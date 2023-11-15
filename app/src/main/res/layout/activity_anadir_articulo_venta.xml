@@ -8,7 +8,7 @@
 
 
     <EditText
-        android:id="@+id/et_username"
+        android:id="@+id/tituloProducto"
         android:layout_width="305dp"
         android:layout_height="48dp"
         android:autofillHints="username"
@@ -17,6 +17,7 @@
         android:hint="Titulo Producto"
         android:inputType="textPersonName"
         android:textAlignment="viewStart"
+        android:textColor="@android:color/darker_gray"
         android:textSize="22sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -26,7 +27,7 @@
         android:id="@+id/descripcionProducto"
         android:layout_width="257dp"
         android:layout_height="139dp"
-        android:layout_marginTop="3dp"
+        android:layout_marginTop="4dp"
         android:backgroundTint="#FF5722"
         android:ems="10"
         android:inputType="text"
@@ -40,6 +41,19 @@
         tools:textSize="22sp" />
 
     <TextView
+        android:id="@+id/textView2"
+        android:layout_width="95dp"
+        android:layout_height="18dp"
+        android:layout_marginTop="24dp"
+        android:text="Descripción"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/descripcionProducto"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/descripcionProducto"
+        app:layout_constraintTop_toBottomOf="@+id/tituloProducto" />
+
+    <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -48,43 +62,33 @@
         android:text="Titulo Producto"
         android:textSize="16sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="@+id/et_username"
-        app:layout_constraintStart_toStartOf="@+id/et_username"
+        app:layout_constraintEnd_toEndOf="@+id/tituloProducto"
+        app:layout_constraintStart_toStartOf="@+id/tituloProducto"
         app:layout_constraintTop_toBottomOf="@+id/imageView2" />
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="95dp"
-        android:layout_height="18dp"
-        android:layout_marginTop="48dp"
-        android:text="Descripción"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="@+id/descripcionProducto"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/descripcionProducto"
-        app:layout_constraintTop_toBottomOf="@+id/et_username" />
-
-    <Button
-        android:id="@+id/añadirButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="61dp"
-        android:backgroundTint="#4CAF50"
-        android:text="Añadir"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/subirFotosButton" />
 
     <Button
         android:id="@+id/subirFotosButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="67dp"
+        android:layout_marginTop="36dp"
         android:backgroundTint="#03A9F4"
         android:text="Subir Fotografías"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/descripcionProducto" />
+        app:layout_constraintTop_toBottomOf="@+id/precioArticulo" />
+
+    <Button
+        android:id="@+id/añadirButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="31dp"
+        android:backgroundTint="#4CAF50"
+        android:text="Añadir"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/subirFotosButton" />
 
     <ImageView
         android:id="@+id/imageView2"
@@ -94,4 +98,32 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/imagen_de_whatsapp_2023_11_15_a_las_12_47_36_04bc5f3c" />
+
+    <EditText
+        android:id="@+id/precioArticulo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="57dp"
+        android:backgroundTint="#3F51B5"
+        android:ems="10"
+        android:inputType="numberDecimal"
+        android:text="Precio"
+        android:textColor="@android:color/darker_gray"
+        android:textSize="22sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/descripcionProducto" />
+
+    <TextView
+        android:id="@+id/textView9"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Precio"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/precioArticulo"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/precioArticulo"
+        tools:layout_editor_absoluteY="488dp" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
