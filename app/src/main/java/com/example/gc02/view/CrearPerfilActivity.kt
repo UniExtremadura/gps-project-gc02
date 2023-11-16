@@ -9,7 +9,6 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.appcompat.app.AppCompatActivity
-import com.example.gc02.R
 import com.example.gc02.databinding.ActivityCrearPerfilBinding
 import com.example.gc02.model.User
 import com.example.gc02.utils.CredentialCheck
@@ -18,10 +17,6 @@ class CrearPerfilActivity : AppCompatActivity(){
 
     private lateinit var binding: ActivityCrearPerfilBinding
 
-    private lateinit var Et_nombre_usuario: EditText
-    private lateinit var Et_email: EditText
-    private lateinit var Et_password: EditText
-    private lateinit var Btn_registrar: Button
 
     companion object {
         const val USUARIO = "NEW_USUARIO"
@@ -45,18 +40,18 @@ class CrearPerfilActivity : AppCompatActivity(){
 
     private fun setUpListeners() {
         with(binding) {
-           Btn_registrar.setOnClickListener{
+           btRegister.setOnClickListener{
                 val check = CredentialCheck.join(
-                    Et_nombre_usuario.text.toString(),
-                    Et_email.text.toString(),
-                    Et_password.text.toString()
+                    etUsername.text.toString(),
+                    etEmail.text.toString(),
+                    etRepassword.text.toString()
                 )
                if(check.fail) notifyInvalidCredentials(check.msg)
                else
                    navigateBackWithResult(
-                       User(Et_nombre_usuario.text.toString(),
-                           Et_email.text.toString(),
-                           Et_password.text.toString())
+                       User(etUsername.text.toString(),
+                           etEmail.text.toString(),
+                           etRepassword.text.toString())
                    )
             }
         }
