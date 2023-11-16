@@ -67,13 +67,13 @@
         android:text="Correo:"
         android:textSize="16sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="@+id/et_password"
+        app:layout_constraintEnd_toEndOf="@+id/et_email"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/et_password"
+        app:layout_constraintStart_toStartOf="@+id/et_email"
         app:layout_constraintTop_toBottomOf="@+id/et_username" />
 
     <EditText
-        android:id="@+id/et_password"
+        android:id="@+id/et_email"
         android:layout_width="305dp"
         android:layout_height="48dp"
         android:layout_marginTop="2dp"
@@ -100,7 +100,7 @@
         app:layout_constraintEnd_toEndOf="@+id/et_repassword"
         app:layout_constraintHorizontal_bias="0.013"
         app:layout_constraintStart_toStartOf="@+id/et_repassword"
-        app:layout_constraintTop_toBottomOf="@+id/et_password" />
+        app:layout_constraintTop_toBottomOf="@+id/et_email" />
 
     <EditText
         android:id="@+id/et_repassword"
