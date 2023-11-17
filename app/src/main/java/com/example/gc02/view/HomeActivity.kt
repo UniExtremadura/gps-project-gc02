@@ -1,4 +1,4 @@
-package com.example.gc02.views
+package com.example.gc02.view
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
