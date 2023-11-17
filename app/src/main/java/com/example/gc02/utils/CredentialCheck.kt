@@ -1,5 +1,6 @@
 package com.example.gc02.utils
 
+import android.provider.ContactsContract.CommonDataKinds.Email
 import com.example.gc02.utils.CredentialCheck
 
 class CredentialCheck {
@@ -42,7 +43,7 @@ class CredentialCheck {
             else checks[0]
         }
 
-        fun join(username: String, password: String, repassword: String): CredentialCheck {
+        fun join(username: String,email: String, password: String, repassword: String): CredentialCheck {
             return if (username.isBlank() || username.length < MINCHARS) checks[1]
             else if (password.isBlank() || password.length < MINCHARS) checks[2]
             else if (password != repassword) checks[3]

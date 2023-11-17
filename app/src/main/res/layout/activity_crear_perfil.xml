@@ -87,13 +87,13 @@
         android:text="Contraseña:"
         android:textSize="16sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="@+id/et_repassword"
+        app:layout_constraintEnd_toEndOf="@+id/et_password"
         app:layout_constraintHorizontal_bias="0.013"
-        app:layout_constraintStart_toStartOf="@+id/et_repassword"
+        app:layout_constraintStart_toStartOf="@+id/et_password"
         app:layout_constraintTop_toBottomOf="@+id/et_email" />
 
     <EditText
-        android:id="@+id/et_repassword"
+        android:id="@+id/et_password"
         android:layout_width="305dp"
         android:layout_height="48dp"
         android:autofillHints="password"
@@ -121,7 +121,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.528"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPassword" />
+        app:layout_constraintTop_toBottomOf="@+id/et_rePassword" />
 
     <TextView
         android:id="@+id/repiteContraCrearPerfil"
@@ -131,13 +131,13 @@
         android:text="Repita la contraseña:"
         android:textSize="16sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="@+id/editTextTextPassword"
+        app:layout_constraintEnd_toEndOf="@+id/et_rePassword"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/editTextTextPassword"
-        app:layout_constraintTop_toBottomOf="@+id/et_repassword" />
+        app:layout_constraintStart_toStartOf="@+id/et_rePassword"
+        app:layout_constraintTop_toBottomOf="@+id/et_password" />
 
     <EditText
-        android:id="@+id/editTextTextPassword"
+        android:id="@+id/et_rePassword"
         android:layout_width="305dp"
         android:layout_height="48dp"
         android:backgroundTint="@android:color/holo_red_dark"

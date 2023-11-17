@@ -4,8 +4,6 @@ package com.example.gc02.view
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Button
-import android.widget.EditText
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.appcompat.app.AppCompatActivity
@@ -22,6 +20,7 @@ class CrearPerfilActivity : AppCompatActivity(){
         const val USUARIO = "NEW_USUARIO"
         const val EMAIL = "NEW_EMAIL"
         const val PASSWORD = "NEW_PASSWORD"
+        const val REPASSWORD = "NEW_REPASSWORD"
 
         fun start(
             context: Context,
@@ -44,14 +43,15 @@ class CrearPerfilActivity : AppCompatActivity(){
                 val check = CredentialCheck.join(
                     etUsername.text.toString(),
                     etEmail.text.toString(),
-                    etRepassword.text.toString()
+                    etPassword.text.toString(),
+                    etRePassword.text.toString()
                 )
                if(check.fail) notifyInvalidCredentials(check.msg)
                else
                    navigateBackWithResult(
                        User(etUsername.text.toString(),
                            etEmail.text.toString(),
-                           etRepassword.text.toString())
+                           etPassword.text.toString())
                    )
             }
         }
