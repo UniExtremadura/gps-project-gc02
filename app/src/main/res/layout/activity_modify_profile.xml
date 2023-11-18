@@ -103,7 +103,7 @@
         app:layout_constraintTop_toBottomOf="@+id/et_email" />
 
     <Button
-        android:id="@+id/bt_modificar_perfil"
+        android:id="@+id/btModificarPerfil"
         android:layout_width="305dp"
         android:layout_height="60dp"
         android:layout_marginBottom="64dp"
