@@ -11,7 +11,7 @@ import com.example.gc02.databinding.ActivityModifyProfileBinding
 import com.example.gc02.model.User
 import com.example.gc02.utils.CredentialCheck
 
-class CrearPerfilActivity : AppCompatActivity(){
+class ModifyProfileActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityModifyProfileBinding
 
@@ -30,6 +30,7 @@ class CrearPerfilActivity : AppCompatActivity(){
             responseLauncher.launch(intent)
         }
     }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityModifyProfileBinding.inflate(layoutInflater)
@@ -39,33 +40,37 @@ class CrearPerfilActivity : AppCompatActivity(){
 
     private fun setUpListeners() {
         with(binding) {
-            bt_modificar_perfil.setOnClickListener{
-                val check = CredentialCheck.join(
+            bt_modificar_perfil.setOnClickListener {
+                val check = CredentialCheck.join_Modificar(
                     etUsername.text.toString(),
                     etEmail.text.toString(),
                     etPassword.text.toString()
                 )
-                if(check.fail) notifyInvalidCredentials(check.msg)
+                if (check.fail) notifyInvalidCredentials(check.msg)
                 else
                     navigateBackWithResult(
-                        User(etUsername.text.toString(),
+                        User(
+                            etUsername.text.toString(),
                             etEmail.text.toString(),
-                            etPassword.text.toString())
+                            etPassword.text.toString()
+                        )
                     )
             }
         }
     }
 
-    private fun navigateBackWithResult(user: User){
+    private fun navigateBackWithResult(user: User) {
         val intent = Intent().apply {
             putExtra(USUARIO, user.name)
-            putExtra(EMAIL,user.email)
-            putExtra(PASSWORD,user.password)
+            putExtra(EMAIL, user.email)
+            putExtra(PASSWORD, user.password)
         }
         setResult(RESULT_OK, intent)
         finish()
     }
-    private fun notifyInvalidCredentials(msg: String){
-        Toast.makeText(this,msg,Toast.LENGTH_SHORT).show()
+
+    private fun notifyInvalidCredentials(msg: String) {
+        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
     }
 
+}

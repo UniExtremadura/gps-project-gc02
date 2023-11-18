@@ -43,7 +43,7 @@ class CredentialCheck {
             else checks[0]
         }
 
-        fun join(username: String,email: String, password: String): CredentialCheck {
+        fun join_Modificar(username: String,email: String, password: String): CredentialCheck {
             return if (username.isBlank() || username.length < MINCHARS) checks[1]
             else if (password.isBlank() || password.length < MINCHARS) checks[2]
             else checks[0]
