@@ -1,12 +1,14 @@
 package com.example.gc02.utils
 
-class CredentialCheck private constructor() {
+import android.provider.ContactsContract.CommonDataKinds.Email
+import com.example.gc02.utils.CredentialCheck
 
+class CredentialCheck {
     var fail: Boolean = false
     var msg: String = ""
     var error: CredentialError = CredentialError.PasswordError
 
-    companion object{
+    companion object {
 
         private val TAG = CredentialCheck::class.java.canonicalName
         private val MINCHARS = 4
@@ -41,15 +43,15 @@ class CredentialCheck private constructor() {
             else checks[0]
         }
 
-        fun join(username: String, password: String, repassword: String): CredentialCheck {
+        fun join(username: String,email: String, password: String, repassword: String): CredentialCheck {
             return if (username.isBlank() || username.length < MINCHARS) checks[1]
             else if (password.isBlank() || password.length < MINCHARS) checks[2]
-            else if (password!=repassword) checks[3]
+            else if (password != repassword) checks[3]
             else checks[0]
         }
-    }
 
-    enum class CredentialError {
-        PasswordError, UsernameError, Success
+        enum class CredentialError {
+            PasswordError, UsernameError, Success
+        }
     }
 }
