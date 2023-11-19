@@ -1,4 +1,4 @@
-package com.example.gc02.views
+package com.example.gc02.view
 
 import android.content.Intent
 import android.net.Uri
