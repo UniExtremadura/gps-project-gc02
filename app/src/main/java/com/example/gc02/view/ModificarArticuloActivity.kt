@@ -10,6 +10,7 @@ import com.example.gc02.R
 import com.example.gc02.databinding.ActivityModificarArticuloBinding
 import com.example.gc02.model.Article
 import com.example.gc02.model.User
+import com.example.gc02.utils.ArticleCheck
 
 class ModificarArticuloActivity : AppCompatActivity() {
 
@@ -31,19 +32,21 @@ class ModificarArticuloActivity : AppCompatActivity() {
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityModificarArticuloBinding.inflate(R.layout.activity_modificar_articulo)
-        setContentView(binding,savedInstanceState)
+        binding = ActivityModificarArticuloBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         setUpListeners()
     }
 
     private fun setUpListeners() {
         with(binding) {
             anadirButton.setOnClickListener {
-                val check = ArticleCheck.join_Modificar(
+                val check = ArticleCheck.modificar(
                     tituloProducto.text.toString(),
                     descripcionProducto.text.toString(),
                     precioArticulo.text.toString()
                 )
+                if check =
+                    else
                     navigateBackWithResult(
                         Article(
                             tituloProducto.text.toString(),
