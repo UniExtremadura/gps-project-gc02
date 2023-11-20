@@ -78,7 +78,7 @@
         app:layout_constraintTop_toBottomOf="@+id/precioArticulo" />
 
     <Button
-        android:id="@+id/añadirButton"
+        android:id="@+id/anadirButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="31dp"

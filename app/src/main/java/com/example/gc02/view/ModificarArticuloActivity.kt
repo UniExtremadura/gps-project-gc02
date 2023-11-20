@@ -8,6 +8,7 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.appcompat.app.AppCompatActivity
 import com.example.gc02.R
 import com.example.gc02.databinding.ActivityModificarArticuloBinding
+import com.example.gc02.model.Article
 import com.example.gc02.model.User
 
 class ModificarArticuloActivity : AppCompatActivity() {
@@ -37,8 +38,8 @@ class ModificarArticuloActivity : AppCompatActivity() {
 
     private fun setUpListeners() {
         with(binding) {
-            añadirButton.setOnClickListener {
-                val check = CredentialCheck.join_Modificar(
+            anadirButton.setOnClickListener {
+                val check = ArticleCheck.join_Modificar(
                     tituloProducto.text.toString(),
                     descripcionProducto.text.toString(),
                     precioArticulo.text.toString()
@@ -54,7 +55,7 @@ class ModificarArticuloActivity : AppCompatActivity() {
         }
     }
 
-    private fun navigateBackWithResult(user: User) {
+    private fun navigateBackWithResult(article: Article) {
         val intent = Intent().apply {
             putExtra(TITLE, article.title)
             putExtra(DESC, article.description)
