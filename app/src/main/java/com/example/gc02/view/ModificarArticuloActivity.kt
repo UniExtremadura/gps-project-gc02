@@ -45,9 +45,8 @@ class ModificarArticuloActivity : AppCompatActivity() {
                     descripcionProducto.text.toString(),
                     precioArticulo.text.toString()
                 )
-                if check =
-                    else
-                    navigateBackWithResult(
+                if (check.fail) notifyInvalidArticle(check.msg)
+                else navigateBackWithResult(
                         Article(
                             tituloProducto.text.toString(),
                             descripcionProducto.text.toString(),
@@ -67,5 +66,7 @@ class ModificarArticuloActivity : AppCompatActivity() {
         setResult(RESULT_OK, intent)
         finish()
     }
-
+    private fun notifyInvalidArticle(msg: String) {
+        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
+    }
 }
