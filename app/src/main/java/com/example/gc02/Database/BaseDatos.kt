@@ -11,7 +11,7 @@ import com.example.gc02.Database.UserDao
 @Database(entities = [User::class, Article::class], version = 1)
 abstract class BaseDatos : RoomDatabase() {
     abstract fun userDao(): UserDao
-    //abstract fun showDao(): ShowDao
+    abstract fun articleDao(): ArticleDao
 
     companion object {
         private var INSTANCE: BaseDatos? = null

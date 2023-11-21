@@ -6,13 +6,18 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import com.example.gc02.databinding.ActivityAnadirArticuloVentaBinding
 import com.example.gc02.model.Article
 import com.example.gc02.utils.ArticleCheck
+import com.example.gc02.Database.BaseDatos
+import kotlinx.coroutines.launch
 
 class AnadirArticuloALaVentaActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityAnadirArticuloVentaBinding
+
+    private lateinit var db: BaseDatos
 
     companion object {
 
@@ -34,22 +39,47 @@ class AnadirArticuloALaVentaActivity : AppCompatActivity() {
         binding = ActivityAnadirArticuloVentaBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        db = BaseDatos.getInstance(applicationContext)!!
+
         setUpListeners()
     }
 
     private fun setUpListeners() {
         with(binding){
             anadirButton.setOnClickListener {
-               val check = ArticleCheck.insert(
+               join()
+            }
+        }
+    }
+
+    private fun join() {
+        with(binding) {
+            val check = ArticleCheck.insert(
                 tituloProducto.text.toString(),
                 descripcionProducto.text.toString(),
                 precioArticulo.text.toString()
-               )
-                if (check.fail) notifyInvalidArticle(check.msg)
-                else navigateBackWithResult(
-                    Article(tituloProducto.text.toString(),descripcionProducto.text.toString(),
-                    precioArticulo.text.toString())
-                )
+            )
+            if (check.fail) notifyInvalidArticle(check.msg)
+            else {
+                lifecycleScope.launch{
+                    val article = Article(
+                        null,
+                        tituloProducto.text.toString(),
+                        descripcionProducto.text.toString(),
+                        precioArticulo.text.toString()
+                    )
+                    val id =  db?.articleDao()?.insert(article)
+
+                    navigateBackWithResult(
+                        Article(
+                            id,
+                            tituloProducto.text.toString(),
+                            descripcionProducto.text.toString(),
+                            precioArticulo.text.toString()
+                        )
+                    )
+                }
+
             }
         }
     }
