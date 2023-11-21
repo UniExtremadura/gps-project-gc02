@@ -1,5 +1,3 @@
-import org.jetbrains.kotlin.utils.alwaysTrue
-
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
@@ -33,9 +31,6 @@ android {
                 "proguard-rules.pro"
             )
         }
-    }
-    viewBinding {
-        enable = true
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
