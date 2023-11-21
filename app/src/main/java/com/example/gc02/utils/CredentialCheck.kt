@@ -49,7 +49,11 @@ class CredentialCheck {
             else if (password != repassword) checks[3]
             else checks[0]
         }
-
+        fun join_Modificar(username: String,email: String, password: String): CredentialCheck {
+            return if (username.isBlank() || username.length < MINCHARS) checks[1]
+            else if (password.isBlank() || password.length < MINCHARS) checks[2]
+            else checks[0]
+        }
         enum class CredentialError {
             PasswordError, UsernameError, Success
         }
