@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.appcompat.app.AppCompatActivity
+
 import com.example.gc02.databinding.ActivityCrearPerfilBinding
 import com.example.gc02.model.User
 import com.example.gc02.utils.CredentialCheck
@@ -14,7 +15,6 @@ import com.example.gc02.utils.CredentialCheck
 class CrearPerfilActivity : AppCompatActivity(){
 
     private lateinit var binding: ActivityCrearPerfilBinding
-
 
     companion object {
         const val USUARIO = "NEW_USUARIO"
