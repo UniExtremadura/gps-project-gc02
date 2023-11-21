@@ -42,13 +42,18 @@ class CredentialCheck {
             else if (password.isBlank() || password.length < MINCHARS) checks[2]
             else checks[0]
         }
-
+        fun passwordOk(pass1: String, pass2: String): CredentialCheck {
+            return if (pass1.isBlank() || pass1.length < MINCHARS) checks[2]
+            else if (pass1 != pass2) checks[3]
+            else checks[0]
+        }
         fun join(username: String,email: String, password: String, repassword: String): CredentialCheck {
             return if (username.isBlank() || username.length < MINCHARS) checks[1]
             else if (password.isBlank() || password.length < MINCHARS) checks[2]
             else if (password != repassword) checks[3]
             else checks[0]
         }
+
         fun join_Modificar(username: String,email: String, password: String): CredentialCheck {
             return if (username.isBlank() || username.length < MINCHARS) checks[1]
             else if (password.isBlank() || password.length < MINCHARS) checks[2]

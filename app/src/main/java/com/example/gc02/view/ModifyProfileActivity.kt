@@ -49,7 +49,7 @@ class ModifyProfileActivity : AppCompatActivity() {
                 if (check.fail) notifyInvalidCredentials(check.msg)
                 else
                     navigateBackWithResult(
-                        User(
+                        User(null,
                             etUsername.text.toString(),
                             etEmail.text.toString(),
                             etPassword.text.toString()

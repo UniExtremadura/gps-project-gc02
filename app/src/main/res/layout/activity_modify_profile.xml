@@ -124,6 +124,7 @@
         android:layout_marginTop="10dp"
         android:backgroundTint="@color/white"
         android:foreground="?android:attr/homeAsUpIndicator"
+        android:text="back"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -137,7 +138,6 @@
         android:textAlignment="center"
         android:textSize="34sp"
         android:textStyle="bold"
-        app:circularflow_radiusInDP="2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
