@@ -57,6 +57,15 @@ class ArticleCheck private constructor() {
             else if (desc.length > 256 || desc.length < 20) checks[6]
             else checks[0]
         }
+        fun modificar(title: String,desc: String, price: String): ArticleCheck {
+            return if (title.isBlank()) checks[1]
+            else if (desc.isBlank()) checks[2]
+            else if (price.isBlank()) checks[3]
+            else if (price.toInt() <= 0) checks[4]
+            else if (title.length > 25 || title.length < 6) checks[5]
+            else if (desc.length > 256 || desc.length < 20) checks[6]
+            else checks[0]
+        }
     }
 
     enum class ArticleError {
