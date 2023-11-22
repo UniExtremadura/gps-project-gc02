@@ -1,4 +1,4 @@
-package com.example.gc02.Database
+package com.example.gc02.database
 
 import androidx.room.Dao
 import androidx.room.Insert

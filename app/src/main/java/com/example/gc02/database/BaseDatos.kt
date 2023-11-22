@@ -1,4 +1,4 @@
-package com.example.gc02.Database
+package com.example.gc02.database
 
 import android.content.Context
 import androidx.room.Database
