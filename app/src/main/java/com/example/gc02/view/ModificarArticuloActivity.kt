@@ -47,7 +47,7 @@ class ModificarArticuloActivity : AppCompatActivity() {
                 )
                 if (check.fail) notifyInvalidArticle(check.msg)
                 else navigateBackWithResult(
-                        Article(
+                        Article(null,
                             tituloProducto.text.toString(),
                             descripcionProducto.text.toString(),
                             precioArticulo.text.toString()

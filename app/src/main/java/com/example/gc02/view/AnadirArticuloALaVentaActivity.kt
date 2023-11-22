@@ -10,7 +10,7 @@ import androidx.lifecycle.lifecycleScope
 import com.example.gc02.databinding.ActivityAnadirArticuloVentaBinding
 import com.example.gc02.model.Article
 import com.example.gc02.utils.ArticleCheck
-import com.example.gc02.Database.BaseDatos
+import com.example.gc02.database.BaseDatos
 import kotlinx.coroutines.launch
 
 class AnadirArticuloALaVentaActivity : AppCompatActivity() {

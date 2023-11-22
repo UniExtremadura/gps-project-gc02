@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".views.LoginActivity">
+    tools:context=".view.LoginActivity"
+    android:theme="@style/Theme.AppCompat">
 
     <ImageView
         android:id="@+id/imageView"
@@ -19,7 +20,7 @@
     <EditText
         android:id="@+id/username"
         android:layout_width="250dp"
-        android:layout_height="45dp"
+        android:layout_height="48dp"
         android:layout_marginTop="125dp"
         android:ems="10"
         android:inputType="text"
@@ -32,10 +33,11 @@
     <EditText
         android:id="@+id/password"
         android:layout_width="250dp"
-        android:layout_height="45dp"
+        android:layout_height="48dp"
         android:layout_marginTop="50dp"
         android:ems="10"
         android:inputType="textPassword"
+        android:text="Contraseña"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
