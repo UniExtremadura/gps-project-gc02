@@ -8,7 +8,7 @@ import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
-import com.example.gc02.database.BaseDatos
+import com.example.gc02.Database.BaseDatos
 
 import com.example.gc02.databinding.ActivityCrearPerfilBinding
 import com.example.gc02.model.User
