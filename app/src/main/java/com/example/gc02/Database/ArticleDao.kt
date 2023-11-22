@@ -5,7 +5,6 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import androidx.room.Transaction
 import com.example.gc02.model.Article
 //import es.unex.giiis.asee.tiviclone.data.model.UserShowCrossRef
 //import es.unex.giiis.asee.tiviclone.data.model.UserWithShows

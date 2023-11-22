@@ -6,7 +6,6 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.example.gc02.model.User
 import com.example.gc02.model.Article
-import com.example.gc02.Database.UserDao
 
 @Database(entities = [User::class, Article::class], version = 1)
 abstract class BaseDatos : RoomDatabase() {
