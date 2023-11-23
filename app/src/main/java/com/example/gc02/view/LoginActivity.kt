@@ -10,6 +10,7 @@ import com.example.gc02.database.BaseDatos
 import  com.example.gc02.databinding.ActivityLoginBinding
 import com.example.gc02.model.User
 import com.example.gc02.utils.CredentialCheck
+import com.example.gc02.view.home.HomeActivity
 import kotlinx.coroutines.launch
 
 class LoginActivity : AppCompatActivity() {
