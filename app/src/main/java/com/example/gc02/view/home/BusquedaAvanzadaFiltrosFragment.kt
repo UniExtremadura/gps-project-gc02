@@ -7,15 +7,20 @@ import android.view.ViewGroup
 import  com.example.gc02.databinding.FragmentBusquedaAvanzadaFiltrosBinding
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import com.example.gc02.R
 
-class BusquedaAvanzadaFiltrosFragment : Fragment() {
-    private var _binding: FragmentBusquedaAvanzadaFiltrosBinding? = null
-    private val binding get() = _binding!!
+class BusquedaAvanzadaFiltrosFragment : Fragment(R.layout.fragment_busqueda_avanzada_filtros) {
+    private lateinit var binding: FragmentBusquedaAvanzadaFiltrosBinding
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        binding = FragmentBusquedaAvanzadaFiltrosBinding.inflate(layoutInflater)
+        super.onCreate(savedInstanceState)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentBusquedaAvanzadaFiltrosBinding.inflate(inflater, container, false)
-        return binding.root
+        return inflater.inflate(R.layout.fragment_busqueda_avanzada_filtros, container, false)
     }
 }

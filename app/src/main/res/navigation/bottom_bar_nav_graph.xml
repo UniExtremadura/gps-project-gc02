@@ -1,6 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:startDestination="@id/page_home"
     android:id="@+id/bottom_bar_nav_graph">
+
+    <fragment
+        android:id="@+id/page_home"
+        android:name="com.example.gc02.view.home.BusquedaAvanzadaFiltrosFragment"
+        tools:layout="@layout/fragment_busqueda_avanzada_filtros" />
+
+    <fragment
+        android:id="@+id/page_articulos"
+        android:name="com.example.gc02.view.home.listaArticulosFragment"
+        tools:layout="@layout/fragment_lista_articulos" />
+
+    <fragment
+        android:id="@+id/page_ajustes"
+        android:name="com.example.gc02.view.home.AjustesFragment"
+        tools:layout="@layout/fragment_ajustes" />
 
 </navigation>

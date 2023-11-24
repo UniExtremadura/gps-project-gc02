@@ -8,6 +8,7 @@ import androidx.navigation.ui.AppBarConfiguration
 import com.example.gc02.R
 import com.example.gc02.model.User
 import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.gc02.databinding.ActivityHomeBinding
@@ -35,10 +36,21 @@ class HomeActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_home)
+        binding = ActivityHomeBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         val user = intent.getSerializableExtra(USER_INFO) as User
 
+        setupNavegacion()
         setUpUI(user)
+    }
+
+    private fun setupNavegacion() {
+        val bottomNavigationItemView = binding.bottomNavigation
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+        NavigationUI.setupWithNavController(
+            bottomNavigationItemView,
+            navHostFragment.navController
+        )
     }
 
     fun setUpUI(user: User) {
