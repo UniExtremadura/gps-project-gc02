@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.ConsultarPerfilFragment">
+
+    <!-- Perfil del Usuario -->
+    <LinearLayout
+        android:id="@+id/layoutPerfil"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:visibility="invisible">
+
+        <!-- Aquí puedes agregar vistas para mostrar la información del perfil del usuario -->
+        <!-- Por ejemplo, TextViews, ImageViews, etc. -->
+        <!-- Ejemplo: -->
+        <TextView
+            android:id="@+id/textViewNombre"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nombre del Usuario" />
+
+        <TextView
+            android:id="@+id/textViewCorreo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Correo Electrónico" />
+
+        <!-- Agrega las demás vistas para mostrar la información del perfil -->
+
+    </LinearLayout>
+
+    <!-- Sección de Comentarios -->
+    <LinearLayout
+        android:id="@+id/layoutComentarios"
+        android:layout_width="match_parent"
+        android:layout_height="272dp"
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:visibility="invisible">
+
+        <!-- Lista de Comentarios -->
+        <ListView
+            android:id="@+id/listViewComentarios"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <!-- Aquí puedes agregar otras vistas si es necesario -->
+
+    </LinearLayout>
+
+    <!-- Agregar Comentario -->
+    <LinearLayout
+        android:id="@+id/layoutAgregarComentario"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- EditText para el Comentario -->
+        <EditText
+            android:id="@+id/editTextComentario"
+            android:layout_width="match_parent"
+            android:layout_height="75dp"
+            android:hint="Añadir comentario" />
+
+        <!-- Botón para Enviar Comentario -->
+        <Button
+            android:id="@+id/btEnviarComentario"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#03A9F4"
+            android:text="Enviar Comentario" />
+
+    </LinearLayout>
+
+
+</FrameLayout>
