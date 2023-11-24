@@ -75,8 +75,8 @@
 
     <Button
         android:id="@+id/btArticulosVenta"
-        android:layout_width="305dp"
-        android:layout_height="60dp"
+        android:layout_width="279dp"
+        android:layout_height="50dp"
         android:layout_marginTop="28dp"
         android:backgroundTint="#8BC34A"
         android:text="Articulos"
@@ -90,8 +90,8 @@
 
     <Button
         android:id="@+id/btMostrarFavoritos"
-        android:layout_width="305dp"
-        android:layout_height="60dp"
+        android:layout_width="279dp"
+        android:layout_height="50dp"
         android:layout_marginTop="28dp"
         android:backgroundTint="#8BC34A"
         android:text="Registrar"
@@ -104,17 +104,31 @@
         app:layout_constraintTop_toBottomOf="@+id/btArticulosVenta" />
     <Button
         android:id="@+id/btAjustes"
-        android:layout_width="305dp"
-        android:layout_height="60dp"
+        android:layout_width="279dp"
+        android:layout_height="50dp"
         android:layout_marginTop="28dp"
         android:backgroundTint="#8BC34A"
         android:text="Ajustes"
         android:textAllCaps="false"
         android:textColor="#2A2929"
         android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="@id/btCerrarSesion"
+        app:layout_constraintHorizontal_bias="0.528"
+        app:layout_constraintStart_toStartOf="@id/btCerrarSesion"
+        app:layout_constraintTop_toBottomOf="@+id/btMostrarFavoritos" />
+    <Button
+        android:id="@+id/btCerrarSesion"
+        android:layout_width="279dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="28dp"
+        android:backgroundTint="#8BC34A"
+        android:text="Cerrar Sesión"
+        android:textAllCaps="false"
+        android:textColor="#2A2929"
+        android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.528"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btMostrarFavoritos" />
+        app:layout_constraintTop_toBottomOf="@+id/btAjustes" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
