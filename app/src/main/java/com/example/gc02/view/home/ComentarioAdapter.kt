@@ -8,7 +8,7 @@ import com.example.gc02.model.Comentario
 
 class ComentarioAdapter(
     private var comentarios: List<Comentario>
-    ) : RecyclerView.Adapter<ComentarioAdapter.ComentarioViewHolder>() {
+) : RecyclerView.Adapter<ComentarioAdapter.ComentarioViewHolder>() {
 
     class ComentarioViewHolder(
         private val binding: ListComentarioBinding
@@ -23,7 +23,7 @@ class ComentarioAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ComentarioViewHolder {
         val binding =
-            ListComentarioBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        ListComentarioBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ComentarioViewHolder(binding)
     }
     override fun getItemCount() = comentarios.size
@@ -35,4 +35,8 @@ class ComentarioAdapter(
         this.comentarios = comentarios
         notifyDataSetChanged()
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> d7e0ca0 (GC02-29 Funcionalidad de fragment Comentario en perfil)
