@@ -2,16 +2,16 @@ package com.example.gc02.view.home
 
 import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.navigation.ui.AppBarConfiguration
-import com.example.gc02.R
-import com.example.gc02.model.User
+import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import com.example.gc02.R
 import com.example.gc02.databinding.ActivityHomeBinding
+import com.example.gc02.model.User
 
 class HomeActivity : AppCompatActivity() {
     private lateinit var appBarConfiguration: AppBarConfiguration
@@ -64,15 +64,14 @@ class HomeActivity : AppCompatActivity() {
         setupActionBarWithNavController(navController, appBarConfiguration)
 
         // Hide toolbar and bottom navigation when in detail fragment
-       /* navController.addOnDestinationChangedListener { _, destination, _ ->
-            if ((destination.id == R.id.showDetailFragment) ||
-                (destination.id == R.id.settingsFragment)
-            ) {
+        /*navController.addOnDestinationChangedListener { _, destination, _ ->
+            if (destination.id == R.id.page_perfil)
+             {
                 //   binding.toolbar.visibility = View.GONE
-                binding.toolbar.menu.clear()
+                binding.bottomNavigation.menu.clear()
                 binding.bottomNavigation.visibility = View.GONE
             } else {
-                binding.toolbar.visibility = View.VISIBLE
+                binding.bottomNavigation.visibility = View.VISIBLE
                 binding.bottomNavigation.visibility = View.VISIBLE
             }
         }*/
