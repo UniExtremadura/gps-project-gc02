@@ -27,8 +27,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextName" />
 
-    <SeekBar
-        android:id="@+id/seekBarPrice"
+    <EditText
+        android:id="@+id/editPrice"
         android:layout_width="359dp"
         android:layout_height="24dp"
         android:layout_below="@id/textViewPrice"
@@ -43,12 +43,12 @@
         android:id="@+id/buttonSearch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/seekBarPrice"
+        android:layout_below="@id/editPrice"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="28dp"
         android:text="Buscar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/seekBarPrice" />
+        app:layout_constraintTop_toBottomOf="@+id/editPrice" />
 </androidx.constraintlayout.widget.ConstraintLayout>
