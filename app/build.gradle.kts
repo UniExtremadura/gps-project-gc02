@@ -60,6 +60,7 @@ dependencies {
     implementation("com.google.android.material:material:1.10.0")
     implementation("androidx.navigation:navigation-ui-ktx:2.7.5")
     implementation("androidx.navigation:navigation-fragment:2.7.5")
+    implementation("com.google.firebase:firebase-auth-ktx:22.3.0")
     val room_version = "2.5.0"
 
     implementation("androidx.room:room-runtime:$room_version")
