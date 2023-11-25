@@ -38,6 +38,7 @@ class HomeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        
         val user = intent.getSerializableExtra(USER_INFO) as User
 
         setupNavegacion()
@@ -57,12 +58,12 @@ class HomeActivity : AppCompatActivity() {
         binding.bottomNavigation.setupWithNavController(navController)
         appBarConfiguration = AppBarConfiguration(
             setOf(
-               //R.id.nombreFragmento
+                R.id.page_perfil,
+                R.id.page_home,
+                R.id.page_articulos
             )
         )
-
         setupActionBarWithNavController(navController, appBarConfiguration)
-
         // Hide toolbar and bottom navigation when in detail fragment
         /*navController.addOnDestinationChangedListener { _, destination, _ ->
             if (destination.id == R.id.page_perfil)

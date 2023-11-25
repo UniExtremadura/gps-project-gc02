@@ -11,6 +11,9 @@ interface ComentarioDao {
     @Query("SELECT * FROM Comentario WHERE commentId = :id")
     suspend fun findById(id: Int): Comentario
 
+    @Query("SELECT * FROM Comentario")
+    suspend fun obtenerComentarios():List<Comentario>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(comentario: Comentario): Long
 

@@ -7,10 +7,10 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.gc02.data.dummyComentarios
 import com.example.gc02.database.BaseDatos
 import com.example.gc02.databinding.FragmentConsultarPerfilBinding
 import com.example.gc02.model.Comentario
+import com.example.gc02.model.User
 import kotlinx.coroutines.launch
 
 
@@ -28,9 +28,10 @@ class ConsultarPerfilFragment : Fragment() {
     private val TAG = "ComentarioFragment"
     private lateinit var db: BaseDatos
     private var _comentarios: List<Comentario> = emptyList()
-    private lateinit var listener: OnComentarioClickListener
-    interface OnComentarioClickListener {
-        fun onComentarioClick(comentario: Comentario)
+    private lateinit var listener: OnPerfilClickListener
+
+    interface OnPerfilClickListener {
+        fun onPerfilClick(user:User)
     }
     private var param1: String? = null
     private var param2: String? = null
@@ -45,12 +46,8 @@ class ConsultarPerfilFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentConsultarPerfilBinding.inflate(inflater, container, false)
-        //Contexto base datos???
-
         // Configurar el botón para enviar un nuevo comentario
-        binding.btEnviarComentario.setOnClickListener {
-            enviarComentario()
-        }
+        setUpRecyclerView()
         // Configurar la carga de información del perfil (puedes obtener esta información desde tu base de datos u otro origen)
         cargarInformacionDePerfil()
 
@@ -63,15 +60,10 @@ class ConsultarPerfilFragment : Fragment() {
     }
 
 
-    private fun enviarComentario() {
+    private fun enviarComentario(nameUser: String) {
         // Agregar lógica para enviar un nuevo comentario
         val nuevoComentario = binding.editTextComentario.text.toString()
-        /*val currentUser = FirebaseAuth.getInstance().currentUser
-        var nameUser = ""
-        if (currentUser != null) {
-             nameUser = currentUser.displayName.toString()
-        }*/
-        var nameUser= "Manuel"
+
         // Agregar lógica para almacenar el comentario en la base de datos
         lifecycleScope.launch {
             val comment = Comentario(
@@ -82,7 +74,7 @@ class ConsultarPerfilFragment : Fragment() {
             val id = db?.comentarioDao()?.insert(comment)
         }
         // Después de enviar el comentario, actualizar la lista de comentarios llamando a cargarComentarios()
-        //setUpRecyclerView()
+        setUpRecyclerView()
         // Limpiar el EditText después de enviar el comentario
         binding.editTextComentario.text.clear()
     }
@@ -94,13 +86,26 @@ class ConsultarPerfilFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setUpRecyclerView()
+        // Accede al usuario desde los argumentos del Fragmento
+        val userInfo = arguments?.getSerializable(HomeActivity.USER_INFO) as? User
+        binding.btEnviarComentario.setOnClickListener {
+            // Utiliza la información del usuario según sea necesario
+            if (userInfo != null) {
+                enviarComentario(userInfo.name)
+            }else enviarComentario("Anonimo")
+        }
     }
     private fun setUpRecyclerView() {
-        comentarioAdapter = ComentarioAdapter(comentarios = dummyComentarios)
+        comentarioAdapter = ComentarioAdapter(
+            comentarios=_comentarios
+        )
         with(binding) {
             layoutComentarios.layoutManager = LinearLayoutManager(context)
             layoutComentarios.adapter = comentarioAdapter
+        }
+        lifecycleScope.launch {
+            val comentariosDB = db.comentarioDao().obtenerComentarios()
+            comentarioAdapter.updateData(comentariosDB)
         }
         android.util.Log.d("ComentarioFragment", "setUpRecyclerView")
     }
@@ -117,14 +122,14 @@ class ConsultarPerfilFragment : Fragment() {
          * @param param2 Parameter 2.
          * @return A new instance of fragment ConsultarPerfilFragment.
          */
-        // TODO: Rename and change types and number of parameters
+        private const val USER_INFO = "USER_INFO"
         @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            ConsultarPerfilFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+        fun newInstance(userInfo:User):ConsultarPerfilFragment{
+            val fragment=ConsultarPerfilFragment()
+            val args = Bundle()
+            args.putSerializable(USER_INFO,userInfo)
+            fragment.arguments=args
+            return fragment
+        }
     }
 }
