@@ -3,4 +3,6 @@
     <string name="volver">Volver</string>
     <string name="cerrar_sesi_n">Cerrar sesión</string>
     <string name="esta_seguro_de_que_desea_cerrar_sesi_n">¿Esta seguro de que desea cerrar sesión?</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
