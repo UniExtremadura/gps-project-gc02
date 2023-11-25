@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/page_home"
         android:name="com.example.gc02.view.home.BusquedaAvanzadaFiltrosFragment"
-        tools:layout="@layout/fragment_busqueda_avanzada_filtros"></fragment>
+        tools:layout="@layout/fragment_busqueda_avanzada_filtros"/>
 
     <fragment
         android:id="@+id/page_articulos"

@@ -8,7 +8,7 @@ import com.example.gc02.model.Comentario
 
 class ComentarioAdapter(
     private var comentarios: List<Comentario>
-) : RecyclerView.Adapter<ComentarioAdapter.ComentarioViewHolder>() {
+    ) : RecyclerView.Adapter<ComentarioAdapter.ComentarioViewHolder>() {
 
     class ComentarioViewHolder(
         private val binding: ListComentarioBinding
