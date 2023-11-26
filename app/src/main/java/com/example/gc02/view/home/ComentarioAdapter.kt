@@ -35,8 +35,6 @@ class ComentarioAdapter(
         this.comentarios = comentarios
         notifyDataSetChanged()
     }
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> d7e0ca0 (GC02-29 Funcionalidad de fragment Comentario en perfil)
+
+

@@ -27,6 +27,7 @@ private const val ARG_PARAM2 = "param2"
 class ConsultarPerfilFragment : Fragment() {
     private val TAG = "ComentarioFragment"
 
+    private lateinit var db: BaseDatos
     private var _comentarios: List<Comentario> = emptyList()
     private lateinit var listener: OnComentarioClickListener
     interface OnComentarioClickListener {
@@ -39,7 +40,6 @@ class ConsultarPerfilFragment : Fragment() {
 
     private val binding get() = _binding!!
     private lateinit var comentarioAdapter: ComentarioAdapter
-
     private var userInfo: User? = null
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
