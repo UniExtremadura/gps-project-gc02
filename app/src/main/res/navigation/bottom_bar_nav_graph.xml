@@ -18,16 +18,19 @@
 
     <fragment
         android:id="@+id/page_home"
+        android:label="Home"
         android:name="com.example.gc02.view.home.BusquedaAvanzadaFiltrosFragment"
         tools:layout="@layout/fragment_busqueda_avanzada_filtros"/>
 
     <fragment
         android:id="@+id/page_articulos"
+        android:label="Articulos"
         android:name="com.example.gc02.view.home.listaArticulosFragment"
         tools:layout="@layout/fragment_lista_articulos" />
 
     <fragment
         android:id="@+id/page_perfil"
+        android:label="Perfil"
         android:name="com.example.gc02.view.home.ConsultarPerfilFragment"
         tools:layout="@layout/fragment_consultar_perfil"/>
 

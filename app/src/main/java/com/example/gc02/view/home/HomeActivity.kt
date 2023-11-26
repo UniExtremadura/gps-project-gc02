@@ -3,6 +3,8 @@ package com.example.gc02.view.home
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
@@ -77,11 +79,11 @@ class HomeActivity : AppCompatActivity() {
             }
         }*/
     }
-    /*    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.toolbar_home, menu)
 
         val searchItem = menu?.findItem(R.id.action_search)
-        val searchView = searchItem?.actionView as SearchView
+        //val searchView = searchItem?.actionView as SearchView
 
         // Configure the search info and add any event listeners.
 
@@ -91,7 +93,7 @@ class HomeActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
         R.id.action_settings -> {
             // User chooses the "Settings" item. Show the app settings UI.
-            val action = DiscoverFragmentDirections.actionHomeToSettingsFragment()
+            val action = SettingFragmentDirections.actionHomeToSettingsFragment()
             navController.navigate(action)
             true
         }
@@ -102,7 +104,7 @@ class HomeActivity : AppCompatActivity() {
             super.onOptionsItemSelected(item)
         }
     }
-
+/*
     override fun onShowClick(show: Show) {
         val action = DiscoverFragmentDirections.actionDiscoverFragmentToShowDetailFragment(show)
         navController.navigate(action)

@@ -2,11 +2,10 @@ package com.example.gc02.view.home
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.gc02.R
+import androidx.fragment.app.Fragment
 import com.example.gc02.databinding.FragmentSettingBinding
 import com.example.gc02.view.LoginActivity
 
@@ -37,6 +36,19 @@ class SettingFragment : Fragment() {
 
             // Cierra la actividad actual del fragmento si es necesario
             requireActivity().finish()
+        }
+        binding.btnVolver.setOnClickListener{
+            val fragmentManager = requireActivity().supportFragmentManager
+            val transaction = fragmentManager.beginTransaction()
+
+// Utiliza popBackStack() para navegar hacia atrás
+            fragmentManager.popBackStack()
+
+// Puedes añadir la transacción a la pila de retroceso (opcional)
+            transaction.addToBackStack(null)
+
+// Realiza el commit de la transacción
+            transaction.commit()
         }
     }
 
