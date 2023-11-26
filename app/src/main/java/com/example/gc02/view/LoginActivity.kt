@@ -1,15 +1,15 @@
 package com.example.gc02.view
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.example.gc02.database.BaseDatos
-
-import  com.example.gc02.databinding.ActivityLoginBinding
+import com.example.gc02.databinding.ActivityLoginBinding
 import com.example.gc02.model.User
 import com.example.gc02.utils.CredentialCheck
+import com.example.gc02.view.home.HomeActivity
 import kotlinx.coroutines.launch
 
 class LoginActivity : AppCompatActivity() {
