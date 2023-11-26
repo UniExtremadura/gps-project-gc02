@@ -40,12 +40,20 @@ class ConsultarPerfilFragment : Fragment() {
 
     private val binding get() = _binding!!
     private lateinit var comentarioAdapter: ComentarioAdapter
-
+    private var userInfo: User? = null
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentConsultarPerfilBinding.inflate(inflater, container, false)
+
+        binding.btEnviarComentario.setOnClickListener {
+            // Utiliza la información del usuario según sea necesario
+            if (userInfo != null) {
+                enviarComentario(userInfo!!.name)
+            }
+        }
+
         // Configurar el botón para enviar un nuevo comentario
         setUpRecyclerView()
         // Configurar la carga de información del perfil (puedes obtener esta información desde tu base de datos u otro origen)
@@ -56,7 +64,10 @@ class ConsultarPerfilFragment : Fragment() {
 
     private fun cargarInformacionDePerfil() {
         // Agregar lógica para cargar y mostrar la información del perfil del usuario
-        // por ejemplo: textViewNombre.text = "Nombre del usuario obtenido de base de datos"
+        with(binding) {
+            tvConsultarPerfil.text = userInfo?.name
+            tvCorreoPerfil.text = userInfo?.email
+        }
     }
 
 
@@ -82,18 +93,19 @@ class ConsultarPerfilFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         db = BaseDatos.getInstance(requireContext())!!
+        // Obtén el Intent de la actividad
+        val intent = activity?.intent
+
+        // Verifica si el Intent no es nulo y si contiene la clave USER_INFO
+        if (intent?.hasExtra(HomeActivity.USER_INFO) == true) {
+            // Obtén el objeto User del Intent
+            userInfo = intent.getSerializableExtra(HomeActivity.USER_INFO) as? User
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        // Accede al usuario desde los argumentos del Fragmento
-        val userInfo = arguments?.getSerializable(HomeActivity.USER_INFO) as? User
-        binding.btEnviarComentario.setOnClickListener {
-            // Utiliza la información del usuario según sea necesario
-            if (userInfo != null) {
-                enviarComentario(userInfo.name)
-            }else enviarComentario("Anonimo")
-        }
+
     }
     private fun setUpRecyclerView() {
         comentarioAdapter = ComentarioAdapter(
