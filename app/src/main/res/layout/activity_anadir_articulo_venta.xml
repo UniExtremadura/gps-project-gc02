@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/añadirArticuloALaVenta"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.AnadirArticuloALaVentaActivity">
+
+
+    <EditText
+        android:id="@+id/tituloProducto"
+        android:layout_width="305dp"
+        android:layout_height="48dp"
+        android:autofillHints="username"
+        android:backgroundTint="#00BCD4"
+        android:gravity="start"
+        android:hint="Titulo Producto"
+        android:inputType="textPersonName"
+        android:textAlignment="viewStart"
+        android:textColor="@android:color/darker_gray"
+        android:textColorHint="@android:color/darker_gray"
+        android:textSize="22sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+    <EditText
+        android:id="@+id/descripcionProducto"
+        android:layout_width="248dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="4dp"
+        android:backgroundTint="#FF5722"
+        android:ems="10"
+        android:inputType="text"
+        android:text="Descripción"
+        android:textColor="@android:color/darker_gray"
+        android:textColorHint="@android:color/darker_gray"
+        android:textSize="22sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView2"
+        tools:textSize="22sp" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="95dp"
+        android:layout_height="18dp"
+        android:layout_marginTop="24dp"
+        android:text="Descripción"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/descripcionProducto"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/descripcionProducto"
+        app:layout_constraintTop_toBottomOf="@+id/tituloProducto" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="72dp"
+        android:layout_marginEnd="193dp"
+        android:text="Titulo Producto"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/tituloProducto"
+        app:layout_constraintStart_toStartOf="@+id/tituloProducto"
+        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+
+    <Button
+        android:id="@+id/subirFotosButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="36dp"
+        android:backgroundTint="#03A9F4"
+        android:text="Subir Fotografías"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/precioArticulo" />
+
+    <Button
+        android:id="@+id/anadirButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="116dp"
+        android:backgroundTint="#4CAF50"
+        android:text="Añadir"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/subirFotosButton" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="408dp"
+        android:layout_height="126dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/imagen_de_whatsapp_2023_11_15_a_las_12_47_36_04bc5f3c" />
+
+    <EditText
+        android:id="@+id/precioArticulo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="57dp"
+        android:backgroundTint="#3F51B5"
+        android:ems="10"
+        android:inputType="numberDecimal"
+        android:text="Precio"
+        android:textColor="@android:color/darker_gray"
+        android:textSize="22sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/descripcionProducto" />
+
+    <TextView
+        android:id="@+id/textView9"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="35dp"
+        android:text="Precio"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/precioArticulo"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/precioArticulo"
+        app:layout_constraintTop_toBottomOf="@+id/descripcionProducto" />
+
+    <Button
+        android:id="@+id/buttonVolver"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="36dp"
+        android:layout_marginBottom="32dp"
+        android:backgroundTint="#F44336"
+        android:text="Volver"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@+id/anadirButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/subirFotosButton" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
