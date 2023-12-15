@@ -154,7 +154,7 @@ class ConsultarDetallesArticuloFragment : Fragment() {
               }
           })*/
     }
-    private suspend fun fetchShopDetail(shopId: Long?): Shop {
+    /*private suspend fun fetchShopDetail(shopId: Long?): Shop {
         var shop = Shop()
         try {
             shop = getNetworkService().getShopDetail(shopId).shop ?: Shop()
@@ -162,7 +162,7 @@ class ConsultarDetallesArticuloFragment : Fragment() {
             throw APIError("Unable to fetch data from API", cause)
         }
         return shop
-    }
+    }*/
 
     private fun navigateToRealizarCompra(){
         val intent = Intent(activity, RealizarCompraActivity::class.java)
