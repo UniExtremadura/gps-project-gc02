@@ -27,7 +27,7 @@ class ValoracionActivity : AppCompatActivity() {
 
     private fun setUpListeners() {
         with(binding) {
-            //val valoracion = Valuation(null, ratingBar.rating, editTextComentario.text.toString())
+            val valoracion = Valuation(null, ratingBar.rating, editTextComentario.text.toString())
 
 
         }
