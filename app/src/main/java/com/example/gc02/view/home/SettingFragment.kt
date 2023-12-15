@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.gc02.databinding.FragmentSettingBinding
 import com.example.gc02.view.LoginActivity
@@ -49,6 +50,13 @@ class SettingFragment : Fragment() {
 
 // Realiza el commit de la transacción
             transaction.commit()
+        }
+        binding.btnBorrarPerfil.setOnClickListener {
+            Toast.makeText(
+                this@SettingFragment,
+                "Boton de borrar perfil",
+                Toast.LENGTH_SHORT
+            ).show()
         }
     }
 
