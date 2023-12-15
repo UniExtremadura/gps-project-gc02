@@ -175,4 +175,8 @@ class ConsultarDetallesArticuloFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
+    /**
+    private fun notifyInvalid(msg: String){
+        Toast.makeText(this,msg,Toast.LENGTH_SHORT).show()
+    }*/
 }
