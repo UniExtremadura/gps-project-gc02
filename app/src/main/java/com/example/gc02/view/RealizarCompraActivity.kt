@@ -3,6 +3,7 @@ package com.example.gc02.view
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.lifecycle.lifecycleScope
@@ -45,8 +46,15 @@ class RealizarCompraActivity : AppCompatActivity() {
 
             comprarArtculoButton.setOnClickListener {
                 lifecycleScope.launch {
-                    db.articleDao().delete(shop)
-                    navigateToValoracion()
+                    if(shop != null) {
+                        db.articleDao().delete(shop)
+                        navigateToValoracion()
+                        Toast.makeText(
+                            this@RealizarCompraActivity,
+                            "Articulo comprado",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
                 }
 
             }
