@@ -6,6 +6,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Transaction
+import androidx.room.Update
 import com.example.gc02.model.Article
 import com.example.gc02.model.UserShopCrossRef
 import com.example.gc02.model.UserwithShops
@@ -36,4 +37,10 @@ interface ArticleDao {
         insert(article)
         insertUserShop(UserShopCrossRef(userId, article.articleId))
     }
+    @Update
+    suspend fun updateProduct(article: Article)
+
+    @Transaction
+    @Query("SELECT * FROM Article")
+    suspend fun getAll(): List<Article>
 }
