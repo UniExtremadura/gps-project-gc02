@@ -29,15 +29,15 @@ class RealizarCompraActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         //views initialization and listeners
-        setUpUI()
+        //setUpUI()
         setUpListeners()
 
     }
 
-
+    /**
     private fun setUpUI() {
         //get attributes from xml using binding
-    }
+    }*/
 
     private fun setUpListeners() {
         val shop = intent.getSerializableExtra("shop") as Article
