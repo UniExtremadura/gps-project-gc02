@@ -111,6 +111,7 @@
                 android:id="@+id/btEnviarComentario"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="120dp"
                 android:layout_marginTop="16dp"
                 android:backgroundTint="#03A9F4"
                 android:text="Enviar Comentario"
