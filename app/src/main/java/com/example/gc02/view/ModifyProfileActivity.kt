@@ -60,6 +60,11 @@ class ModifyProfileActivity : AppCompatActivity() {
     }
 
     private fun navigateBackWithResult(user: User) {
+        Toast.makeText(
+            this,
+            "User modified",
+            Toast.LENGTH_SHORT
+        ).show()
         val intent = Intent().apply {
             putExtra(USUARIO, user.name)
             putExtra(EMAIL, user.email)
