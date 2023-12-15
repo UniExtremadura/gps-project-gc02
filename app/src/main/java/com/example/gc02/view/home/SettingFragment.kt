@@ -41,7 +41,7 @@ class SettingFragment : Fragment() {
             val fragmentManager = requireActivity().supportFragmentManager
             val transaction = fragmentManager.beginTransaction()
 
-// Utiliza popBackStack() para navegar hacia atrás
+// Utiliza popBackStack() para realizar la navegación hacia atrás
             fragmentManager.popBackStack()
 
 // Puedes añadir la transacción a la pila de retroceso (opcional)
