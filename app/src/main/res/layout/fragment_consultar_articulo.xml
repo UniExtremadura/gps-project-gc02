@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:context=".view.home.ConsultarArticuloFragment">
+
+        <ImageView
+            android:id="@+id/shImage"
+            android:layout_width="295dp"
+            android:layout_height="192dp"
+            android:layout_marginTop="16dp"
+            android:contentDescription="show cover"
+            android:scaleType="centerCrop"
+            android:src="@drawable/perfil"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/NombreArticulo"
+            android:layout_width="136dp"
+            android:layout_height="28dp"
+            android:layout_marginTop="80dp"
+            android:text="Artículo"
+            app:layout_constraintEnd_toEndOf="@+id/shImage"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/shImage"
+            app:layout_constraintTop_toBottomOf="@+id/shImage" />
+
+        <TextView
+            android:id="@+id/tvNombreArticulo"
+            android:layout_width="295dp"
+            android:layout_height="31dp"
+            android:hint="NombreArticulo"
+            app:layout_constraintEnd_toEndOf="@+id/NombreArticulo"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/NombreArticulo"
+            app:layout_constraintTop_toBottomOf="@+id/NombreArticulo" />
+
+        <TextView
+            android:id="@+id/DescripcionArticulo"
+            android:layout_width="153dp"
+            android:layout_height="24dp"
+            android:layout_marginTop="20dp"
+            android:text="Descripción"
+            app:layout_constraintEnd_toEndOf="@+id/tvNombreArticulo"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/tvNombreArticulo"
+            app:layout_constraintTop_toBottomOf="@+id/tvNombreArticulo" />
+
+        <TextView
+            android:id="@+id/tvDescripcionArticulo"
+            android:layout_width="298dp"
+            android:layout_height="152dp"
+            android:hint="DescripcionArticulo"
+            app:layout_constraintEnd_toEndOf="@+id/DescripcionArticulo"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/DescripcionArticulo"
+            app:layout_constraintTop_toBottomOf="@+id/DescripcionArticulo" />
+
+        <Button
+            android:id="@+id/btComprar"
+            android:layout_width="114dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="88dp"
+            android:layout_marginTop="40dp"
+            android:text="Comprar"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/tvDescripcionArticulo"
+            app:layout_constraintTop_toBottomOf="@+id/tvDescripcionArticulo"
+            app:layout_constraintVertical_bias="1.0" />
+
+        <Switch
+            android:id="@+id/sw_favorito"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:layout_marginTop="19dp"
+            android:foregroundTint="#9C27B0"
+            android:text="FAV"
+            android:textColor="#F8E857"
+            android:textStyle="bold"
+            android:trackTint="#F8E857"
+            android:typeface="monospace"
+            app:layout_constraintEnd_toStartOf="@+id/tvPrecio"
+            app:layout_constraintHorizontal_bias="0.285"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/shImage" />
+
+        <TextView
+            android:id="@+id/tvPrecio"
+            android:layout_width="78dp"
+            android:layout_height="39dp"
+            android:lineSpacingExtra="10sp"
+            android:text="Precio"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toTopOf="@+id/NombreArticulo"
+            app:layout_constraintEnd_toEndOf="@+id/shImage"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="@+id/shImage"
+            app:layout_constraintTop_toBottomOf="@+id/shImage"
+            app:layout_constraintVertical_bias="0.47" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>
