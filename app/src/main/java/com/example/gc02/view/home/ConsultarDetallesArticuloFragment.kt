@@ -55,6 +55,7 @@ class ConsultarDetallesArticuloFragment : Fragment() {
         lifecycleScope.launch{
             try{
                 // val _shop = fetchShopDetail(shop.articleId).toShop()
+                //_shop.isFavorite = shop.isFavorite
                 showBinding(shop)
             } catch (error: APIError) {
                 Toast.makeText(context, error.message, Toast.LENGTH_SHORT).show()
@@ -70,12 +71,25 @@ class ConsultarDetallesArticuloFragment : Fragment() {
         binding.tvNombreArticulo.text = shop.title
         binding.tvDescripcionArticulo.text = shop.description
         binding.tvPrecio.text = shop.price.toString()
+        binding.swFavorito.isChecked = shop.isFavorite
 
 
         Glide.with(this)
             .load(shop.image)
             .placeholder(R.drawable.placeholder)
             .into(binding.shImage)
+        binding.swFavorito.setOnCheckedChangeListener { _, isChecked ->
+            lifecycleScope.launch {
+                if (isChecked) {
+                    shop.isFavorite = true
+                    db.articleDao().insertAndRelate(shop, user.userId!!)
+                } else {
+                    shop.isFavorite = false
+                    db.articleDao().delete(shop)
+                }
+            }
+
+        }
     }
 
     private fun setUpListeners() {

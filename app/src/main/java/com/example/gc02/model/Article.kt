@@ -1,5 +1,6 @@
 package com.example.gc02.model
 
+import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import java.io.Serializable
@@ -8,6 +9,8 @@ data class Article(
     @PrimaryKey(autoGenerate = true) var articleId: Long,
     val title: String = "",
     val description: String = "",
-    val price: String = ""
-    //var image: String = "" //IMAGEN PATH UNIDO AL API??
+    val price: Double = 0.0,
+    val category: String? = "",
+    val image: String? = "",
+    @ColumnInfo(name = "is_favorite") var isFavorite: Boolean
 ) : Serializable
