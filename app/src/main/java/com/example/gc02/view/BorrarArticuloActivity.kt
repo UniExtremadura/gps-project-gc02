@@ -30,10 +30,16 @@ class BorrarArticuloActivity : AppCompatActivity() {
     }
 
     private fun setUpListeners() {
+
         with(binding) {
 
             borrarArtculoButton.setOnClickListener {
                 navigateToLoginActivity()
+                Toast.makeText(
+                    applicationContext,
+                    "Article deleted",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
 
             cancelarBorradoArticulobutton.setOnClickListener {
