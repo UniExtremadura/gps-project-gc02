@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/bottom_bar_nav_graph"
+    app:startDestination="@id/page_home">
+
+    <action
+        android:id="@+id/action_home_to_settingsFragment"
+        app:destination="@id/fragmentAjustes" />
+
+    <fragment
+        android:id="@+id/fragmentAjustes"
+        android:name="com.example.gc02.view.home.AjustesFragment"
+        android:label="Settings"
+        tools:layout="@layout/fragment_ajustes" />
+
+    <fragment
+        android:id="@+id/page_home"
+        android:name="com.example.gc02.view.home.BusquedaAvanzadaFiltrosFragment"
+        android:label="Inicio"
+        tools:layout="@layout/fragment_busqueda_avanzada_filtros">
+        <action
+            android:id="@+id/action_page_home_to_page_articulos"
+            app:destination="@id/page_articulos" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/page_articulos"
+        android:name="com.example.gc02.view.home.ConsultarArticuloFragment"
+        android:label="Articulos"
+        tools:layout="@layout/fragment_lista_articulos" >
+        <argument
+            android:name="nombre"
+            app:argType="string"
+            android:defaultValue='' />
+        <argument
+            android:name="precio"
+            app:argType="string"
+            android:defaultValue='' />
+        <action
+            android:id="@+id/action_page_articulos_to_consultarDetallesArticuloFragment"
+            app:destination="@id/consultarDetallesArticuloFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/page_perfil"
+        android:name="com.example.gc02.view.home.ConsultarPerfilFragment"
+        android:label="Perfil"
+        tools:layout="@layout/fragment_consultar_perfil"/>
+    <fragment
+        android:id="@+id/consultarDetallesArticuloFragment"
+        android:name="com.example.gc02.view.home.ConsultarDetallesArticuloFragment"
+        android:label="ConsultarDetallesArticuloFragment"
+        tools:layout="@layout/fragment_consultar_articulo">
+        <argument
+            android:name="shop"
+            app:argType="com.example.gc02.model.Article" />
+        <action
+            android:id="@+id/action_consultarDetallesArticuloFragment_to_page_articulos"
+            app:destination="@id/page_articulos" />
+
+    </fragment>
+    <action
+        android:id="@+id/action_global_page_home"
+        app:destination="@id/page_home" />
+
+</navigation>
