@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.gc02.databinding.FragmentSettingBinding
 import com.example.gc02.view.LoginActivity
@@ -33,7 +34,11 @@ class SettingFragment : Fragment() {
         binding.btnLogout.setOnClickListener {
             val intent = Intent(requireContext(), LoginActivity::class.java)
             startActivity(intent)
-
+           /* Toast.makeText(
+                this@SettingFragment,
+                "Sesion cerrada",
+                Toast.LENGTH_SHORT
+            ).show()*/
             // Cierra la actividad actual del fragmento si es necesario
             requireActivity().finish()
         }
@@ -41,7 +46,7 @@ class SettingFragment : Fragment() {
             val fragmentManager = requireActivity().supportFragmentManager
             val transaction = fragmentManager.beginTransaction()
 
-// Utiliza popBackStack() para navegar hacia atrás
+// Utiliza popBackStack() para realizar la navegación hacia atrás
             fragmentManager.popBackStack()
 
 // Puedes añadir la transacción a la pila de retroceso (opcional)

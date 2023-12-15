@@ -1,5 +1,7 @@
 package com.example.gc02.utils
 
+import android.widget.Toast
+
 class ArticleCheck private constructor() {
 
     var fail: Boolean = false
@@ -65,6 +67,14 @@ class ArticleCheck private constructor() {
             else if (title.length > 25 || title.length < 6) checks[5]
             else if (desc.length > 256 || desc.length < 20) checks[6]
             else checks[0]
+        }
+
+        fun confirmar(){
+            /*Toast.makeText(
+                ArticleCheck,
+                "Articulo modificado",
+                Toast.LENGTH_SHORT
+            ).show()*/
         }
     }
 
