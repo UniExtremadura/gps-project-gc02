@@ -88,6 +88,10 @@ class MisFavoritosFragment : Fragment() {
                     articuloAdapter.updateData(_shops.filter {
                         it.isFavorite
                     })
+                    Toast.makeText(context,
+                        "Favoritos mostrados",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 } catch (error: APIError) {
                     Toast.makeText(context, error.message, Toast.LENGTH_SHORT).show()
                 } finally {
