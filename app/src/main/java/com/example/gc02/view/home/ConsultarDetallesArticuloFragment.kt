@@ -86,6 +86,11 @@ class ConsultarDetallesArticuloFragment : Fragment() {
                 } else {
                     shop.isFavorite = false
                     db.articleDao().delete(shop)
+                    Toast.makeText(
+                        context,
+                        "Artículo borrado de favoritos",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
 
