@@ -117,6 +117,36 @@ class HomeActivity : AppCompatActivity(), ConsultarArticuloFragment.OnShopClickL
     }
 
 
+    /*override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.toolbar_home, menu)
+
+        val searchItem = menu?.findItem(R.id.action_search)
+        //val searchView = searchItem?.actionView as SearchView
+
+        // Configure the search info and add any event listeners.
+
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
+        R.id.action_settings -> {
+            // User chooses the "Settings" item. Show the app settings UI.
+            val action = SettingFragmentDirections.actionHomeToSettingsFragment()
+            navController.navigate(action)
+            true
+        }
+
+        else -> {
+            // The user's action isn't recognized.
+            // Invoke the superclass to handle it.
+            super.onOptionsItemSelected(item)
+        }
+    }*/
+    /*
+        override fun onShowClick(show: Show) {
+            val action = DiscoverFragmentDirections.actionDiscoverFragmentToShowDetailFragment(show)
+            navController.navigate(action)
+        }*/
     override fun onShopClick(shop: Article) {
         val action = ConsultarArticuloFragmentDirections.actionPageArticulosToConsultarDetallesArticuloFragment(shop)
         navController.navigate(action)
