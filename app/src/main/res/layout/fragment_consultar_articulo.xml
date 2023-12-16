@@ -83,7 +83,7 @@
             android:layout_height="48dp"
             android:layout_marginTop="19dp"
             android:foregroundTint="#9C27B0"
-            android:text="Fav"
+            android:text="FAV"
             android:textColor="#F8E857"
             android:textSize="16sp"
             android:textStyle="bold"
