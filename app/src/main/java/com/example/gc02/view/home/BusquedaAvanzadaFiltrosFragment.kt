@@ -18,10 +18,9 @@ import com.example.gc02.databinding.FragmentListaArticulosBinding
 import com.example.gc02.model.Article
 
 class BusquedaAvanzadaFiltrosFragment : Fragment(R.layout.fragment_busqueda_avanzada_filtros) {
+
     private var _binding: FragmentBusquedaAvanzadaFiltrosBinding? = null
     private val binding get() = _binding!!
-
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,10 +48,10 @@ class BusquedaAvanzadaFiltrosFragment : Fragment(R.layout.fragment_busqueda_avan
             ).show()
             findNavController().navigate(action)
         }
-            //val resultados = filtrarArticulos(nombreBusqueda, precioBusqueda.toDoubleOrNull())
         }
         return binding.root
     }
+
 
     /**
     private fun notifyInvalidBusqueda(msg: String) {
