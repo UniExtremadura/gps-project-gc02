@@ -23,10 +23,6 @@ import com.example.gc02.model.User
 import com.example.gc02.view.CrearPerfilActivity
 import com.example.gc02.view.RealizarCompraActivity
 import kotlinx.coroutines.launch
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-
 class ConsultarDetallesArticuloFragment : Fragment() {
     private lateinit var user: User
     private lateinit var db: BaseDatos
@@ -86,6 +82,11 @@ class ConsultarDetallesArticuloFragment : Fragment() {
                 } else {
                     shop.isFavorite = false
                     db.articleDao().delete(shop)
+                    Toast.makeText(
+                        context,
+                        "Artículo borrado de favoritos",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
 
@@ -117,7 +118,7 @@ class ConsultarDetallesArticuloFragment : Fragment() {
     }*/
 
     private fun deleteProduct(productId: Long) {
-        /*   val productService = getNetworkService()
+        val productService = getNetworkService()
 
            val call: Call<Void> = productService.deleteProduct(productId)
            call.enqueue(object : Callback<Void> {
@@ -135,7 +136,7 @@ class ConsultarDetallesArticuloFragment : Fragment() {
                    // Manejar errores de red u otros errores
                    Log.e("DELETE", "Error de red al intentar eliminar el producto", t)
                }
-           })*/
+           })
     }
 
     private fun updateProduct(productId: Long) {
