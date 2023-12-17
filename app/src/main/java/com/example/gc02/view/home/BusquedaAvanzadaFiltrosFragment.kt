@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation.findNavController
 import androidx.navigation.fragment.findNavController
@@ -41,6 +42,11 @@ class BusquedaAvanzadaFiltrosFragment : Fragment(R.layout.fragment_busqueda_avan
                 nombreBusqueda,
                 precioBusqueda
             )
+            Toast.makeText(
+                context,
+                "Filtros correctos",
+                Toast.LENGTH_SHORT
+            ).show()
             findNavController().navigate(action)
         }
             //val resultados = filtrarArticulos(nombreBusqueda, precioBusqueda.toDoubleOrNull())
