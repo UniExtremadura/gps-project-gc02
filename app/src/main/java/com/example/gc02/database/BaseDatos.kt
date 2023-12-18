@@ -7,8 +7,9 @@ import androidx.room.RoomDatabase
 import com.example.gc02.model.Article
 import com.example.gc02.model.Comentario
 import com.example.gc02.model.User
+import com.example.gc02.model.UserShopCrossRef
 
-@Database(entities = [User::class, Article::class, Comentario::class], version = 1)
+@Database(entities = [User::class, Article::class, Comentario::class, UserShopCrossRef::class], version = 1)
 abstract class BaseDatos : RoomDatabase() {
     abstract fun userDao(): UserDao
     abstract fun articleDao(): ArticleDao
@@ -24,7 +25,8 @@ abstract class BaseDatos : RoomDatabase() {
                     INSTANCE = Room.databaseBuilder(
                         context,
                         BaseDatos::class.java, "BaseDatos.db"
-                    ).build()
+                    ).fallbackToDestructiveMigration()
+                        .build()
                 }
             }
             return INSTANCE

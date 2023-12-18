@@ -29,18 +29,24 @@ interface ArticleDao {
     @Query("SELECT * FROM User where userId = :userId")
     suspend fun getUserWithShops(userId: Long): UserwithShops
 
+
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertUserShop(crossRef: UserShopCrossRef)
 
     @Transaction
     suspend fun insertAndRelate(article: Article, userId: Long) {
         insert(article)
-        insertUserShop(UserShopCrossRef(userId, article.articleId))
+        article.articleId?.let { UserShopCrossRef(userId, it) }?.let { insertUserShop(it) }
     }
     @Update
     suspend fun updateProduct(article: Article)
 
+
     @Transaction
     @Query("SELECT * FROM Article")
     suspend fun getAll(): List<Article>
+
+    @Transaction
+    @Query("SELECT * FROM Article WHERE userId=:userId")
+    suspend fun getAllByUser(userId: Long?): List<Article>
 }

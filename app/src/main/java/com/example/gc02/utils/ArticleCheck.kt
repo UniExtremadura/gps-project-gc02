@@ -5,7 +5,7 @@ import android.widget.Toast
 class ArticleCheck private constructor() {
 
     var fail: Boolean = false
-    var msg: String = ""
+    var msg: String = "Error check"
     var error: ArticleError = ArticleError.TitleError
 
     companion object{

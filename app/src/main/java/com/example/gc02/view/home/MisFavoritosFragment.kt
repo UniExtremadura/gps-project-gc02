@@ -19,17 +19,23 @@ import com.example.gc02.database.BaseDatos
 import com.example.gc02.databinding.FragmentMisFavoritosBinding
 import com.example.gc02.databinding.FragmentMisProductosBinding
 import com.example.gc02.model.Article
+import com.example.gc02.model.User
 import com.example.gc02.view.AnadirArticuloALaVentaActivity
 import kotlinx.coroutines.launch
 
 
 class MisFavoritosFragment : Fragment() {
+    private lateinit var user: User
 
     private var _binding: FragmentMisFavoritosBinding? = null
     private lateinit var db: BaseDatos
-    private var _shops = listOf<Article>()
+    private var favShops : List<Article> = emptyList()
     private lateinit var articuloAdapter: ArticuloAdapter
+    private lateinit var listener: OnShopClickListener
 
+    interface OnShopClickListener {
+        fun onShopClick(article: Article)
+    }
 
     private val binding get() = _binding!!
     override fun onCreateView(
@@ -44,32 +50,43 @@ class MisFavoritosFragment : Fragment() {
     override fun onAttach(context: android.content.Context) {
         super.onAttach(context)
         db = BaseDatos.getInstance(context)!!
+
+        if (context is OnShopClickListener) {
+            listener = context
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setUpListeners()
+        setUpRecyclerView()
+        val userProvider = activity as UserProvider
+        user = userProvider.getUser()
+
+        loadFavorites()
     }
-    private suspend fun fetchShops(): List<Shop> {
-        var apiShops = listOf<Shop>()
-        Log.d("API"," FETCHSHOPS")
-        try {
-            apiShops = getNetworkService().getCategories()
-            Log.d("API","Shops:$apiShops")
-        } catch (cause: Throwable) {
-            Log.e("API", "Error fetching shop data", cause)
-            throw APIError("Unable to fetch data from API", cause)
-        }
-        return apiShops
-    }
+    /*    private suspend fun fetchShops(): List<Shop> {
+            var apiShops = listOf<Shop>()
+            Log.d("API"," FETCHSHOPS")
+            try {
+                apiShops = getNetworkService().getCategories()
+                Log.d("API","Shops:$apiShops")
+            } catch (cause: Throwable) {
+                Log.e("API", "Error fetching shop data", cause)
+                throw APIError("Unable to fetch data from API", cause)
+            }
+            return apiShops
+        }*/
+
     private fun setUpRecyclerView() {
         articuloAdapter = ArticuloAdapter(
-            shops = _shops,
+            shops = favShops,
             onClick = {
                 Toast.makeText(context, "click on: "+it.title, Toast.LENGTH_SHORT).show()
-
+                //listener.onShopClick(it)
             },
             onLongClick = {
+                setNoFavorite(it)
+                loadFavorites()
                 Toast.makeText(context, "long click on: "+it.title, Toast.LENGTH_SHORT).show()
             },
             context = this.context
@@ -78,36 +95,24 @@ class MisFavoritosFragment : Fragment() {
             rvShopList.layoutManager = LinearLayoutManager(context)
             rvShopList.adapter = articuloAdapter
         }
-
-        lifecycleScope.launch {
-            if (_shops.isEmpty()) {
-                binding.spinner.visibility = View.VISIBLE
-                try {
-                    _shops = fetchShops().map(Shop::toShop)
-                    _shops.plus(db.articleDao().getAll())
-                    articuloAdapter.updateData(_shops.filter {
-                        it.isFavorite
-                    })
-                    Toast.makeText(context,
-                        "Favoritos mostrados",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                } catch (error: APIError) {
-                    Toast.makeText(context, error.message, Toast.LENGTH_SHORT).show()
-                } finally {
-                    binding.spinner.visibility = View.GONE
-
-                }
-            }
-        }
         android.util.Log.d("ArticulosFragment", "setUpRecyclerView")
     }
-    private fun setUpListeners() {
-        with(binding) {
 
+    private fun loadFavorites(){
+        lifecycleScope.launch {
+            binding.spinner.visibility = View.VISIBLE
+            favShops = db.articleDao().getUserWithShops(user.userId!!).shops
+            articuloAdapter.updateData(favShops)
+            binding.spinner.visibility = View.GONE
         }
     }
-
+    private fun setNoFavorite(shop: Article){
+        lifecycleScope.launch {
+            shop.isFavorite = false
+            //delete show and userShow is deleted by cascade
+            db.articleDao().delete(shop)
+        }
+    }
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

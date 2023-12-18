@@ -12,7 +12,8 @@ fun Shop.toShop() = Article(
     description = description ?: "",
     price = price ?: 0.0,
     category = category ?: "",
-    image = image ?: ""
+    image = image ?: "",
+    isFavorite = false
 )
 
 fun Categories.toCategories() = Category(

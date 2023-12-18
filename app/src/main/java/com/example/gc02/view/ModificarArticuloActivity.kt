@@ -6,10 +6,8 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.appcompat.app.AppCompatActivity
-import com.example.gc02.R
 import com.example.gc02.databinding.ActivityModificarArticuloBinding
 import com.example.gc02.model.Article
-import com.example.gc02.model.User
 import com.example.gc02.utils.ArticleCheck
 
 class ModificarArticuloActivity : AppCompatActivity() {
@@ -47,12 +45,15 @@ class ModificarArticuloActivity : AppCompatActivity() {
                 )
                 if (check.fail) notifyInvalidArticle(check.msg)
                 else navigateBackWithResult(
-                        Article(null,
+                        Article(0,
                             tituloProducto.text.toString(),
                             descripcionProducto.text.toString(),
-                            precioArticulo.text.toString()
+                            precioArticulo.text.toString().toDouble(),
+                            null,
+                            null,
+                            false
                         )
-                    )
+                        )
             }
         }
     }

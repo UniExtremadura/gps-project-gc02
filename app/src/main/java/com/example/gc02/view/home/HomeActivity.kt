@@ -22,7 +22,8 @@ import com.example.gc02.databinding.ActivityHomeBinding
 import com.example.gc02.model.Article
 import com.example.gc02.model.User
 
-class HomeActivity : AppCompatActivity(), ConsultarArticuloFragment.OnShopClickListener{
+class HomeActivity : AppCompatActivity(), ConsultarArticuloFragment.OnShopClickListener, UserProvider{
+    private lateinit var user: User
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityHomeBinding
     private val navController by lazy {
@@ -48,7 +49,7 @@ class HomeActivity : AppCompatActivity(), ConsultarArticuloFragment.OnShopClickL
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val user = intent.getSerializableExtra(USER_INFO) as User
+        user = intent.getSerializableExtra(USER_INFO) as User
 
         setupNavegacion()
         setUpUI(user)
@@ -105,7 +106,7 @@ class HomeActivity : AppCompatActivity(), ConsultarArticuloFragment.OnShopClickL
     override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
         R.id.action_settings -> {
             // User chooses the "Settings" item. Show the app settings UI.
-            val action = AjustesFragmentDirections.actionHomeToSettingsFragment()
+            val action = SettingFragmentDirections.actionHomeToSettingsFragment()
             navController.navigate(action)
             true
         }
@@ -151,4 +152,6 @@ class HomeActivity : AppCompatActivity(), ConsultarArticuloFragment.OnShopClickL
         val action = ConsultarArticuloFragmentDirections.actionPageArticulosToConsultarDetallesArticuloFragment(shop)
         navController.navigate(action)
     }
+
+    override fun getUser() = user
 }

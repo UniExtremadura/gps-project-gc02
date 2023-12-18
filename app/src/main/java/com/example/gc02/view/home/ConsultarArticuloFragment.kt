@@ -36,7 +36,7 @@ class ConsultarArticuloFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var db: BaseDatos
 
-    private var _shops = listOf<Article>()
+    private var _shops : List<Article> = emptyList()
 
     private lateinit var listener: OnShopClickListener
 
@@ -107,8 +107,9 @@ class ConsultarArticuloFragment : Fragment() {
             if (_shops.isEmpty()) {
                 binding.spinner.visibility = View.VISIBLE
                 try {
-                    _shops = fetchShops().map(Shop::toShop)
-                    _shops.plus(db.articleDao().getAll())
+                    _shops = db.articleDao().getAll()
+                   _shops = _shops + fetchShops().map(Shop::toShop)
+
                     Log.d("Consultar", "Consultar nombre $args.nombre y precio $args.precio")
                     if(!args.precio.equals("") && !args.nombre.equals("")) {
                         articuloAdapter.updateData(_shops.filter {

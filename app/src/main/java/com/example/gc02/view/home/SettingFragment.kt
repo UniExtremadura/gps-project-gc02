@@ -42,19 +42,7 @@ class SettingFragment : Fragment() {
             // Cierra la actividad actual del fragmento si es necesario
             requireActivity().finish()
         }
-        binding.btnVolver.setOnClickListener{
-            val fragmentManager = requireActivity().supportFragmentManager
-            val transaction = fragmentManager.beginTransaction()
 
-// Utiliza popBackStack() para realizar la navegación hacia atrás
-            fragmentManager.popBackStack()
-
-// Puedes añadir la transacción a la pila de retroceso (opcional)
-            transaction.addToBackStack(null)
-
-// Realiza el commit de la transacción
-            transaction.commit()
-        }
     }
 
 }

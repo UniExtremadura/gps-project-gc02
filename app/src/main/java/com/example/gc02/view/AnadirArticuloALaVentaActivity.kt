@@ -3,6 +3,7 @@ package com.example.gc02.view
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.appcompat.app.AppCompatActivity
@@ -11,6 +12,8 @@ import com.example.gc02.databinding.ActivityAnadirArticuloVentaBinding
 import com.example.gc02.model.Article
 import com.example.gc02.utils.ArticleCheck
 import com.example.gc02.database.BaseDatos
+import com.example.gc02.model.User
+import com.example.gc02.view.home.UserProvider
 import kotlinx.coroutines.launch
 
 class AnadirArticuloALaVentaActivity : AppCompatActivity() {
@@ -18,6 +21,8 @@ class AnadirArticuloALaVentaActivity : AppCompatActivity() {
     private lateinit var binding: ActivityAnadirArticuloVentaBinding
 
     private lateinit var db: BaseDatos
+
+
 
     companion object {
 
@@ -63,19 +68,30 @@ class AnadirArticuloALaVentaActivity : AppCompatActivity() {
             else {
                 lifecycleScope.launch{
                     val article = Article(
-                        0,
+                        null,
                         tituloProducto.text.toString(),
                         descripcionProducto.text.toString(),
-                        precioArticulo.text.toString()
+                        precioArticulo.text.toString().toDouble(),
+                        null,
+                        null,
+                        false,
+                        (intent.getSerializableExtra("user") as User).userId
+
+
                     )
                     val id =  db?.articleDao()?.insert(article)
-
+                    if (id != null) {
+                        Log.d("Anyadir", "El id del articulo insertado es ${db.articleDao().findById(id.toInt()).title}")
+                    }
                     navigateBackWithResult(
                         Article(
-                            id,
+                            id!!,
                             tituloProducto.text.toString(),
                             descripcionProducto.text.toString(),
-                            precioArticulo.text.toString()
+                            precioArticulo.text.toString().toDouble(),
+                            null,
+                            null,
+                            false
                         )
                     )
                 }

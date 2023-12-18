@@ -41,7 +41,7 @@ class ModifyProfileActivity : AppCompatActivity() {
     private fun setUpListeners() {
         with(binding) {
             btModificarPerfil.setOnClickListener {
-                val check = CredentialCheck.join_modificar(
+                val check = CredentialCheck.join_Modificar(
                     etUsername.text.toString(),
                     etEmail.text.toString(),
                     etPassword.text.toString()

@@ -24,7 +24,7 @@ import com.example.gc02.view.CrearPerfilActivity
 import com.example.gc02.view.RealizarCompraActivity
 import kotlinx.coroutines.launch
 class ConsultarDetallesArticuloFragment : Fragment() {
-    private lateinit var user: User
+    private var userInfo: User? = null
     private lateinit var db: BaseDatos
 
     private var _binding: FragmentConsultarArticuloBinding? = null
@@ -43,6 +43,14 @@ class ConsultarDetallesArticuloFragment : Fragment() {
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        // Obtén el Intent de la actividad
+        val intent = activity?.intent
+
+        // Verifica si el Intent no es nulo y si contiene la clave USER_INFO
+        if (intent?.hasExtra(HomeActivity.USER_INFO) == true) {
+            // Obtén el objeto User del Intent
+            userInfo = intent.getSerializableExtra(HomeActivity.USER_INFO) as? User
+        }
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -78,7 +86,7 @@ class ConsultarDetallesArticuloFragment : Fragment() {
             lifecycleScope.launch {
                 if (isChecked) {
                     shop.isFavorite = true
-                    db.articleDao().insertAndRelate(shop, user.userId!!)
+                    db.articleDao().insertAndRelate(shop, userInfo?.userId!!)
                 } else {
                     shop.isFavorite = false
                     db.articleDao().delete(shop)
@@ -117,7 +125,7 @@ class ConsultarDetallesArticuloFragment : Fragment() {
         }
     }*/
 
-    private fun deleteProduct(productId: Long) {
+    /*private fun deleteProduct(productId: Long) {
         val productService = getNetworkService()
 
            val call: Call<Void> = productService.deleteProduct(productId)
@@ -137,7 +145,7 @@ class ConsultarDetallesArticuloFragment : Fragment() {
                    Log.e("DELETE", "Error de red al intentar eliminar el producto", t)
                }
            })
-    }
+    }*/
 
     private fun updateProduct(productId: Long) {
         /*  val productService = getNetworkService()
@@ -190,9 +198,27 @@ class ConsultarDetallesArticuloFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
-
+    companion object {
+        /**
+         * Use this factory method to create a new instance of
+         * this fragment using the provided parameters.
+         *
+         * @param param1 Parameter 1.
+         * @param param2 Parameter 2.
+         * @return A new instance of fragment ConsultarPerfilFragment.
+         */
+        private const val USER_INFO = "USER_INFO"
+        @JvmStatic
+        fun newInstance(userInfo:User):ConsultarPerfilFragment{
+            val fragment=ConsultarPerfilFragment()
+            val args = Bundle()
+            args.putSerializable(USER_INFO,userInfo)
+            fragment.arguments=args
+            return fragment
+        }
+    }
     /**
     private fun notifyValidArticle(msg: String) {
-        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
+    Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
     }*/
 }

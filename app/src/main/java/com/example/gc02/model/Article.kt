@@ -6,11 +6,12 @@ import androidx.room.PrimaryKey
 import java.io.Serializable
 @Entity
 data class Article(
-    @PrimaryKey(autoGenerate = true) var articleId: Long,
+    @PrimaryKey(autoGenerate = true) var articleId: Long?,
     val title: String = "",
     val description: String = "",
     val price: Double = 0.0,
     val category: String? = "",
     val image: String? = "",
-    @ColumnInfo(name = "is_favorite") var isFavorite: Boolean
+    @ColumnInfo(name = "is_favorite") var isFavorite: Boolean,
+    val userId: Long? = null
 ) : Serializable

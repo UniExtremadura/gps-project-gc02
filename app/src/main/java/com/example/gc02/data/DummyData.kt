@@ -33,14 +33,14 @@ val dummyComentarios: List<Comentario> = listOf(
 
 
 val dummyArticulos: List<Article> = listOf(
-    Article(null, "Laptop", "Laptop de última generación", 1299.99,"Ordenadores",""),
+/*    Article(null, "Laptop", "Laptop de última generación", 1299.99,"Ordenadores",""),
     Article(null, "Teléfono", "Teléfono inteligente de gama alta", 799.99, "Tecnología", ""),
     Article(null, "Auriculares", "Auriculares inalámbricos con cancelación de ruido", 149.99, "Tecnología", ""),
     Article(null, "Smartwatch", "Smartwatch con seguimiento de actividad", 199.99, "Tecnología", ""),
     Article(null, "Tablet", "Tablet con pantalla retina", 499.99, "Tecnología", ""),
     Article(null, "Cámara", "Cámara digital de alta resolución", 599.99, "Tecnología", ""),
     Article(null, "Altavoces", "Altavoces Bluetooth de calidad premium", 129.99, "Tecnología", ""),
-    Article(null, "Impresora", "Impresora láser todo en uno", 299.99, "Tecnología", "")/*,
+    Article(null, "Impresora", "Impresora láser todo en uno", 299.99, "Tecnología", ""),
     Article(9, "Teclado y ratón", "Combo de teclado y ratón inalámbricos", "79.99"),
     Article(10, "Monitor", "Monitor IPS de 27 pulgadas", "349.99"),
     Article(11, "Mochila", "Mochila resistente para portátiles", "49.99"),
