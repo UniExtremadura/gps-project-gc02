@@ -23,6 +23,9 @@ interface ArticleDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(article: Article): Long
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insert1(article: Article): Long
+
     @Delete
     suspend fun delete(article: Article)
     @Transaction
@@ -45,6 +48,10 @@ interface ArticleDao {
     @Transaction
     @Query("SELECT * FROM Article")
     suspend fun getAll(): List<Article>
+
+    @Transaction
+    @Query("SELECT * FROM Article")
+    fun getAllPrueba(): List<Article>
 
     @Transaction
     @Query("SELECT * FROM Article WHERE userId=:userId")
