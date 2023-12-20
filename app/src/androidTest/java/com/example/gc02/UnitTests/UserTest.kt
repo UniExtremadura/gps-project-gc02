@@ -69,6 +69,11 @@ class UserTest {
         Assert.assertFalse(userFalso != null)
 
     }
+
+    @Test
+    fun deleteUser() {
+        //TODO:TEST DELETE USER
+    }
     companion object {
         fun createUser(): User {
             return User(null, "user1", "user1@gmail.com", "user1")

@@ -1,6 +1,7 @@
 package com.example.gc02.database
 
 import androidx.room.Dao
+import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Transaction
@@ -15,6 +16,13 @@ import com.example.gc02.model.User
 
     @Insert
      fun insert1(user: User): Long
+
+    @Delete
+    suspend fun delete(user: User)
+
+    @Delete
+    fun delete1(user: User)
+
     @Query("SELECT * FROM User")
      fun getAll(): List<User>
     @Query("SELECT * FROM user WHERE name LIKE :first LIMIT 1")
