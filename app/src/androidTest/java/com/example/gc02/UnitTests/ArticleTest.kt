@@ -49,8 +49,28 @@ class ArticleTest {
         Assert.assertTrue(listArticles[1].userId?.toDouble() == 1.0 && listArticles[1].userId?.toDouble() == 1.0)
         Assert.assertFalse(listArticles[0].articleId == listArticles[1].articleId)
 
-        Assert.assertTrue(articleDao.delete1(article1)==articleDao.delete1(article2)==true)
+        //Test Consultar Articulo
+        Assert.assertTrue(article1.title == listArticles[0].title)
+        Assert.assertTrue(article1.description == listArticles[0].description)
+        Assert.assertTrue(article1.image == listArticles[0].image)
+        Assert.assertTrue(article1.category == listArticles[0].category)
+        Assert.assertTrue(article1.price == listArticles[0].price)
+        Assert.assertTrue(article1.isFavorite == listArticles[0].isFavorite)
+        Assert.assertTrue(article1.userId == listArticles[0].userId)
+
+        Assert.assertTrue(article2.title == listArticles[1].title)
+        Assert.assertTrue(article2.description == listArticles[1].description)
+        Assert.assertTrue(article2.image == listArticles[1].image)
+        Assert.assertTrue(article2.category == listArticles[1].category)
+        Assert.assertTrue(article2.price == listArticles[1].price)
+        Assert.assertTrue(article2.isFavorite == listArticles[1].isFavorite)
+        Assert.assertTrue(article2.userId == listArticles[1].userId)
+
+        articleDao.delete1(article1)
+        articleDao.delete1(article2)
         Assert.assertFalse(articleDao.findById(id1)==null&&articleDao.findById(id2)==null)
+
+
     }
 
     companion object {
