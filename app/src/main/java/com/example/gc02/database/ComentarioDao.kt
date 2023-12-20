@@ -14,8 +14,14 @@ interface ComentarioDao {
     @Query("SELECT * FROM Comentario")
     suspend fun obtenerComentarios():List<Comentario>
 
+    @Query("SELECT * FROM Comentario")
+    fun obtenerComentariosPrueba():List<Comentario>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(comentario: Comentario): Long
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insert1(comentario: Comentario): Long
 
     @Delete
     suspend fun delete(comentario: Comentario)
