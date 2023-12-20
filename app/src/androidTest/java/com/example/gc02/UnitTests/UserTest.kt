@@ -72,7 +72,18 @@ class UserTest {
 
     @Test
     fun deleteUser() {
-        //TODO:TEST DELETE USER
+
+        val user: User = createUser()
+        userDao.insert1(user)
+
+        val insertedUser = userDao.findByName1(user.name)
+        Assert.assertNotNull(insertedUser)
+
+
+        userDao.delete1(user)
+
+        val deletedUser: User? = userDao.findByName1(user.name)
+        Assert.assertNull(deletedUser)
     }
     companion object {
         fun createUser(): User {
