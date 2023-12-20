@@ -49,6 +49,8 @@ class ArticleTest {
         Assert.assertTrue(listArticles[1].userId?.toDouble() == 1.0 && listArticles[1].userId?.toDouble() == 1.0)
         Assert.assertFalse(listArticles[0].articleId == listArticles[1].articleId)
 
+        Assert.assertTrue(articleDao.delete1(article1)==articleDao.delete1(article2)==true)
+        Assert.assertFalse(articleDao.findById(id1)==null&&articleDao.findById(id2)==null)
     }
 
     companion object {
