@@ -21,6 +21,9 @@ interface ArticleDao {
     @Query("SELECT * FROM Article WHERE articleId = :id")
     suspend fun findById(id: Int): Article
 
+    @Query("SELECT * FROM Article WHERE articleId = :id")
+    fun findByIdPrueba(id: Int): Article
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(article: Article): Long
 
@@ -40,11 +43,21 @@ interface ArticleDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertUserShop(crossRef: UserShopCrossRef)
 
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    fun insertUserShopPrueba(crossRef: UserShopCrossRef)
+
     @Transaction
     suspend fun insertAndRelate(article: Article, userId: Long) {
         insert(article)
         article.articleId?.let { UserShopCrossRef(userId, it) }?.let { insertUserShop(it) }
     }
+
+    @Transaction
+    fun insertAndRelatePrueba(article: Article, userId: Long) {
+        insert1(article)
+        article.articleId?.let { UserShopCrossRef(userId, it) }?.let { insertUserShopPrueba(it) }
+    }
+
     @Update
     suspend fun updateProduct(article: Article)
 

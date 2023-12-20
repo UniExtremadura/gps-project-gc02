@@ -12,6 +12,7 @@ import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import com.example.gc02.model.Article
+import com.example.gc02.model.UserShopCrossRef
 
 
 @LargeTest
@@ -49,6 +50,23 @@ class ArticleTest {
         Assert.assertTrue(listArticles[1].userId?.toDouble() == 1.0 && listArticles[1].userId?.toDouble() == 1.0)
         Assert.assertFalse(listArticles[0].articleId == listArticles[1].articleId)
 
+    }
+
+    @Test
+    fun writeArticleAndReadDetailInDataBase() {
+        val article1: Article = createArticle()
+        val article2: Article = createArticle()
+
+        val id1 = articleDao.insert1(article1)
+        val id2 = articleDao.insert1(article2)
+
+        val listArticles: List<Article> = articleDao.getAllPrueba()
+
+        Assert.assertTrue(listArticles[0].articleId == id1)
+        Assert.assertTrue(listArticles[1].articleId == id2)
+        Assert.assertTrue(listArticles[1].userId?.toDouble() == 1.0 && listArticles[1].userId?.toDouble() == 1.0)
+        Assert.assertFalse(listArticles[0].articleId == listArticles[1].articleId)
+
         //Test Consultar Articulo
         Assert.assertTrue(article1.title == listArticles[0].title)
         Assert.assertTrue(article1.description == listArticles[0].description)
@@ -65,12 +83,38 @@ class ArticleTest {
         Assert.assertTrue(article2.price == listArticles[1].price)
         Assert.assertTrue(article2.isFavorite == listArticles[1].isFavorite)
         Assert.assertTrue(article2.userId == listArticles[1].userId)
+    }
 
+    @Test
+    fun writeArticleAndDeleteOnDataBase() {
+        val article1: Article = createArticle()
+        val article2: Article = createArticle()
+
+        val id1 = articleDao.insert1(article1)
+        val id2 = articleDao.insert1(article2)
+
+        // Borrado de artículos
         articleDao.delete1(article1)
         articleDao.delete1(article2)
         Assert.assertFalse(articleDao.findById(id1)==null&&articleDao.findById(id2)==null)
+    }
 
+    @Test
+    fun writeArticleAndAddToFavorite() {
+        val article1: Article = createArticle()
+        val article2: Article = createArticle()
 
+        val id1 = articleDao.insert1(article1)
+        val id2 = articleDao.insert1(article2)
+
+        article1.isFavorite = true
+        article2.isFavorite = true
+
+        articleDao.insertAndRelatePrueba(article1, 2)
+        articleDao.insertAndRelatePrueba(article2, 3)
+
+        Assert.assertTrue(article1.isFavorite)
+        Assert.assertTrue(article2.isFavorite)
     }
 
     companion object {
