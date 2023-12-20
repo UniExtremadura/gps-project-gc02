@@ -72,7 +72,20 @@ class UserTest {
 
     @Test
     fun updatePerfil(){
-        //TODO:TEST UPDATE PROFILE
+        val user:User = createUser()
+        val id = userDao.insert1(user)
+
+        Assert.assertTrue(id > 0)
+
+        val updatedUser = User(id,"manuel","manu@gmail.com","manuel123")
+        userDao.update1(updatedUser)
+
+        val newUser: User? = userDao.findByName1("manuel")
+        Assert.assertNotNull(newUser)
+        Assert.assertEquals(updatedUser.name,newUser?.name)
+        Assert.assertEquals(updatedUser.email,newUser?.email)
+        Assert.assertEquals(updatedUser.password,newUser?.password)
+
     }
 
     companion object {
