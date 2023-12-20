@@ -17,4 +17,6 @@ import com.example.gc02.model.User
      fun insert1(user: User): Long
     @Query("SELECT * FROM User")
      fun getAll(): List<User>
+    @Query("SELECT * FROM user WHERE name LIKE :first LIMIT 1")
+     fun findByName1(first: String): User
 }

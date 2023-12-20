@@ -21,6 +21,7 @@ import org.junit.runner.RunWith
 import java.io.IOException
 import androidx.lifecycle.lifecycleScope
 import androidx.room.Room
+import com.example.gc02.utils.CredentialCheck
 
 
 @LargeTest
@@ -56,8 +57,10 @@ class UserTest {
         Assert.assertTrue(listUsers[0].userId == id1)
         Assert.assertTrue(listUsers[1].userId == id2)
         Assert.assertFalse(listUsers[0].userId == listUsers[1].userId)
-    }
 
+
+
+    }
     companion object {
         fun createUser(): User {
             return User(null, "user1", "user1@gmail.com", "user1")
