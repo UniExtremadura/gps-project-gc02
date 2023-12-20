@@ -69,6 +69,12 @@ class UserTest {
         Assert.assertFalse(userFalso != null)
 
     }
+
+    @Test
+    fun updatePerfil(){
+        //TODO:TEST UPDATE PROFILE
+    }
+
     companion object {
         fun createUser(): User {
             return User(null, "user1", "user1@gmail.com", "user1")
