@@ -48,6 +48,7 @@ class ArticleTest {
         Assert.assertTrue(listArticles[1].articleId == id2)
         Assert.assertTrue(listArticles[1].userId?.toDouble() == 1.0 && listArticles[1].userId?.toDouble() == 1.0)
         Assert.assertFalse(listArticles[0].articleId == listArticles[1].articleId)
+
     }
 
     companion object {

@@ -28,6 +28,9 @@ interface ArticleDao {
 
     @Delete
     suspend fun delete(article: Article)
+
+    @Delete
+    fun delete1(article: Article)
     @Transaction
     @Query("SELECT * FROM User where userId = :userId")
     suspend fun getUserWithShops(userId: Long): UserwithShops
