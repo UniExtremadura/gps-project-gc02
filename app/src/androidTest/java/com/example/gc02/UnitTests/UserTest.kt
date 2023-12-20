@@ -25,7 +25,7 @@ import androidx.room.Room
 
 @LargeTest
 @RunWith(AndroidJUnit4::class)
-class CentersDAOUnitTest {
+class UserTest {
 
     private lateinit var userDao: UserDao
     private lateinit var db: BaseDatos
