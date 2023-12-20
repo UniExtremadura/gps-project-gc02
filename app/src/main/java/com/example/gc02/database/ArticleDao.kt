@@ -8,6 +8,7 @@ import androidx.room.Query
 import androidx.room.Transaction
 import androidx.room.Update
 import com.example.gc02.model.Article
+import com.example.gc02.model.Comentario
 import com.example.gc02.model.UserShopCrossRef
 import com.example.gc02.model.UserwithShops
 
@@ -28,6 +29,9 @@ interface ArticleDao {
 
     @Delete
     suspend fun delete(article: Article)
+
+    @Delete
+    fun delete1(article: Article)
     @Transaction
     @Query("SELECT * FROM User where userId = :userId")
     suspend fun getUserWithShops(userId: Long): UserwithShops
@@ -56,4 +60,6 @@ interface ArticleDao {
     @Transaction
     @Query("SELECT * FROM Article WHERE userId=:userId")
     suspend fun getAllByUser(userId: Long?): List<Article>
-}
+
+    @Query("SELECT * FROM Article WHERE articleId = :id")
+    fun findById(id: Long): Article }
