@@ -96,6 +96,7 @@ class ArticleTest {
         // Borrado de artículos
         articleDao.delete1(article1)
         articleDao.delete1(article2)
+        Assert.assertFalse(articleDao.findById1(id1)==null&&articleDao.findById1(id2)==null)
         Assert.assertFalse(articleDao.findById(id1)==null&&articleDao.findById(id2)==null)
     }
 
@@ -131,8 +132,8 @@ class ArticleTest {
         articleDao.insertAndRelatePrueba(article1, 2)
         articleDao.insertAndRelatePrueba(article2, 3)
 
-        articleDao.findById(id1).isFavorite = false
-        articleDao.findById(id2).isFavorite = false
+        articleDao.findById1(id1).isFavorite = false
+        articleDao.findById1(id2).isFavorite = false
 
         Assert.assertFalse(article1.isFavorite&&article2.isFavorite)
     }

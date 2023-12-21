@@ -13,9 +13,6 @@ import com.example.gc02.model.User
 import com.example.gc02.model.UserShopCrossRef
 import com.example.gc02.model.UserwithShops
 
-//import es.unex.giiis.asee.tiviclone.data.model.UserShowCrossRef
-//import es.unex.giiis.asee.tiviclone.data.model.UserWithShows
-
 @Dao
 interface ArticleDao {
 
@@ -82,4 +79,4 @@ interface ArticleDao {
     fun findByName1(first: String): Article
 
     @Query("SELECT * FROM Article WHERE articleId = :id")
-    fun findById(id: Long): Article }
+    fun findById1(id: Long): Article }
