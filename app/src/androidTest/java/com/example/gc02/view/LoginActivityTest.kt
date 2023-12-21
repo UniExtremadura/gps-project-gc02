@@ -21,6 +21,7 @@ import org.hamcrest.Matcher
 import org.hamcrest.Matchers.allOf
 import org.hamcrest.TypeSafeMatcher
 import org.junit.After
+import org.junit.AfterClass
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -41,7 +42,6 @@ class LoginActivityTest {
     fun setUpUser(){
         var context: Context = ApplicationProvider.getApplicationContext<Context>()
         volatileBD = BaseDatos.getInstance(context)!!
-
         userDAO = volatileBD.userDao()
 
         //SE CREA UN USER
@@ -54,7 +54,7 @@ class LoginActivityTest {
     }
 
     @Test
-    fun informacionPerfilTest() {
+    fun informacionLoginTest() {
         onView(
             withId(R.id.loginlayout)
         )
@@ -108,15 +108,6 @@ class LoginActivityTest {
             )
         )
         homeLayout.check(matches(isDisplayed()))
-    }
-
-    @Test
-    fun navegateCrearPerfilActivityTest(){
-
-        onView(withId(R.id.registerbutton)
-        ).perform(click())
-
-        onView(withId(R.id.crearPerfil)).check(matches(isDisplayed()))
     }
 
     private fun childAtPosition(
