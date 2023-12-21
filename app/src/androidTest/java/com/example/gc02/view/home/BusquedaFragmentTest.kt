@@ -1,5 +1,4 @@
-
-package com.example.gc02.view
+package com.example.gc02.view.home
 
 import android.content.Context
 import android.view.View
@@ -20,6 +19,7 @@ import com.example.gc02.database.BaseDatos
 import com.example.gc02.database.UserDao
 import com.example.gc02.model.Article
 import com.example.gc02.model.User
+import com.example.gc02.view.LoginActivity
 import kotlinx.coroutines.runBlocking
 import org.hamcrest.Description
 import org.hamcrest.Matcher
@@ -34,5 +34,161 @@ import org.junit.runner.RunWith
 @LargeTest
 @RunWith(AndroidJUnit4::class)
 class BusquedaFragmentTest {
+
+    @Rule
+    @JvmField
+    var lActivityScenarioRule = ActivityScenarioRule(LoginActivity::class.java)
+
+    private lateinit var volatileBD: BaseDatos
+    private lateinit var userDAO: UserDao
+
+    private lateinit var articleDao: ArticleDao
+
+    @Before
+    fun setUpUser(){
+        var context: Context = ApplicationProvider.getApplicationContext<Context>()
+        volatileBD = BaseDatos.getInstance(context)!!
+
+        userDAO = volatileBD.userDao()
+        articleDao = volatileBD.articleDao()
+
+        //SE CREA UN USER
+        val user = User(99,"user1","user@user.com","user123")
+
+        //SE CREAN ARTICULOS
+        val article1 = Article(1,"Pantalones vaqueros","PAntalones vaqueros ajustados",6.0,"","",false,99)
+        val article2 = Article(2,"Chaqueta vaqueros","Chaqueta vaquera ajustada",12.0,"","",false,99)
+        val article3 = Article(3,"Pendientes de bola","Pendientes redondos de bola",35.0,"","",false,99)
+
+
+        //SE INSERTA EN LA BASE DE DATOS
+        runBlocking {
+            userDAO.insert(user)
+            articleDao.insertAndRelate(article1,99)
+            articleDao.insertAndRelate(article2,99)
+            articleDao.insertAndRelate(article3,99)
+        }
+    }
+
+    @Test
+    fun busquedaTest(){
+        onView(
+            withId(R.id.loginlayout))
+            .check(matches(isDisplayed()))
+
+        val appCompatEditText = onView(
+            allOf(
+                withId(R.id.username),
+                childAtPosition(
+                    allOf(
+                        withId(R.id.loginlayout), isDisplayed()
+                    ),
+                    1
+                )
+            )
+        )
+        appCompatEditText.perform(replaceText("user1"), closeSoftKeyboard())
+
+        val appCompatEditText2 = onView(
+            allOf(
+                withId(R.id.password),
+                childAtPosition(
+                    allOf(
+                        withId(R.id.loginlayout), isDisplayed()
+                    ),
+                    2
+                )
+            )
+        )
+        appCompatEditText2.perform(replaceText("user123"), closeSoftKeyboard())
+
+        val materialButton3 = onView(
+            allOf(
+                withId(R.id.loginbutton), withText("Iniciar Sesion"),
+                childAtPosition(
+                    allOf(
+                        withId(R.id.loginlayout), isDisplayed()
+                    ),
+                    4
+                )
+            )
+        )
+        materialButton3.perform(click())
+
+        Thread.sleep(2000)
+
+        val homeLayout = onView(
+            allOf(
+                withId(R.id.page_home),
+                isDisplayed()
+            )
+        )
+        homeLayout.check(matches(isDisplayed()))
+
+        Thread.sleep(2000)
+        val editTextBusqueda = onView(
+            allOf(
+                withId(R.id.editTextName),
+                childAtPosition(
+                    allOf(
+                        withId(R.id.buscador),
+                    ),
+                    0
+                ),
+                isDisplayed()
+            )
+        )
+        editTextBusqueda.perform(replaceText("Pantalones"), closeSoftKeyboard())
+
+        onView(withId(R.id.buttonSearch)).perform(click())
+        Thread.sleep(1000)
+
+        val recyclerView = onView(
+            allOf(
+                withId(R.id.rv_shop_list),
+                childAtPosition(
+                    withId(R.id.listaArticulos),
+                    1
+                )
+            )
+        )
+        recyclerView.perform(actionOnItemAtPosition<RecyclerView.ViewHolder>(0, click()))
+
+        val articleView = onView(
+            allOf(
+                withId(R.id.tvNombreArticulo),
+                childAtPosition(
+                    allOf(
+                        withId(R.id.consultarArticulo), isDisplayed()
+                    ),
+                    2
+                ), isDisplayed()
+            )
+        )
+        articleView.check(matches(isDisplayed()))
+
+    }
+
+    private fun childAtPosition(
+        parentMatcher: Matcher<View>, position: Int
+    ): Matcher<View> {
+
+        return object : TypeSafeMatcher<View>() {
+            override fun describeTo(description: Description) {
+                description.appendText("Child at position $position in parent ")
+                parentMatcher.describeTo(description)
+            }
+
+            public override fun matchesSafely(view: View): Boolean {
+                val parent = view.parent
+                return parent is ViewGroup && parentMatcher.matches(parent)
+                        && view == parent.getChildAt(position)
+            }
+        }
+    }
+    @After
+    fun closeVolatileDB() {
+        volatileBD.close()
+    }
 
 }
