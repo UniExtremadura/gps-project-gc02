@@ -4,6 +4,8 @@ import androidx.room.Room
 import androidx.test.filters.LargeTest
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.example.gc02.api.APICallback
+
 import com.example.gc02.database.BaseDatos
 import com.example.gc02.database.ArticleDao
 import org.junit.After
@@ -12,15 +14,17 @@ import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import com.example.gc02.model.Article
-import com.example.gc02.model.UserShopCrossRef
+
+
 
 
 @LargeTest
 @RunWith(AndroidJUnit4::class)
-class ArticleTest {
+class ArticleTest (){
 
     private lateinit var articleDao: ArticleDao
     private lateinit var db: BaseDatos
+
 
     @Before
     fun createDb() {
@@ -28,6 +32,7 @@ class ArticleTest {
         db = Room.inMemoryDatabaseBuilder(context, BaseDatos::class.java)
             .build()
         articleDao = db.articleDao()
+
     }
 
     @After
@@ -85,6 +90,7 @@ class ArticleTest {
         Assert.assertTrue(article2.userId == listArticles[1].userId)
     }
 
+
     @Test
     fun writeArticleAndDeleteOnDataBase() {
         val article1: Article = createArticle()
@@ -96,7 +102,8 @@ class ArticleTest {
         // Borrado de artículos
         articleDao.delete1(article1)
         articleDao.delete1(article2)
-        Assert.assertFalse(articleDao.findById(id1)==null&&articleDao.findById(id2)==null)
+        Assert.assertFalse(articleDao.findById1(id1)==null&&articleDao.findById1(id2)==null)
+        Assert.assertFalse(articleDao.findById1(id1)==null&&articleDao.findById1(id2)==null)
     }
 
     @Test
@@ -116,6 +123,27 @@ class ArticleTest {
         Assert.assertTrue(article1.isFavorite)
         Assert.assertTrue(article2.isFavorite)
     }
+
+    @Test
+    fun writeArticleAndDeleteFromFavorite() {
+        val article1: Article = createArticle()
+        val article2: Article = createArticle()
+
+        val id1 = articleDao.insert1(article1)
+        val id2 = articleDao.insert1(article2)
+
+        article1.isFavorite = true
+        article2.isFavorite = true
+
+        articleDao.insertAndRelatePrueba(article1, 2)
+        articleDao.insertAndRelatePrueba(article2, 3)
+
+        articleDao.findById1(id1).isFavorite = false
+        articleDao.findById1(id2).isFavorite = false
+
+        Assert.assertFalse(article1.isFavorite&&article2.isFavorite)
+    }
+
 
     companion object {
         fun createArticle(): Article {

@@ -69,6 +69,41 @@ class UserTest {
         Assert.assertFalse(userFalso != null)
 
     }
+
+    @Test
+    fun deleteUser() {
+
+        val user: User = createUser()
+        userDao.insert1(user)
+
+        val insertedUser = userDao.findByName1(user.name)
+        Assert.assertNotNull(insertedUser)
+
+
+        userDao.delete1(user)
+
+        val deletedUser: User? = userDao.findByName1(user.name)
+        Assert.assertNull(deletedUser)
+    }
+
+    @Test
+    fun updatePerfil(){
+        val user:User = createUser()
+        val id = userDao.insert1(user)
+
+        Assert.assertTrue(id > 0)
+
+        val updatedUser = User(id,"manuel","manu@gmail.com","manuel123")
+        userDao.update1(updatedUser)
+
+        val newUser: User? = userDao.findByName1("manuel")
+        Assert.assertNotNull(newUser)
+        Assert.assertEquals(updatedUser.name,newUser?.name)
+        Assert.assertEquals(updatedUser.email,newUser?.email)
+        Assert.assertEquals(updatedUser.password,newUser?.password)
+
+    }
+
     companion object {
         fun createUser(): User {
             return User(null, "user1", "user1@gmail.com", "user1")
