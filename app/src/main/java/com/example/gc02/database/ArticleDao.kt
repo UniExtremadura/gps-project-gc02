@@ -9,6 +9,7 @@ import androidx.room.Transaction
 import androidx.room.Update
 import com.example.gc02.model.Article
 import com.example.gc02.model.Comentario
+import com.example.gc02.model.User
 import com.example.gc02.model.UserShopCrossRef
 import com.example.gc02.model.UserwithShops
 
@@ -48,6 +49,9 @@ interface ArticleDao {
     @Update
     suspend fun updateProduct(article: Article)
 
+    @Update
+    fun updateProduct1(article: Article)
+
 
     @Transaction
     @Query("SELECT * FROM Article")
@@ -60,6 +64,9 @@ interface ArticleDao {
     @Transaction
     @Query("SELECT * FROM Article WHERE userId=:userId")
     suspend fun getAllByUser(userId: Long?): List<Article>
+
+    @Query("SELECT * FROM Article WHERE title LIKE :first LIMIT 1")
+    fun findByName1(first: String): Article
 
     @Query("SELECT * FROM Article WHERE articleId = :id")
     fun findById(id: Long): Article }

@@ -12,6 +12,7 @@ import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import com.example.gc02.model.Article
+import com.example.gc02.model.User
 
 
 @LargeTest
@@ -73,6 +74,24 @@ class ArticleTest {
 
     }
 
+    @Test
+    fun updateArticulo(){
+        val article:Article = ArticleTest.createArticle()
+        val id = articleDao.insert1(article)
+
+        Assert.assertTrue(id > 0)
+
+        val updatedArticle = Article(id,"laptop negro", "Portatil negro con un año de uso", 1000.0, "electronica",null,false)
+        articleDao.updateProduct1(updatedArticle)
+        val newArticle: Article? = articleDao.findByName1("laptop negro")
+        Assert.assertNotNull(newArticle)
+        Assert.assertEquals(updatedArticle.title,newArticle?.title)
+        Assert.assertEquals(updatedArticle.description,newArticle?.description)
+        Assert.assertEquals(updatedArticle.price,newArticle?.price)
+        Assert.assertEquals(updatedArticle.category,newArticle?.category)
+        Assert.assertEquals(updatedArticle.isFavorite,newArticle?.isFavorite)
+
+    }
     companion object {
         fun createArticle(): Article {
             return Article(
