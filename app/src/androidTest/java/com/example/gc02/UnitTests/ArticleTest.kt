@@ -63,6 +63,14 @@ class ArticleTest {
 
         articleDao.insertAndRelatePrueba(article1, 2)
         articleDao.insertAndRelatePrueba(article2, 3)
+
+        Assert.assertTrue(article1.isFavorite)
+        Assert.assertTrue(article2.isFavorite)
+
+        article1.isFavorite = false
+        article2.isFavorite = false
+
+        Assert.assertFalse(article1.isFavorite&&article2.isFavorite)
     }
     companion object {
         fun createArticle(): Article {
