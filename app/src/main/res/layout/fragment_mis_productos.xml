@@ -8,7 +8,6 @@
     android:id="@+id/misProductos"
     android:gravity="center">
 
-
     <Button
         android:id="@+id/buttonAnadirProducto"
         android:layout_width="272dp"
