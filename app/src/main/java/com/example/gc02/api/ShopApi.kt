@@ -7,6 +7,7 @@ import com.example.gc02.model.Article
 import com.example.gc02.utils.SkipNetworkInterceptor
 import okhttp3.OkHttpClient
 import retrofit2.Call
+import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.Body
@@ -37,6 +38,9 @@ interface ShopApi {
     ): List<Categories>
     @GET("products")
     suspend fun getCategories( ): List<Shop>
+
+    @GET("products")
+    suspend fun getCategories1( ): Response<List<Shop>>
 
     @GET("shop-details")
     suspend fun getShopDetail(
