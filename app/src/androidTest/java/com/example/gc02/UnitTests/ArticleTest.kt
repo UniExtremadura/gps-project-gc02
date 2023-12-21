@@ -84,6 +84,7 @@ class ArticleTest {
         val updatedArticle = Article(id,"laptop negro", "Portatil negro con un año de uso", 1000.0, "electronica",null,false)
         articleDao.updateProduct1(updatedArticle)
         val newArticle: Article? = articleDao.findByName1("laptop negro")
+
         Assert.assertNotNull(newArticle)
         Assert.assertEquals(updatedArticle.title,newArticle?.title)
         Assert.assertEquals(updatedArticle.description,newArticle?.description)
