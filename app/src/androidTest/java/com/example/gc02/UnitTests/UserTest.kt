@@ -21,6 +21,7 @@ import org.junit.runner.RunWith
 import java.io.IOException
 import androidx.lifecycle.lifecycleScope
 import androidx.room.Room
+import com.example.gc02.utils.CredentialCheck
 
 
 @LargeTest
@@ -45,6 +46,7 @@ class UserTest {
 
     @Test
     fun writeUserAndReadInDataBase() {
+        //Test crear usuario
         val user1: User = createUser()
         val user2: User = createUser()
 
@@ -56,6 +58,50 @@ class UserTest {
         Assert.assertTrue(listUsers[0].userId == id1)
         Assert.assertTrue(listUsers[1].userId == id2)
         Assert.assertFalse(listUsers[0].userId == listUsers[1].userId)
+
+        //Test Iniciar Sesion
+        val user3 = userDao.findByName1(listUsers[0].name)
+        Assert.assertTrue(user3.userId == id1)
+         val user4 = userDao.findByName1(listUsers[1].name)
+        Assert.assertTrue(user4.userId == id1)
+
+        val userFalso = userDao.findByName1("manuel")
+        Assert.assertFalse(userFalso != null)
+
+    }
+
+    @Test
+    fun deleteUser() {
+
+        val user: User = createUser()
+        userDao.insert1(user)
+
+        val insertedUser = userDao.findByName1(user.name)
+        Assert.assertNotNull(insertedUser)
+
+
+        userDao.delete1(user)
+
+        val deletedUser: User? = userDao.findByName1(user.name)
+        Assert.assertNull(deletedUser)
+    }
+
+    @Test
+    fun updatePerfil(){
+        val user:User = createUser()
+        val id = userDao.insert1(user)
+
+        Assert.assertTrue(id > 0)
+
+        val updatedUser = User(id,"manuel","manu@gmail.com","manuel123")
+        userDao.update1(updatedUser)
+
+        val newUser: User? = userDao.findByName1("manuel")
+        Assert.assertNotNull(newUser)
+        Assert.assertEquals(updatedUser.name,newUser?.name)
+        Assert.assertEquals(updatedUser.email,newUser?.email)
+        Assert.assertEquals(updatedUser.password,newUser?.password)
+
     }
 
     companion object {
