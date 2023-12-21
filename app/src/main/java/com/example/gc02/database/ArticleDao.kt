@@ -8,6 +8,7 @@ import androidx.room.Query
 import androidx.room.Transaction
 import androidx.room.Update
 import com.example.gc02.model.Article
+import com.example.gc02.model.Comentario
 import com.example.gc02.model.UserShopCrossRef
 import com.example.gc02.model.UserwithShops
 
@@ -20,6 +21,9 @@ interface ArticleDao {
     @Query("SELECT * FROM Article WHERE articleId = :id")
     suspend fun findById(id: Int): Article
 
+    @Query("SELECT * FROM Article WHERE articleId = :id")
+    fun findByIdPrueba(id: Int): Article
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(article: Article): Long
 
@@ -28,6 +32,9 @@ interface ArticleDao {
 
     @Delete
     suspend fun delete(article: Article)
+
+    @Delete
+    fun delete1(article: Article)
     @Transaction
     @Query("SELECT * FROM User where userId = :userId")
     suspend fun getUserWithShops(userId: Long): UserwithShops
@@ -44,11 +51,13 @@ interface ArticleDao {
         insert(article)
         article.articleId?.let { UserShopCrossRef(userId, it) }?.let { insertUserShop(it) }
     }
+
     @Transaction
     fun insertAndRelatePrueba(article: Article, userId: Long) {
         insert1(article)
         article.articleId?.let { UserShopCrossRef(userId, it) }?.let { insertUserShopPrueba(it) }
     }
+
     @Update
     suspend fun updateProduct(article: Article)
 
@@ -64,4 +73,6 @@ interface ArticleDao {
     @Transaction
     @Query("SELECT * FROM Article WHERE userId=:userId")
     suspend fun getAllByUser(userId: Long?): List<Article>
-}
+
+    @Query("SELECT * FROM Article WHERE articleId = :id")
+    fun findById(id: Long): Article }
