@@ -68,7 +68,7 @@ class ArticleTest {
 
         articleDao.delete1(article1)
         articleDao.delete1(article2)
-        Assert.assertFalse(articleDao.findById(id1)==null&&articleDao.findById(id2)==null)
+        Assert.assertFalse(articleDao.findById1(id1)==null&&articleDao.findById1(id2)==null)
 
 
     }
