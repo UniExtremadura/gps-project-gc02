@@ -25,7 +25,9 @@
         <activity
             android:name=".view.AnadirArticuloALaVentaActivity"
             android:exported="false"/>
-
+        <activity
+            android:name=".view.ValoracionActivity"
+            android:exported="false"/>
         <activity
             android:name=".view.LoginActivity"
             android:exported="true"

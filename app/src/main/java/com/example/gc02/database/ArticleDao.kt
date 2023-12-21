@@ -9,17 +9,18 @@ import androidx.room.Transaction
 import androidx.room.Update
 import com.example.gc02.model.Article
 import com.example.gc02.model.Comentario
+import com.example.gc02.model.User
 import com.example.gc02.model.UserShopCrossRef
 import com.example.gc02.model.UserwithShops
-
-//import es.unex.giiis.asee.tiviclone.data.model.UserShowCrossRef
-//import es.unex.giiis.asee.tiviclone.data.model.UserWithShows
 
 @Dao
 interface ArticleDao {
 
     @Query("SELECT * FROM Article WHERE articleId = :id")
     suspend fun findById(id: Int): Article
+
+    @Query("SELECT * FROM Article WHERE articleId = :id")
+    fun findByIdPrueba(id: Int): Article
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(article: Article): Long
@@ -40,13 +41,26 @@ interface ArticleDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertUserShop(crossRef: UserShopCrossRef)
 
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    fun insertUserShopPrueba(crossRef: UserShopCrossRef)
+
     @Transaction
     suspend fun insertAndRelate(article: Article, userId: Long) {
         insert(article)
         article.articleId?.let { UserShopCrossRef(userId, it) }?.let { insertUserShop(it) }
     }
+
+    @Transaction
+    fun insertAndRelatePrueba(article: Article, userId: Long) {
+        insert1(article)
+        article.articleId?.let { UserShopCrossRef(userId, it) }?.let { insertUserShopPrueba(it) }
+    }
+
     @Update
     suspend fun updateProduct(article: Article)
+
+    @Update
+    fun updateProduct1(article: Article)
 
 
     @Transaction
@@ -61,5 +75,8 @@ interface ArticleDao {
     @Query("SELECT * FROM Article WHERE userId=:userId")
     suspend fun getAllByUser(userId: Long?): List<Article>
 
+    @Query("SELECT * FROM Article WHERE title LIKE :first LIMIT 1")
+    fun findByName1(first: String): Article
+
     @Query("SELECT * FROM Article WHERE articleId = :id")
-    fun findById(id: Long): Article }
+    fun findById1(id: Long): Article }
