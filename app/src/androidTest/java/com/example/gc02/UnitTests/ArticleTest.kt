@@ -50,6 +50,20 @@ class ArticleTest {
         Assert.assertFalse(listArticles[0].articleId == listArticles[1].articleId)
     }
 
+    @Test
+    fun writeArticleAndAddToFavorite() {
+        val article1: Article = createArticle()
+        val article2: Article = createArticle()
+
+        val id1 = articleDao.insert1(article1)
+        val id2 = articleDao.insert1(article2)
+
+        article1.isFavorite = true
+        article2.isFavorite = true
+
+        articleDao.insertAndRelatePrueba(article1, 2)
+        articleDao.insertAndRelatePrueba(article2, 3)
+    }
     companion object {
         fun createArticle(): Article {
             return Article(
