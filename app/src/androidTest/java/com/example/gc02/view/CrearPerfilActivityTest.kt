@@ -31,11 +31,13 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 
+@LargeTest
+@RunWith(AndroidJUnit4::class)
 class CrearPerfilActivityTest {
 
     @Rule
     @JvmField
-    var lActivityScenarioRule = ActivityScenarioRule(CrearPerfilActivity::class.java)
+    var lActivityScenarioRule = ActivityScenarioRule(LoginActivity::class.java)
 
     private lateinit var volatileBD: BaseDatos
     private lateinit var userDAO: UserDao
@@ -51,6 +53,22 @@ class CrearPerfilActivityTest {
 
     @Test
     fun registerUserTest(){
+        onView(
+            withId(R.id.loginlayout)
+        )
+            .check(matches(isDisplayed()))
+        onView(
+            allOf(
+                withId(R.id.registerbutton), withText("Registrarse"),
+                childAtPosition(
+                    allOf(
+                        withId(R.id.loginlayout), isDisplayed()
+                    ),
+                    3
+                )
+            )
+        ).perform(click())
+        Thread.sleep(2000)
         onView(
             withId(R.id.crearPerfil))
             .check(matches(isDisplayed()))
