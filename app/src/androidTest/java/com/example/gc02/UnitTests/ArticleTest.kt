@@ -117,6 +117,27 @@ class ArticleTest {
         Assert.assertTrue(article2.isFavorite)
     }
 
+    @Test
+    fun writeArticleAndDeleteFromFavorite() {
+        val article1: Article = createArticle()
+        val article2: Article = createArticle()
+
+        val id1 = articleDao.insert1(article1)
+        val id2 = articleDao.insert1(article2)
+
+        article1.isFavorite = true
+        article2.isFavorite = true
+
+        articleDao.insertAndRelatePrueba(article1, 2)
+        articleDao.insertAndRelatePrueba(article2, 3)
+
+        articleDao.findById(id1).isFavorite = false
+        articleDao.findById(id2).isFavorite = false
+
+        Assert.assertFalse(article1.isFavorite&&article2.isFavorite)
+    }
+
+
     companion object {
         fun createArticle(): Article {
             return Article(
