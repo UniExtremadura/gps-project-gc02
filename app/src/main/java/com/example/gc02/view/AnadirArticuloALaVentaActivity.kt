@@ -6,17 +6,13 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
-import com.example.gc02.R
+import com.example.gc02.database.BaseDatos
 import com.example.gc02.databinding.ActivityAnadirArticuloVentaBinding
 import com.example.gc02.model.Article
-import com.example.gc02.utils.ArticleCheck
-import com.example.gc02.database.BaseDatos
 import com.example.gc02.model.User
-import com.example.gc02.view.home.CreateArticleSharedViewModel
+import com.example.gc02.utils.ArticleCheck
 import com.example.gc02.view.home.MisProductosFragment
 import kotlinx.coroutines.launch
 
@@ -78,7 +74,6 @@ class AnadirArticuloALaVentaActivity : AppCompatActivity() {
                         null,
                         false,
                         (intent.getSerializableExtra("user") as User).userId
-
 
                     )
                     val id =  db?.articleDao()?.insert(article)

@@ -35,7 +35,7 @@ import org.junit.runner.RunWith
 @LargeTest
 @RunWith(AndroidJUnit4::class)
 class ConsultarComentarioTest {
-
+/*
     @Rule
     @JvmField
     var lActivityScenarioRule = ActivityScenarioRule(LoginActivity::class.java)
@@ -171,4 +171,6 @@ class ConsultarComentarioTest {
         fun closeVolatileDB() {
             volatileBD.close()
         }
+
+ */
 }

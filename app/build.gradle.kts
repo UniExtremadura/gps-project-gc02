@@ -69,6 +69,7 @@ dependencies {
     implementation("com.google.firebase:firebase-auth-ktx:22.3.0")
 
     implementation("com.github.bumptech.glide:glide:5.0.0-rc01")
+    implementation("androidx.media3:media3-common:1.2.0")
 
     val room_version = "2.6.0"
     implementation("androidx.room:room-runtime:$room_version")

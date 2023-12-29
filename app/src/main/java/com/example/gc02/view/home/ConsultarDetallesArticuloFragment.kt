@@ -2,6 +2,7 @@ package com.example.gc02.view.home
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,6 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.gc02.R
 import com.example.gc02.api.APIError
@@ -18,6 +20,7 @@ import com.example.gc02.data.Repository
 import com.example.gc02.database.BaseDatos
 import com.example.gc02.databinding.FragmentConsultarArticuloBinding
 import com.example.gc02.model.Article
+import com.example.gc02.model.Comentario
 import com.example.gc02.model.User
 import com.example.gc02.view.RealizarCompraActivity
 import kotlinx.coroutines.launch
@@ -25,7 +28,8 @@ class ConsultarDetallesArticuloFragment : Fragment() {
     private var userInfo: User? = null
     private lateinit var db: BaseDatos
     private val sharedViewModel: SharedViewModel by activityViewModels()
-
+    private lateinit var comentarioAdapter: ComentarioAdapter
+    private var _comentarios: List<Comentario> = emptyList()
     private var _binding: FragmentConsultarArticuloBinding? = null
     private val binding get() = _binding!!
 
@@ -45,7 +49,15 @@ class ConsultarDetallesArticuloFragment : Fragment() {
     ): View {
 
         _binding = FragmentConsultarArticuloBinding.inflate(inflater, container, false)
+        binding.btEnviarComentario.setOnClickListener {
+            // Utiliza la información del usuario según sea necesario
+            if (userInfo != null) {
+                enviarComentario(userInfo!!.name)
+            }
+        }
 
+        // Configurar el botón para enviar un nuevo comentario
+        setUpRecyclerViewComentario()
         return binding.root
     }
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -77,7 +89,59 @@ class ConsultarDetallesArticuloFragment : Fragment() {
 
 
     }
+    private fun enviarComentario(nameUser: String) {
+        // Agregar lógica para enviar un nuevo comentario
+        val nuevoComentario = binding.editTextComentario.text.toString()
+    Log.d("Comentario","Agregar comentario a articulo : ${args.shop.articleId}")
+        // Agregar lógica para almacenar el comentario en la base de datos
+        lifecycleScope.launch {
+            val comment = Comentario(
+                null,
+                nameUser,
+                nuevoComentario,
+                args.shop.articleId,
+                args.shop.userId
+            )
+            val id = db?.comentarioDao()?.insert(comment)
+        }
+        // Después de enviar el comentario, actualizar la lista de comentarios llamando a cargarComentarios()
+        setUpRecyclerViewComentario()
+        // Limpiar el EditText después de enviar el comentario
+        binding.editTextComentario.text.clear()
+    }
 
+    private fun setUpRecyclerViewComentario() {
+        comentarioAdapter = ComentarioAdapter(
+            comentarios=_comentarios,
+            onLongClick = {
+                if(userInfo?.name == it.autor) {
+                    Toast.makeText(context, " DELETING COMMENT... !!!", Toast.LENGTH_SHORT).show()
+                    deleteComment(it)
+                }else Toast.makeText(context, " CANNOT DELETE THIS COMMENT...", Toast.LENGTH_SHORT).show()
+            }
+        )
+        with(binding) {
+            layoutComentarios.layoutManager = LinearLayoutManager(context)
+            layoutComentarios.adapter = comentarioAdapter
+        }
+        lifecycleScope.launch {
+            val shop = args.shop.articleId
+            val comentariosDB = db.comentarioDao().obtenerComentariosByArticleAndUser(shop!!, args.shop.userId!!)
+            comentarioAdapter.updateData(comentariosDB)
+        }
+        Toast.makeText(
+            context,
+            "Comentarios mostrados",
+            Toast.LENGTH_SHORT
+        ).show()
+        Log.d("ComentarioFragment", "setUpRecyclerView")
+    }
+    private fun deleteComment(comment: Comentario){
+        lifecycleScope.launch {
+            db.comentarioDao().delete(comment)
+            setUpRecyclerViewComentario()
+        }
+    }
     private fun showBinding(shop: Article) {
         binding.tvNombreArticulo.text = shop.title
         binding.tvDescripcionArticulo.text = shop.description
