@@ -37,7 +37,7 @@ class BusquedaAvanzadaFiltrosFragment : Fragment(R.layout.fragment_busqueda_avan
             Log.d("Busqueda","setOnCLickListener")
             val nombreBusqueda = editTextName.text.toString()
             val precioBusqueda = editPrice.text.toString()
-            val action = BusquedaAvanzadaFiltrosFragmentDirections.actionPageHomeToPageArticulos(
+            val action = BusquedaAvanzadaFiltrosFragmentDirections.actionPageHomeToPageArticulosFiltros(
                 nombreBusqueda,
                 precioBusqueda
             )

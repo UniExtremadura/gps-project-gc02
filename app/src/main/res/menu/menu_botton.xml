@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id = "@+id/page_home"
+        android:id = "@+id/page_articulos"
         android:enabled="true"
         android:icon= "@drawable/icon_home"
         android:title="Inicio"/>
 
     <item
-        android:id = "@+id/page_articulos"
+        android:id = "@+id/page_home"
         android:enabled="true"
         android:icon= "@drawable/icon_busqueda"
         android:title="Buscar"/>

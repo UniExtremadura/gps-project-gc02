@@ -2,30 +2,27 @@ package com.example.gc02.view.home
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.example.gc02.R
 import com.example.gc02.api.APIError
-import com.example.gc02.api.getNetworkService
-import com.example.gc02.data.api.Shop
-import com.example.gc02.data.toShop
 import com.example.gc02.database.BaseDatos
 import com.example.gc02.databinding.FragmentConsultarArticuloBinding
 import com.example.gc02.model.Article
 import com.example.gc02.model.User
-import com.example.gc02.view.CrearPerfilActivity
 import com.example.gc02.view.RealizarCompraActivity
 import kotlinx.coroutines.launch
 class ConsultarDetallesArticuloFragment : Fragment() {
     private var userInfo: User? = null
     private lateinit var db: BaseDatos
+    private val sharedViewModel: SharedViewModel by activityViewModels()
 
     private var _binding: FragmentConsultarArticuloBinding? = null
     private val binding get() = _binding!!
@@ -87,6 +84,7 @@ class ConsultarDetallesArticuloFragment : Fragment() {
                 if (isChecked) {
                     shop.isFavorite = true
                     db.articleDao().insertAndRelate(shop, userInfo?.userId!!)
+                    agregarAFavoritos(shop)
                 } else {
                     shop.isFavorite = false
                     db.articleDao().delete(shop)
@@ -99,6 +97,10 @@ class ConsultarDetallesArticuloFragment : Fragment() {
             }
 
         }
+    }
+
+    private fun agregarAFavoritos(articulo: Article) {
+        sharedViewModel.agregarAFavoritos(articulo)
     }
 
     private fun setUpListeners() {
