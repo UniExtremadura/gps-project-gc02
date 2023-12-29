@@ -8,11 +8,14 @@ import com.example.gc02.model.Article
 import com.example.gc02.model.Comentario
 import com.example.gc02.model.User
 import com.example.gc02.model.UserShopCrossRef
+import com.example.gc02.model.Valuation
 
-@Database(entities = [User::class, Article::class, Comentario::class, UserShopCrossRef::class], version = 1)
+@Database(entities = [User::class, Article::class, Comentario::class, UserShopCrossRef::class, Valuation::class], version = 1)
 abstract class BaseDatos : RoomDatabase() {
     abstract fun userDao(): UserDao
     abstract fun articleDao(): ArticleDao
+
+    abstract fun valuationDao(): ValuationDao
 
     abstract fun comentarioDao() : ComentarioDao
 
