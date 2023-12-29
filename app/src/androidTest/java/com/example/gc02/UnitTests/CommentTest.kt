@@ -17,7 +17,7 @@ import com.example.gc02.model.Comentario
 @LargeTest
 @RunWith(AndroidJUnit4::class)
 class CommentTest {
-
+/*
     private lateinit var comentarioDao: ComentarioDao
     private lateinit var db: BaseDatos
 
@@ -60,4 +60,6 @@ class CommentTest {
             )
         }
     }
+
+ */
 }

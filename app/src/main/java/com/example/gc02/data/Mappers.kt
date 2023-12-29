@@ -7,13 +7,14 @@ import com.example.gc02.model.Category
 
 
 fun Shop.toShop() = Article(
-    articleId = null,
+    articleId = id,
     title = title ?: "",
     description = description ?: "",
     price = price ?: 0.0,
     category = category ?: "",
     image = image ?: "",
-    isFavorite = false
+    isFavorite = false,
+    userId = 999
 )
 
 fun Categories.toCategories() = Category(

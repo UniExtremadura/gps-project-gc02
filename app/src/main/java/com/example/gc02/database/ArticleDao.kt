@@ -22,6 +22,9 @@ interface ArticleDao {
     @Query("SELECT * FROM Article WHERE articleId = :id")
     fun findByIdPrueba(id: Int): Article
 
+    @Query("SELECT COUNT(*) FROM Article")
+    suspend fun obtenerTamano(): Int
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(article: Article): Long
 

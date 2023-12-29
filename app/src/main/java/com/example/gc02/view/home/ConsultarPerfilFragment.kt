@@ -22,7 +22,7 @@ import kotlinx.coroutines.launch
 class ConsultarPerfilFragment : Fragment() {
     private val TAG = "ComentarioFragment"
     private lateinit var db: BaseDatos
-    private var _comentarios: List<Comentario> = emptyList()
+
     private var _valoracion: List<Valuation> = emptyList()
     private lateinit var listener: OnPerfilClickListener
 
@@ -35,7 +35,7 @@ class ConsultarPerfilFragment : Fragment() {
     private var _binding: FragmentConsultarPerfilBinding? = null
 
     private val binding get() = _binding!!
-    private lateinit var comentarioAdapter: ComentarioAdapter
+
     private lateinit var valoracionAdapter: ValoracionAdapter
     private var userInfo: User? = null
     override fun onCreateView(
@@ -43,16 +43,6 @@ class ConsultarPerfilFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentConsultarPerfilBinding.inflate(inflater, container, false)
-
-        binding.btEnviarComentario.setOnClickListener {
-            // Utiliza la información del usuario según sea necesario
-            if (userInfo != null) {
-                enviarComentario(userInfo!!.name)
-            }
-        }
-
-        // Configurar el botón para enviar un nuevo comentario
-        setUpRecyclerViewComentario()
 
         setUpRecyclerViewValoracion()
         // Configurar la carga de información del perfil (puedes obtener esta información desde tu base de datos u otro origen)
@@ -70,24 +60,7 @@ class ConsultarPerfilFragment : Fragment() {
     }
 
 
-    private fun enviarComentario(nameUser: String) {
-        // Agregar lógica para enviar un nuevo comentario
-        val nuevoComentario = binding.editTextComentario.text.toString()
 
-        // Agregar lógica para almacenar el comentario en la base de datos
-        lifecycleScope.launch {
-            val comment = Comentario(
-                null,
-                nameUser,
-                nuevoComentario
-            )
-            val id = db?.comentarioDao()?.insert(comment)
-        }
-        // Después de enviar el comentario, actualizar la lista de comentarios llamando a cargarComentarios()
-        setUpRecyclerViewComentario()
-        // Limpiar el EditText después de enviar el comentario
-        binding.editTextComentario.text.clear()
-    }
 
     private fun setUpRecyclerViewValoracion() {
         valoracionAdapter = ValoracionAdapter(
@@ -126,25 +99,7 @@ class ConsultarPerfilFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
     }
-    private fun setUpRecyclerViewComentario() {
-        comentarioAdapter = ComentarioAdapter(
-            comentarios=_comentarios
-        )
-        with(binding) {
-            layoutComentarios.layoutManager = LinearLayoutManager(context)
-            layoutComentarios.adapter = comentarioAdapter
-        }
-        lifecycleScope.launch {
-            val comentariosDB = db.comentarioDao().obtenerComentarios()
-            comentarioAdapter.updateData(comentariosDB)
-        }
-        Toast.makeText(
-            context,
-            "Comentarios mostrados",
-            Toast.LENGTH_SHORT
-        ).show()
-        android.util.Log.d("ComentarioFragment", "setUpRecyclerView")
-    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null // avoid memory leaks

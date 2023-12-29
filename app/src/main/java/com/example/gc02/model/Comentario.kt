@@ -7,5 +7,7 @@ import java.io.Serializable
 data class Comentario(
     @PrimaryKey(autoGenerate = true) val commentId : Long?,
     val autor: String,
-    val comentario: String
+    val comentario: String,
+    val articleId: Long?,
+    val userId:Long?
 ):Serializable

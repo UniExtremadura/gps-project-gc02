@@ -13,6 +13,8 @@ interface ComentarioDao {
 
     @Query("SELECT * FROM Comentario")
     suspend fun obtenerComentarios():List<Comentario>
+    @Query("SELECT * FROM Comentario WHERE articleId = :articleId AND userId = :userId")
+    suspend fun obtenerComentariosByArticleAndUser(articleId: Long, userId: Long):List<Comentario>
 
     @Query("SELECT * FROM Comentario")
     fun obtenerComentariosPrueba():List<Comentario>

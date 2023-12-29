@@ -7,7 +7,7 @@ import com.example.gc02.model.User
 var user1 = User(10,"Pedro","user@user.com","12345")
 var user2 = User(20,"Juan","user2@user.com","12345")
 
-val dummyComentarios: List<Comentario> = listOf(
+/*val dummyComentarios: List<Comentario> = listOf(
     Comentario(
         1,
         user1.name,
@@ -30,7 +30,7 @@ val dummyComentarios: List<Comentario> = listOf(
     ),
 
 )
-
+*/
 
 val dummyArticulos: List<Article> = listOf(
 /*    Article(null, "Laptop", "Laptop de última generación", 1299.99,"Ordenadores",""),
