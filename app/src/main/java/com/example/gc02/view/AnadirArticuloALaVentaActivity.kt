@@ -6,14 +6,18 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
+import com.example.gc02.R
 import com.example.gc02.databinding.ActivityAnadirArticuloVentaBinding
 import com.example.gc02.model.Article
 import com.example.gc02.utils.ArticleCheck
 import com.example.gc02.database.BaseDatos
 import com.example.gc02.model.User
-import com.example.gc02.view.home.UserProvider
+import com.example.gc02.view.home.CreateArticleSharedViewModel
+import com.example.gc02.view.home.MisProductosFragment
 import kotlinx.coroutines.launch
 
 class AnadirArticuloALaVentaActivity : AppCompatActivity() {
@@ -21,8 +25,6 @@ class AnadirArticuloALaVentaActivity : AppCompatActivity() {
     private lateinit var binding: ActivityAnadirArticuloVentaBinding
 
     private lateinit var db: BaseDatos
-
-
 
     companion object {
 
@@ -41,9 +43,9 @@ class AnadirArticuloALaVentaActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         binding = ActivityAnadirArticuloVentaBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
         db = BaseDatos.getInstance(applicationContext)!!
 
         setUpListeners()
@@ -81,7 +83,7 @@ class AnadirArticuloALaVentaActivity : AppCompatActivity() {
                     )
                     val id =  db?.articleDao()?.insert(article)
                     if (id != null) {
-                        Log.d("Anyadir", "El id del articulo insertado es ${db.articleDao().findById(id.toInt()).title}")
+                        Log.d("Annadir", "El id del articulo insertado es ${db.articleDao().findById(id.toInt()).title}")
                     }
                     navigateBackWithResult(
                         Article(
@@ -107,6 +109,10 @@ class AnadirArticuloALaVentaActivity : AppCompatActivity() {
             putExtra(PRICE,article.price)
         }
         setResult(RESULT_OK, intent)
+
+        val intentListaMisArticulos = Intent(this, MisProductosFragment::class.java)
+        startActivity(intentListaMisArticulos)
+
         finish()
     }
 

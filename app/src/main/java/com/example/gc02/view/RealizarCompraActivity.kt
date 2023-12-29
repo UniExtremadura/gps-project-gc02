@@ -54,6 +54,7 @@ class RealizarCompraActivity : AppCompatActivity() {
                             "Articulo comprado",
                             Toast.LENGTH_SHORT
                         ).show()
+                        finish()
                     }
                 }
 
@@ -67,7 +68,7 @@ class RealizarCompraActivity : AppCompatActivity() {
     private fun navigateToValoracion() {
         val shop = intent.getSerializableExtra("shop") as Article
         val intent = Intent(this, ValoracionActivity::class.java)
-        intent.putExtra("sellerId", "")
+        intent.putExtra("sellerId", shop.userId)
         startActivity(intent)
     }
 
