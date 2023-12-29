@@ -1,26 +1,19 @@
 package com.example.gc02.view.home
 
-import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.gc02.R
-import com.example.gc02.api.APIError
-import com.example.gc02.api.getNetworkService
-import com.example.gc02.data.api.Shop
-import com.example.gc02.data.toShop
 import com.example.gc02.database.BaseDatos
 import com.example.gc02.databinding.FragmentMisFavoritosBinding
-import com.example.gc02.databinding.FragmentMisProductosBinding
 import com.example.gc02.model.Article
 import com.example.gc02.model.User
-import com.example.gc02.view.AnadirArticuloALaVentaActivity
 import kotlinx.coroutines.launch
 
 
@@ -32,6 +25,7 @@ class MisFavoritosFragment : Fragment() {
     private var favShops : List<Article> = emptyList()
     private lateinit var articuloAdapter: ArticuloAdapter
     private lateinit var listener: OnShopClickListener
+    private val sharedViewModel: SharedViewModel by activityViewModels()
 
     interface OnShopClickListener {
         fun onShopClick(article: Article)
@@ -62,20 +56,13 @@ class MisFavoritosFragment : Fragment() {
         val userProvider = activity as UserProvider
         user = userProvider.getUser()
 
+        sharedViewModel.listaFavoritos.observe(viewLifecycleOwner, Observer { nuevaListaFavoritos ->
+            favShops = nuevaListaFavoritos
+            articuloAdapter.updateData(favShops)
+        })
+
         loadFavorites()
     }
-    /*    private suspend fun fetchShops(): List<Shop> {
-            var apiShops = listOf<Shop>()
-            Log.d("API"," FETCHSHOPS")
-            try {
-                apiShops = getNetworkService().getCategories()
-                Log.d("API","Shops:$apiShops")
-            } catch (cause: Throwable) {
-                Log.e("API", "Error fetching shop data", cause)
-                throw APIError("Unable to fetch data from API", cause)
-            }
-            return apiShops
-        }*/
 
     private fun setUpRecyclerView() {
         articuloAdapter = ArticuloAdapter(
@@ -91,6 +78,7 @@ class MisFavoritosFragment : Fragment() {
             },
             context = this.context
         )
+
         with(binding) {
             rvShopList.layoutManager = LinearLayoutManager(context)
             rvShopList.adapter = articuloAdapter
@@ -102,10 +90,12 @@ class MisFavoritosFragment : Fragment() {
         lifecycleScope.launch {
             binding.spinner.visibility = View.VISIBLE
             favShops = db.articleDao().getUserWithShops(user.userId!!).shops
+            sharedViewModel.listaFavoritos.value = db.articleDao().getUserWithShops(user.userId!!).shops
             articuloAdapter.updateData(favShops)
             binding.spinner.visibility = View.GONE
         }
     }
+
     private fun setNoFavorite(shop: Article){
         lifecycleScope.launch {
             shop.isFavorite = false

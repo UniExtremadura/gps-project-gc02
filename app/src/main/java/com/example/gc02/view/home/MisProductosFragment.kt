@@ -8,14 +8,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.viewModels
+import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.gc02.api.APIError
-import com.example.gc02.api.getNetworkService
-import com.example.gc02.data.api.Shop
-import com.example.gc02.data.toShop
 import com.example.gc02.database.BaseDatos
-import com.example.gc02.databinding.FragmentMisFavoritosBinding
 import com.example.gc02.databinding.FragmentMisProductosBinding
 import com.example.gc02.model.Article
 import com.example.gc02.model.User
@@ -45,10 +44,6 @@ class MisProductosFragment : Fragment() {
         _binding = FragmentMisProductosBinding.inflate(inflater, container, false)
         setUpListeners()
 
-        val userProvider = activity as UserProvider
-        user = userProvider.getUser()
-        loadArticles()
-        setUpRecyclerView()
         return binding.root
     }
     override fun onAttach(context: android.content.Context) {
@@ -61,7 +56,11 @@ class MisProductosFragment : Fragment() {
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setUpRecyclerView()
+        val userProvider = activity as UserProvider
+        user = userProvider.getUser()
 
+        loadArticles()
 
     }
     private fun setUpRecyclerView() {
