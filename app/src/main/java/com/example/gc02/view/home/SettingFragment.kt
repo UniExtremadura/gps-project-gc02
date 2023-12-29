@@ -8,7 +8,9 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.gc02.databinding.FragmentSettingBinding
+import com.example.gc02.view.BorrarPerfilActivity
 import com.example.gc02.view.LoginActivity
+import com.example.gc02.view.ModifyProfileActivity
 
 /**
  * A simple [Fragment] subclass.
@@ -40,6 +42,17 @@ class SettingFragment : Fragment() {
                 Toast.LENGTH_SHORT
             ).show()*/
             // Cierra la actividad actual del fragmento si es necesario
+            requireActivity().finish()
+        }
+        binding.btnModificarPerfil.setOnClickListener{
+            val intent = Intent(requireContext(),ModifyProfileActivity::class.java)
+            startActivity(intent)
+            requireActivity().finish()
+        }
+
+        binding.btnBorrarPerfil.setOnClickListener{
+            val intent = Intent(requireContext(),BorrarPerfilActivity::class.java)
+            startActivity(intent)
             requireActivity().finish()
         }
 
