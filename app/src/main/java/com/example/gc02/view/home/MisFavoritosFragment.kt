@@ -10,6 +10,8 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.gc02.api.getNetworkService
+import com.example.gc02.data.Repository
 import com.example.gc02.database.BaseDatos
 import com.example.gc02.databinding.FragmentMisFavoritosBinding
 import com.example.gc02.model.Article
@@ -26,6 +28,7 @@ class MisFavoritosFragment : Fragment() {
     private lateinit var articuloAdapter: ArticuloAdapter
     private lateinit var listener: OnShopClickListener
     private val sharedViewModel: SharedViewModel by activityViewModels()
+    private lateinit var repository: Repository
 
     interface OnShopClickListener {
         fun onShopClick(article: Article)
@@ -44,6 +47,7 @@ class MisFavoritosFragment : Fragment() {
     override fun onAttach(context: android.content.Context) {
         super.onAttach(context)
         db = BaseDatos.getInstance(context)!!
+        repository = Repository.getInstance(db.userDao(), db.articleDao(), getNetworkService())
 
         if (context is OnShopClickListener) {
             listener = context
@@ -89,8 +93,8 @@ class MisFavoritosFragment : Fragment() {
     private fun loadFavorites(){
         lifecycleScope.launch {
             binding.spinner.visibility = View.VISIBLE
-            favShops = db.articleDao().getUserWithShops(user.userId!!).shops
-            sharedViewModel.listaFavoritos.value = db.articleDao().getUserWithShops(user.userId!!).shops
+            favShops = repository.getUserWithShopsFavorites(user.userId!!).shops
+            sharedViewModel.listaFavoritos.value = repository.getUserWithShopsFavorites(user.userId!!).shops
             articuloAdapter.updateData(favShops)
             binding.spinner.visibility = View.GONE
         }
@@ -98,11 +102,14 @@ class MisFavoritosFragment : Fragment() {
 
     private fun setNoFavorite(shop: Article){
         lifecycleScope.launch {
-            shop.isFavorite = false
-            //delete show and userShow is deleted by cascade
-            db.articleDao().delete(shop)
+            repository.deleteShopFavorite(shop, user.userId!!)
+            eliminarDeFavoritos(shop)
         }
     }
+    private fun eliminarDeFavoritos(articulo: Article) {
+        sharedViewModel.eliminarDeFavoritos(articulo)
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

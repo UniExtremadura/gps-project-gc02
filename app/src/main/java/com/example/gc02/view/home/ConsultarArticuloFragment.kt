@@ -87,6 +87,7 @@ class ConsultarArticuloFragment : Fragment() {
         }
         return apiShops
     }
+
     private fun setUpRecyclerView() {
         articuloAdapter = ArticuloAdapter(
             shops = _shops,

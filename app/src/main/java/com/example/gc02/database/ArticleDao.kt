@@ -1,5 +1,6 @@
 package com.example.gc02.database
 
+import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
@@ -33,6 +34,7 @@ interface ArticleDao {
 
     @Delete
     fun delete1(article: Article)
+
     @Transaction
     @Query("SELECT * FROM User where userId = :userId")
     suspend fun getUserWithShops(userId: Long): UserwithShops
@@ -55,6 +57,13 @@ interface ArticleDao {
         insert1(article)
         article.articleId?.let { UserShopCrossRef(userId, it) }?.let { insertUserShopPrueba(it) }
     }
+
+    // Relaciona un articulo con un usuario (Favoritos)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    suspend fun insertUserShow(crossRef: UserShopCrossRef)
+
+    @Delete
+    suspend fun deleteUserShow(userShopCrossRef: UserShopCrossRef)
 
     @Update
     suspend fun updateProduct(article: Article)
@@ -79,4 +88,13 @@ interface ArticleDao {
     fun findByName1(first: String): Article
 
     @Query("SELECT * FROM Article WHERE articleId = :id")
-    fun findById1(id: Long): Article }
+    fun findById1(id: Long): Article
+
+    @Query("SELECT * FROM Article")
+    fun getArticles(): LiveData<List<Article>>
+    @Query("SELECT count(*) FROM Article")
+    suspend fun getNumberOfArticles(): Long
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    suspend fun insertAll(shows: List<Article>)
+
+}

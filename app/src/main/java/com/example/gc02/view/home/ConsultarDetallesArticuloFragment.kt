@@ -13,6 +13,8 @@ import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.example.gc02.R
 import com.example.gc02.api.APIError
+import com.example.gc02.api.getNetworkService
+import com.example.gc02.data.Repository
 import com.example.gc02.database.BaseDatos
 import com.example.gc02.databinding.FragmentConsultarArticuloBinding
 import com.example.gc02.model.Article
@@ -27,13 +29,21 @@ class ConsultarDetallesArticuloFragment : Fragment() {
     private var _binding: FragmentConsultarArticuloBinding? = null
     private val binding get() = _binding!!
 
+    private lateinit var repository: Repository
+
     private val args: ConsultarDetallesArticuloFragmentArgs by navArgs()
+
+    override fun onAttach(context: android.content.Context) {
+        super.onAttach(context)
+        db = BaseDatos.getInstance(requireContext())!!
+        repository = Repository.getInstance(db.userDao(), db.articleDao(), getNetworkService())
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        db = BaseDatos.getInstance(requireContext())!!
+
         _binding = FragmentConsultarArticuloBinding.inflate(inflater, container, false)
 
         return binding.root
@@ -83,11 +93,17 @@ class ConsultarDetallesArticuloFragment : Fragment() {
             lifecycleScope.launch {
                 if (isChecked) {
                     shop.isFavorite = true
-                    db.articleDao().insertAndRelate(shop, userInfo?.userId!!)
+                    repository.insertShopFavorite(shop, userInfo?.userId!!)
                     agregarAFavoritos(shop)
+                    Toast.makeText(
+                        context,
+                        "Artículo añadido a favoritos",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 } else {
                     shop.isFavorite = false
-                    db.articleDao().delete(shop)
+                    repository.deleteShopFavorite(shop, userInfo?.userId!!)
+                    eliminarDeFavoritos(shop)
                     Toast.makeText(
                         context,
                         "Artículo borrado de favoritos",
@@ -102,6 +118,14 @@ class ConsultarDetallesArticuloFragment : Fragment() {
     private fun agregarAFavoritos(articulo: Article) {
         sharedViewModel.agregarAFavoritos(articulo)
     }
+
+    private fun eliminarDeFavoritos(articulo: Article) {
+        sharedViewModel.eliminarDeFavoritos(articulo)
+        lifecycleScope.launch {
+            sharedViewModel.listaFavoritos.value = repository.getUserWithShopsFavorites(userInfo?.userId!!).shops
+        }
+    }
+
 
     private fun setUpListeners() {
         val shop = args.shop

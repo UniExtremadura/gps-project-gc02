@@ -6,6 +6,7 @@ import com.example.gc02.data.api.ShopDetails
 import com.example.gc02.model.Article
 import com.example.gc02.utils.SkipNetworkInterceptor
 import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Call
 import retrofit2.Response
 import retrofit2.Retrofit
@@ -19,7 +20,8 @@ import retrofit2.http.Query
 
 private val service: ShopApi by lazy {
     val okHttpClient = OkHttpClient.Builder()
-        .addInterceptor(SkipNetworkInterceptor())
+    //    .addInterceptor(SkipNetworkInterceptor())
+        .addInterceptor(HttpLoggingInterceptor())
         .build()
 
     val retrofit = Retrofit.Builder()

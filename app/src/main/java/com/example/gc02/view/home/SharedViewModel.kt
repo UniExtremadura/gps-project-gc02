@@ -15,4 +15,10 @@ class SharedViewModel : ViewModel() {
         val nuevaListaFavoritos = listaFavoritosActual + articulo
         listaFavoritos.value = nuevaListaFavoritos
     }
+
+    fun eliminarDeFavoritos(articulo: Article) {
+        val listaFavoritosActual = listaFavoritos.value ?: emptyList()
+        val nuevaListaFavoritos = listaFavoritosActual - articulo
+        listaFavoritos.value = nuevaListaFavoritos
+    }
 }
