@@ -20,7 +20,7 @@ import com.example.gc02.view.home.HomeActivity
 class BorrarPerfilActivity : AppCompatActivity(){
     private lateinit var binding: BorrarPerfilActivity
 
-    override fun onCreate(savedInstanceState: Bundle?){
+    /*override fun onCreate(savedInstanceState: Bundle?){
         super.onCreate(savedInstanceState)
 
         binding= ActivityBorrarPerfilBinding.inflate(layoutInflater)
@@ -59,5 +59,5 @@ class BorrarPerfilActivity : AppCompatActivity(){
 
     private fun navigateToJoin() {
         HomeActivity.start(this, user)
-    }
+    }*/
 }

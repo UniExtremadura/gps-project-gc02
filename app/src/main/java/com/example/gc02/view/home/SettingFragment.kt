@@ -51,9 +51,9 @@ class SettingFragment : Fragment() {
         }
 
         binding.btnBorrarPerfil.setOnClickListener{
-            val intent = Intent(requireContext(),BorrarPerfilActivity::class.java)
+            /*val intent = Intent(requireContext(),BorrarPerfilActivity::class.java)
             startActivity(intent)
-            requireActivity().finish()
+            requireActivity().finish()*/
         }
 
     }
