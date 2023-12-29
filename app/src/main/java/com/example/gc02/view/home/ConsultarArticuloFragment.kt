@@ -118,7 +118,6 @@ class ConsultarArticuloFragment : Fragment() {
                                 ignoreCase = true
                             ) && it.price <= args.precio.toDouble()
                         })
-                        requireArguments().clear()
 
                     } else {
                         if (!args.nombre.equals("")){
@@ -128,18 +127,15 @@ class ConsultarArticuloFragment : Fragment() {
                                     ignoreCase = true
                                 )
                             })
-                            requireArguments().clear()
 
                         }else{
                         if(!args.precio.equals("")) {
                             articuloAdapter.updateData(_shops.filter {
                                 it.price <= args.precio.toDouble()
                             })
-                            requireArguments().clear()
 
                         }else{
                             articuloAdapter.updateData(_shops)
-                            requireArguments().clear()
 
                         }
                         }
