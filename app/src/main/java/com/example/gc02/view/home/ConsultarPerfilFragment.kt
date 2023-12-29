@@ -12,6 +12,7 @@ import com.example.gc02.database.BaseDatos
 import com.example.gc02.databinding.FragmentConsultarPerfilBinding
 import com.example.gc02.model.Comentario
 import com.example.gc02.model.User
+import com.example.gc02.model.Valuation
 import kotlinx.coroutines.launch
 /**
  * A simple [Fragment] subclass.
@@ -22,6 +23,7 @@ class ConsultarPerfilFragment : Fragment() {
     private val TAG = "ComentarioFragment"
     private lateinit var db: BaseDatos
     private var _comentarios: List<Comentario> = emptyList()
+    private var _valoracion: List<Valuation> = emptyList()
     private lateinit var listener: OnPerfilClickListener
 
     interface OnPerfilClickListener {
@@ -34,6 +36,7 @@ class ConsultarPerfilFragment : Fragment() {
 
     private val binding get() = _binding!!
     private lateinit var comentarioAdapter: ComentarioAdapter
+    private lateinit var valoracionAdapter: ValoracionAdapter
     private var userInfo: User? = null
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -49,7 +52,9 @@ class ConsultarPerfilFragment : Fragment() {
         }
 
         // Configurar el botón para enviar un nuevo comentario
-        setUpRecyclerView()
+        setUpRecyclerViewComentario()
+
+        setUpRecyclerViewValoracion()
         // Configurar la carga de información del perfil (puedes obtener esta información desde tu base de datos u otro origen)
         cargarInformacionDePerfil()
 
@@ -79,9 +84,29 @@ class ConsultarPerfilFragment : Fragment() {
             val id = db?.comentarioDao()?.insert(comment)
         }
         // Después de enviar el comentario, actualizar la lista de comentarios llamando a cargarComentarios()
-        setUpRecyclerView()
+        setUpRecyclerViewComentario()
         // Limpiar el EditText después de enviar el comentario
         binding.editTextComentario.text.clear()
+    }
+
+    private fun setUpRecyclerViewValoracion() {
+        valoracionAdapter = ValoracionAdapter(
+            valoracion=_valoracion
+        )
+        with(binding) {
+            layoutValoracion.layoutManager = LinearLayoutManager(context)
+            layoutValoracion.adapter = valoracionAdapter
+        }
+        lifecycleScope.launch {
+            val valoracionDB = db.valuationDao().getAllByUser(userInfo?.userId)
+            valoracionAdapter.updateData(valoracionDB)
+        }
+        Toast.makeText(
+            context,
+            "Valoraciones mostradas",
+            Toast.LENGTH_SHORT
+        ).show()
+        android.util.Log.d("ValoracionFragment", "setUpRecyclerView")
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -101,7 +126,7 @@ class ConsultarPerfilFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
     }
-    private fun setUpRecyclerView() {
+    private fun setUpRecyclerViewComentario() {
         comentarioAdapter = ComentarioAdapter(
             comentarios=_comentarios
         )
