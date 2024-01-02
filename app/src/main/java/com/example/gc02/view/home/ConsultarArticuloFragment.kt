@@ -7,17 +7,21 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.gc02.RetroReuseApplication
 import com.example.gc02.api.APIError
 import com.example.gc02.api.getNetworkService
+import com.example.gc02.data.Repository
 import com.example.gc02.data.api.Shop
 import com.example.gc02.data.dummyArticulos
 import com.example.gc02.data.toShop
 import com.example.gc02.database.BaseDatos
 import com.example.gc02.databinding.FragmentListaArticulosBinding
 import com.example.gc02.model.Article
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
 
@@ -33,9 +37,9 @@ private const val TAG = "ConsultarArticuloFragment"
 class ConsultarArticuloFragment : Fragment() {
 
     private var _binding: FragmentListaArticulosBinding? = null
-    private val binding get() = _binding!!
-    private lateinit var db: BaseDatos
+    private val viewModel: ConsultarArticuloViewModel by viewModels { ConsultarArticuloViewModel.Factory }
 
+    private val binding get() = _binding!!
     private var _shops : List<Article> = emptyList()
 
     private lateinit var listener: OnShopClickListener
@@ -53,10 +57,6 @@ class ConsultarArticuloFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentListaArticulosBinding.inflate(inflater, container, false)
-
-        setUpRecyclerView()
-
-
         return binding.root
     }
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -64,7 +64,7 @@ class ConsultarArticuloFragment : Fragment() {
     }
     override fun onAttach(context: android.content.Context) {
         super.onAttach(context)
-        db = BaseDatos.getInstance(context)!!
+
         if (context is OnShopClickListener) {
             listener = context
         } else {
@@ -74,6 +74,59 @@ class ConsultarArticuloFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        setUpRecyclerView()
+        val userProvider = activity as UserProvider
+        val user = userProvider.getUser()
+        viewModel.user = user
+        // show the spinner when [spinner] is true
+        viewModel.spinner.observe(viewLifecycleOwner) { show ->
+            binding.spinner.visibility = if (show) View.VISIBLE else View.GONE
+        }
+
+        // Show a Toast whenever the [toast] is updated a non-null value
+        viewModel.toast.observe(viewLifecycleOwner) { text ->
+            text?.let { Toast.makeText(context, text, Toast.LENGTH_SHORT).show()
+                viewModel.onToastShown()
+            }
+        }
+        subscribeUi(articuloAdapter)
+    }
+
+    private fun subscribeUi(adapter: ArticuloAdapter) {
+        if (!args.precio.equals("") && !args.nombre.equals("")) {
+            viewModel.shops.observe(viewLifecycleOwner) { shops ->
+                adapter.updateData(shops.filter {
+                    it.title.contains(
+                        args.nombre,
+                        ignoreCase = true
+                    ) && it.price <= args.precio.toDouble()
+                })
+            }
+        } else {
+            if (!args.nombre.equals("")) {
+                viewModel.shops.observe(viewLifecycleOwner) { shops ->
+                    adapter.updateData(shops.filter {
+                        it.title.contains(
+                            args.nombre,
+                            ignoreCase = true
+                        )
+                    })
+                }
+            } else {
+                if (!args.precio.equals("")) {
+                    viewModel.shops.observe(viewLifecycleOwner) { shops ->
+                        adapter.updateData(shops.filter {
+                            it.price <= args.precio.toDouble()
+                        })
+                    }
+                } else {
+                    viewModel.shops.observe(viewLifecycleOwner) { shops ->
+                        adapter.updateData(shops)
+                    }
+                }
+            }
+
+        }
     }
     private suspend fun fetchShops(): List<Shop> {
         var apiShops = listOf<Shop>()
@@ -89,6 +142,8 @@ class ConsultarArticuloFragment : Fragment() {
     }
 
     private fun setUpRecyclerView() {
+        Log.d("setUpRecyclerView", "Entro en el setUpRecyclerView")
+
         articuloAdapter = ArticuloAdapter(
             shops = _shops,
             onClick = {
@@ -104,52 +159,34 @@ class ConsultarArticuloFragment : Fragment() {
             rvShopList.adapter = articuloAdapter
         }
 
-        lifecycleScope.launch {
-            if (_shops.isEmpty()) {
-                binding.spinner.visibility = View.VISIBLE
-                try {
-                    _shops = db.articleDao().getAll()
-                   _shops = _shops + fetchShops().map(Shop::toShop)
-
                     Log.d("Consultar", "Consultar nombre $args.nombre y precio $args.precio")
-                    if(!args.precio.equals("") && !args.nombre.equals("")) {
-                        articuloAdapter.updateData(_shops.filter {
-                            it.title.contains(
-                                args.nombre,
-                                ignoreCase = true
-                            ) && it.price <= args.precio.toDouble()
-                        })
 
-                    } else {
-                        if (!args.nombre.equals("")){
-                            articuloAdapter.updateData(_shops.filter {
-                                it.title.contains(
-                                    args.nombre,
-                                    ignoreCase = true
-                                )
-                            })
 
-                        }else{
-                        if(!args.precio.equals("")) {
-                            articuloAdapter.updateData(_shops.filter {
-                                it.price <= args.precio.toDouble()
-                            })
+        android.util.Log.d("ArticulosFragment", "setUpRecyclerView")
+    }
 
-                        }else{
-                            articuloAdapter.updateData(_shops)
-
-                        }
-                        }
-                    }
-                } catch (error: APIError) {
-                    Toast.makeText(context, error.message, Toast.LENGTH_SHORT).show()
-                } finally {
-                    binding.spinner.visibility = View.GONE
-
-                }
+    /**
+     * Helper function to call a data load function with a loading spinner; errors will trigger a
+     * Toast.
+     *
+     * By marking [block] as [suspend] this creates a suspend lambda which can call suspend
+     * functions.
+     *
+     * @param block lambda to actually load data. It is called in the lifecycleScope. Before calling
+     *              the lambda, the loading spinner will display. After completion or error, the
+     *              loading spinner will stop.
+     */
+    private fun launchDataLoad(block: suspend () -> Unit): Job {
+        return lifecycleScope.launch {
+            try {
+                binding.spinner.visibility = View.VISIBLE
+                block()
+            } catch (error: APIError) {
+                Toast.makeText(context, error.message, Toast.LENGTH_SHORT).show()
+            } finally {
+                binding.spinner.visibility = View.GONE
             }
         }
-        android.util.Log.d("ArticulosFragment", "setUpRecyclerView")
     }
     override fun onDestroyView() {
         super.onDestroyView()

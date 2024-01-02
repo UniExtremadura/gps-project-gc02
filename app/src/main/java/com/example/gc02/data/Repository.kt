@@ -11,14 +11,14 @@ import com.example.gc02.model.Article
 import com.example.gc02.model.UserShopCrossRef
 import com.example.gc02.model.UserwithShops
 
-class Repository private constructor(
+class Repository(
     private val userDao: UserDao,
     private val articleDao: ArticleDao,
     private val networkService: ShopApi
 ) {
     private var lastUpdateTimeMillis: Long = 0L
 
-    val shows = articleDao.getArticles()
+    val shops = articleDao.getArticles()
 
     /**
      * Update the shows cache.
@@ -26,16 +26,16 @@ class Repository private constructor(
      * This function may decide to avoid making a network requests on every call based on a
      * cache-invalidation policy.
      */
-    suspend fun tryUpdateRecentShowsCache() {
-        if (shouldUpdateShowsCache()) fetchRecentShows()
+    suspend fun tryUpdateRecentShopsCache() {
+        if (shouldUpdateShowsCache()) fetchRecentShops()
     }
 
     /**
      * Fetch a new list of shows from the network, and append them to [ShowDao]
      */
-    private suspend fun fetchRecentShows() {
+    private suspend fun fetchRecentShops() {
         try {
-            val shops = listOf<Shop>().map { it.toShop()}
+            val shops =  networkService.getCategories().map(Shop::toShop)
             articleDao.insertAll(shops)
             lastUpdateTimeMillis = System.currentTimeMillis()
         } catch (cause: Throwable) {
@@ -64,6 +64,10 @@ class Repository private constructor(
 
     suspend fun getUserWithShopsFavorites(userId: Long): UserwithShops {
         return articleDao.getUserWithShops(userId)
+    }
+
+    suspend fun getShop(shopId: Long): Article {
+        return articleDao.findById(shopId.toInt())
     }
     suspend fun insertShopFavorite(article: Article, userId: Long) {
         articleDao.insert(article)

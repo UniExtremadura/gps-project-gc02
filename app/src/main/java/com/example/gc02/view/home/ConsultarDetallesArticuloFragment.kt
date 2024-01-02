@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -26,21 +27,19 @@ import com.example.gc02.view.RealizarCompraActivity
 import kotlinx.coroutines.launch
 class ConsultarDetallesArticuloFragment : Fragment() {
     private var userInfo: User? = null
+    private val viewModel: ConsultarDetallesArticuloViewModel by viewModels { ConsultarDetallesArticuloViewModel.Factory }
     private lateinit var db: BaseDatos
     private val sharedViewModel: SharedViewModel by activityViewModels()
     private lateinit var comentarioAdapter: ComentarioAdapter
     private var _comentarios: List<Comentario> = emptyList()
     private var _binding: FragmentConsultarArticuloBinding? = null
     private val binding get() = _binding!!
-
-    private lateinit var repository: Repository
-
     private val args: ConsultarDetallesArticuloFragmentArgs by navArgs()
 
     override fun onAttach(context: android.content.Context) {
         super.onAttach(context)
         db = BaseDatos.getInstance(requireContext())!!
-        repository = Repository.getInstance(db.userDao(), db.articleDao(), getNetworkService())
+
     }
 
     override fun onCreateView(
@@ -75,19 +74,27 @@ class ConsultarDetallesArticuloFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val shop = args.shop
 
-        lifecycleScope.launch{
-            try{
-                // val _shop = fetchShopDetail(shop.articleId).toShop()
-                //_shop.isFavorite = shop.isFavorite
-                showBinding(shop)
-            } catch (error: APIError) {
-                Toast.makeText(context, error.message, Toast.LENGTH_SHORT).show()
+        viewModel.shop = shop
+        viewModel.user = userInfo
+
+        // Show a Toast whenever the [toast] is updated a non-null value
+        viewModel.toast.observe(viewLifecycleOwner) { text ->
+            text?.let {
+                Toast.makeText(context, text, Toast.LENGTH_SHORT).show()
+                viewModel.onToastShown()
             }
         }
 
+        subscribeUi()
         setUpListeners()
 
 
+    }
+
+    private fun subscribeUi() {
+        viewModel.shopDetail.observe(viewLifecycleOwner) { shop ->
+            shop?.let{ showBinding(shop) }
+        }
     }
     private fun enviarComentario(nameUser: String) {
         // Agregar lógica para enviar un nuevo comentario
@@ -156,8 +163,7 @@ class ConsultarDetallesArticuloFragment : Fragment() {
         binding.swFavorito.setOnCheckedChangeListener { _, isChecked ->
             lifecycleScope.launch {
                 if (isChecked) {
-                    shop.isFavorite = true
-                    repository.insertShopFavorite(shop, userInfo?.userId!!)
+                    viewModel.setFavorite(shop)
                     agregarAFavoritos(shop)
                     Toast.makeText(
                         context,
@@ -165,8 +171,7 @@ class ConsultarDetallesArticuloFragment : Fragment() {
                         Toast.LENGTH_SHORT
                     ).show()
                 } else {
-                    shop.isFavorite = false
-                    repository.deleteShopFavorite(shop, userInfo?.userId!!)
+                    viewModel.setNoFavorite(shop)
                     eliminarDeFavoritos(shop)
                     Toast.makeText(
                         context,
@@ -185,20 +190,15 @@ class ConsultarDetallesArticuloFragment : Fragment() {
 
     private fun eliminarDeFavoritos(articulo: Article) {
         sharedViewModel.eliminarDeFavoritos(articulo)
-        lifecycleScope.launch {
-            sharedViewModel.listaFavoritos.value = repository.getUserWithShopsFavorites(userInfo?.userId!!).shops
-        }
+          //  sharedViewModel.listaFavoritos.value = viewModel.getUserWithShopsFav()
     }
 
 
     private fun setUpListeners() {
-        val shop = args.shop
         with(binding) {
 
             btComprar.setOnClickListener {
                 lifecycleScope.launch {
-                    // shop.articleId?.let { it1 -> deleteProduct(it1) }
-                    //     shop.articleId?.let { it1 -> updateProduct(it1) }
                     navigateToRealizarCompra()
 
                 }
@@ -206,76 +206,6 @@ class ConsultarDetallesArticuloFragment : Fragment() {
             }
         }
     }
-
-    /*private suspend fun deleteProduct(){
-        try {
-            getNetworkService().deleteProduct(args.shop.articleId)
-        }catch (cause: Throwable){
-            throw APIError("Delete product failed", cause)
-        }
-    }*/
-
-    /*private fun deleteProduct(productId: Long) {
-        val productService = getNetworkService()
-
-           val call: Call<Void> = productService.deleteProduct(productId)
-           call.enqueue(object : Callback<Void> {
-               override fun onResponse(call: Call<Void>, response: Response<Void>) {
-                   if (response.isSuccessful) {
-                       // Éxito al eliminar el producto
-                       Log.d("DELETE", "Producto eliminado con éxito")
-                   } else {
-                       // Manejar errores, por ejemplo, si el producto no existe
-                       Log.e("DELETE", "Error al eliminar el producto: ${response.code()}")
-                   }
-               }
-
-               override fun onFailure(call: Call<Void>, t: Throwable) {
-                   // Manejar errores de red u otros errores
-                   Log.e("DELETE", "Error de red al intentar eliminar el producto", t)
-               }
-           })
-    }*/
-
-    private fun updateProduct(productId: Long) {
-        /*  val productService = getNetworkService()
-
-          val updatedProduct = Shop(
-              id = args.shop.articleId,
-              title = args.shop.title,
-              price = args.shop.price,
-              description = args.shop.description,
-              image = args.shop.image,
-              category = args.shop.category
-          )
-
-          val call: Call<Void> = productService.updateProduct(productId, updatedProduct)
-          call.enqueue(object : Callback<Void> {
-              override fun onResponse(call: Call<Void>, response: Response<Void>) {
-                  if (response.isSuccessful) {
-                      // Éxito al eliminar el producto
-                      Log.d("UPDATE", "Producto actualizado con éxito")
-                  } else {
-                      // Manejar errores, por ejemplo, si el producto no existe
-                      Log.e("UPDATE", "Error al actualizado el producto: ${response.code()}")
-                  }
-              }
-
-              override fun onFailure(call: Call<Void>, t: Throwable) {
-                  // Manejar errores de red u otros errores
-                  Log.e("UPDATE", "Error de red al intentar actualizar el producto", t)
-              }
-          })*/
-    }
-    /*private suspend fun fetchShopDetail(shopId: Long?): Shop {
-        var shop = Shop()
-        try {
-            shop = getNetworkService().getShopDetail(shopId).shop ?: Shop()
-        } catch (cause: Throwable) {
-            throw APIError("Unable to fetch data from API", cause)
-        }
-        return shop
-    }*/
 
     private fun navigateToRealizarCompra(){
         val intent = Intent(activity, RealizarCompraActivity::class.java)
