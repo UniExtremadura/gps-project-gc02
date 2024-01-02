@@ -7,7 +7,10 @@ import android.util.Log
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import com.example.gc02.api.getNetworkService
+import com.example.gc02.data.Repository
 import com.example.gc02.database.BaseDatos
 import com.example.gc02.databinding.ActivityAnadirArticuloVentaBinding
 import com.example.gc02.model.Article
@@ -19,6 +22,7 @@ import kotlinx.coroutines.launch
 class AnadirArticuloALaVentaActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityAnadirArticuloVentaBinding
+    private lateinit var repository: Repository
 
     private lateinit var db: BaseDatos
 
@@ -43,6 +47,7 @@ class AnadirArticuloALaVentaActivity : AppCompatActivity() {
         binding = ActivityAnadirArticuloVentaBinding.inflate(layoutInflater)
         setContentView(binding.root)
         db = BaseDatos.getInstance(applicationContext)!!
+        repository = Repository.getInstance(db.userDao(), db.articleDao(), getNetworkService())
 
         setUpListeners()
     }
@@ -50,7 +55,7 @@ class AnadirArticuloALaVentaActivity : AppCompatActivity() {
     private fun setUpListeners() {
         with(binding){
             anadirButton.setOnClickListener {
-               join()
+                join()
             }
         }
     }
@@ -76,9 +81,9 @@ class AnadirArticuloALaVentaActivity : AppCompatActivity() {
                         (intent.getSerializableExtra("user") as User).userId
 
                     )
-                    val id =  db?.articleDao()?.insert(article)
+                    val id =  repository.insert(article)
                     if (id != null) {
-                        Log.d("Annadir", "El id del articulo insertado es ${db.articleDao().findById(id.toInt()).title}")
+                        Log.d("Annadir", "El id del articulo insertado es ${repository.findById(id.toInt()).title}")
                     }
                     navigateBackWithResult(
                         Article(

@@ -75,6 +75,18 @@ class Repository private constructor(
         articleDao.insert(article)
     }
 
+    suspend fun insert(article: Article): Long {
+        return articleDao.insert(article)
+    }
+
+    suspend fun findById(id: Int): Article {
+        return articleDao.findById(id)
+    }
+
+    suspend fun getAllByUser(userId: Long?): List<Article> {
+        return articleDao.getAllByUser(userId)
+    }
+
     companion object {
         private const val MIN_TIME_FROM_LAST_FETCH_MILLIS: Long = 30000
 

@@ -14,6 +14,8 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.gc02.api.getNetworkService
+import com.example.gc02.data.Repository
 import com.example.gc02.database.BaseDatos
 import com.example.gc02.databinding.FragmentMisProductosBinding
 import com.example.gc02.model.Article
@@ -29,6 +31,7 @@ class MisProductosFragment : Fragment() {
     private lateinit var listener: MisFavoritosFragment.OnShopClickListener
 
     private lateinit var user: User
+    private lateinit var repository: Repository
 
     private var _binding: FragmentMisProductosBinding? = null
     interface OnShopClickListener {
@@ -49,6 +52,7 @@ class MisProductosFragment : Fragment() {
     override fun onAttach(context: android.content.Context) {
         super.onAttach(context)
         db = BaseDatos.getInstance(context)!!
+        repository = Repository.getInstance(db.userDao(), db.articleDao(), getNetworkService())
 
         if (context is MisFavoritosFragment.OnShopClickListener) {
             listener = context
@@ -95,7 +99,7 @@ class MisProductosFragment : Fragment() {
     private fun loadArticles(){
         lifecycleScope.launch {
             binding.spinner.visibility = View.VISIBLE
-            shops = db.articleDao().getAllByUser(user.userId!!)
+            shops = repository.getAllByUser(user.userId!!)
             articuloAdapter.updateData(shops)
             binding.spinner.visibility = View.GONE
         }
