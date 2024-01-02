@@ -29,7 +29,6 @@ class ConsultarDetallesArticuloFragment : Fragment() {
     private var userInfo: User? = null
     private val viewModel: ConsultarDetallesArticuloViewModel by viewModels { ConsultarDetallesArticuloViewModel.Factory }
     private lateinit var db: BaseDatos
-    private val sharedViewModel: SharedViewModel by activityViewModels()
     private lateinit var comentarioAdapter: ComentarioAdapter
     private var _comentarios: List<Comentario> = emptyList()
     private var _binding: FragmentConsultarArticuloBinding? = null
@@ -164,7 +163,6 @@ class ConsultarDetallesArticuloFragment : Fragment() {
             lifecycleScope.launch {
                 if (isChecked) {
                     viewModel.setFavorite(shop)
-                    agregarAFavoritos(shop)
                     Toast.makeText(
                         context,
                         "Artículo añadido a favoritos",
@@ -172,7 +170,6 @@ class ConsultarDetallesArticuloFragment : Fragment() {
                     ).show()
                 } else {
                     viewModel.setNoFavorite(shop)
-                    eliminarDeFavoritos(shop)
                     Toast.makeText(
                         context,
                         "Artículo borrado de favoritos",
@@ -182,15 +179,6 @@ class ConsultarDetallesArticuloFragment : Fragment() {
             }
 
         }
-    }
-
-    private fun agregarAFavoritos(articulo: Article) {
-        sharedViewModel.agregarAFavoritos(articulo)
-    }
-
-    private fun eliminarDeFavoritos(articulo: Article) {
-        sharedViewModel.eliminarDeFavoritos(articulo)
-          //  sharedViewModel.listaFavoritos.value = viewModel.getUserWithShopsFav()
     }
 
 

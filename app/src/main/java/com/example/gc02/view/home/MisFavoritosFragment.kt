@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -23,13 +24,10 @@ class MisFavoritosFragment : Fragment() {
     private lateinit var user: User
 
     private var _binding: FragmentMisFavoritosBinding? = null
-    private lateinit var db: BaseDatos
     private var favShops : List<Article> = emptyList()
     private lateinit var articuloAdapter: ArticuloAdapter
     private lateinit var listener: OnShopClickListener
-    private val sharedViewModel: SharedViewModel by activityViewModels()
-    private lateinit var repository: Repository
-
+    private val viewModel:  MisFavoritosViewModel by viewModels { MisFavoritosViewModel.Factory }
     interface OnShopClickListener {
         fun onShopClick(article: Article)
     }
@@ -46,8 +44,6 @@ class MisFavoritosFragment : Fragment() {
 
     override fun onAttach(context: android.content.Context) {
         super.onAttach(context)
-        db = BaseDatos.getInstance(context)!!
-        repository = Repository.getInstance(db.userDao(), db.articleDao(), getNetworkService())
 
         if (context is OnShopClickListener) {
             listener = context
@@ -59,15 +55,16 @@ class MisFavoritosFragment : Fragment() {
         setUpRecyclerView()
         val userProvider = activity as UserProvider
         user = userProvider.getUser()
+        viewModel.user = user
 
-        sharedViewModel.listaFavoritos.observe(viewLifecycleOwner, Observer { nuevaListaFavoritos ->
-            favShops = nuevaListaFavoritos
-            articuloAdapter.updateData(favShops)
-        })
 
-        loadFavorites()
+        subscribeUi(articuloAdapter)
     }
-
+    private fun subscribeUi(adapter: ArticuloAdapter) {
+        viewModel.misArticulosFavs.observe(viewLifecycleOwner) { misArticulosFavs ->
+            adapter.updateData(misArticulosFavs.shops)
+        }
+    }
     private fun setUpRecyclerView() {
         articuloAdapter = ArticuloAdapter(
             shops = favShops,
@@ -77,7 +74,6 @@ class MisFavoritosFragment : Fragment() {
             },
             onLongClick = {
                 setNoFavorite(it)
-                loadFavorites()
                 Toast.makeText(context, "long click on: "+it.title, Toast.LENGTH_SHORT).show()
             },
             context = this.context
@@ -90,29 +86,25 @@ class MisFavoritosFragment : Fragment() {
         android.util.Log.d("ArticulosFragment", "setUpRecyclerView")
     }
 
-    private fun loadFavorites(){
-        lifecycleScope.launch {
-            binding.spinner.visibility = View.VISIBLE
-            favShops = repository.getUserWithShopsFavorites(user.userId!!).shops
-            sharedViewModel.listaFavoritos.value = repository.getUserWithShopsFavorites(user.userId!!).shops
-            articuloAdapter.updateData(favShops)
-            binding.spinner.visibility = View.GONE
-        }
-    }
+
 
     private fun setNoFavorite(shop: Article){
-        lifecycleScope.launch {
-            repository.deleteShopFavorite(shop, user.userId!!)
-            eliminarDeFavoritos(shop)
-        }
-    }
-    private fun eliminarDeFavoritos(articulo: Article) {
-        sharedViewModel.eliminarDeFavoritos(articulo)
+        viewModel.setNoFavorite(shop)
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
-
+    companion object {
+        /**
+         * Use this factory method to create a new instance of
+         * this fragment using the provided parameters.
+         * @return A new instance of fragment ShowDetailFragment.
+         */
+        @JvmStatic
+        fun newInstance(): MisFavoritosFragment {
+            return MisFavoritosFragment()
+        }
+    }
 }

@@ -100,4 +100,12 @@ interface ArticleDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertAll(shows: List<Article>)
 
+    @Transaction
+    @Query("SELECT * FROM Article where userId = :userId")
+    fun getShopsByUser(userId: Long): LiveData<List<Article>>
+
+
+    @Transaction
+    @Query("SELECT * FROM User where userId = :userId")
+    fun getUserWithShops2(userId: Long): LiveData<UserwithShops>
 }

@@ -25,13 +25,12 @@ import kotlinx.coroutines.launch
 
 
 class MisProductosFragment : Fragment() {
-    private lateinit var db: BaseDatos
     private var shops : List<Article> = emptyList()
     private lateinit var articuloAdapter: ArticuloAdapter
     private lateinit var listener: MisFavoritosFragment.OnShopClickListener
 
     private lateinit var user: User
-    private lateinit var repository: Repository
+    private val viewModel:  MisProductosViewModel by viewModels { MisProductosViewModel.Factory }
 
     private var _binding: FragmentMisProductosBinding? = null
     interface OnShopClickListener {
@@ -51,9 +50,6 @@ class MisProductosFragment : Fragment() {
     }
     override fun onAttach(context: android.content.Context) {
         super.onAttach(context)
-        db = BaseDatos.getInstance(context)!!
-        repository = Repository.getInstance(db.userDao(), db.articleDao(), getNetworkService())
-
         if (context is MisFavoritosFragment.OnShopClickListener) {
             listener = context
         }
@@ -63,9 +59,14 @@ class MisProductosFragment : Fragment() {
         setUpRecyclerView()
         val userProvider = activity as UserProvider
         user = userProvider.getUser()
+        viewModel.user = user
 
-        loadArticles()
-
+        subscribeUi(articuloAdapter)
+    }
+    private fun subscribeUi(adapter: ArticuloAdapter) {
+        viewModel.misArticulos.observe(viewLifecycleOwner) { misArticulos ->
+            adapter.updateData(misArticulos)
+        }
     }
     private fun setUpRecyclerView() {
         articuloAdapter = ArticuloAdapter(
@@ -96,11 +97,10 @@ class MisProductosFragment : Fragment() {
             }
         }
     }
-    private fun loadArticles(){
+    private fun loadArticles(misArticles:List<Article>){
         lifecycleScope.launch {
             binding.spinner.visibility = View.VISIBLE
-            shops = repository.getAllByUser(user.userId!!)
-            articuloAdapter.updateData(shops)
+            articuloAdapter.updateData(misArticles)
             binding.spinner.visibility = View.GONE
         }
     }

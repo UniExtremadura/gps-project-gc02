@@ -48,6 +48,7 @@ class RealizarCompraActivity : AppCompatActivity() {
                 lifecycleScope.launch {
                     if(shop != null) {
                         db.articleDao().delete(shop)
+
                         navigateToValoracion()
                         Toast.makeText(
                             this@RealizarCompraActivity,

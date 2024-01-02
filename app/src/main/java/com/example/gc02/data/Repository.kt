@@ -1,13 +1,15 @@
 package com.example.gc02.data
 
-import androidx.room.Transaction
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.switchMap
 import com.example.gc02.api.ShopApi
 import com.example.gc02.api.APIError
-import com.example.gc02.api.getNetworkService
 import com.example.gc02.data.api.Shop
 import com.example.gc02.database.UserDao
 import com.example.gc02.database.ArticleDao
 import com.example.gc02.model.Article
+import com.example.gc02.model.User
 import com.example.gc02.model.UserShopCrossRef
 import com.example.gc02.model.UserwithShops
 
@@ -20,6 +22,17 @@ class Repository(
 
     val shops = articleDao.getArticles()
 
+    private val userFilter = MutableLiveData<Long>()
+
+    val shopsUser: LiveData<List<Article>> =
+        userFilter.switchMap{ userid -> articleDao.getShopsByUser(userid) }
+
+    val shopsFavUser: LiveData<UserwithShops> =
+        userFilter.switchMap{ userid -> articleDao.getUserWithShops2(userid) }
+
+    fun setUserid(userid: Long) {
+        userFilter.value = userid
+    }
     /**
      * Update the shows cache.
      *
@@ -65,6 +78,7 @@ class Repository(
     suspend fun getUserWithShopsFavorites(userId: Long): UserwithShops {
         return articleDao.getUserWithShops(userId)
     }
+
 
     suspend fun getShop(shopId: Long): Article {
         return articleDao.findById(shopId.toInt())
