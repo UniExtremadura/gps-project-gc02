@@ -26,11 +26,8 @@ class MisFavoritosFragment : Fragment() {
     private var _binding: FragmentMisFavoritosBinding? = null
     private var favShops : List<Article> = emptyList()
     private lateinit var articuloAdapter: ArticuloAdapter
-    private lateinit var listener: OnShopClickListener
+    private lateinit var listener: TabLayoutFragment.OnShopClickListener
     private val viewModel:  MisFavoritosViewModel by viewModels { MisFavoritosViewModel.Factory }
-    interface OnShopClickListener {
-        fun onShopClick(article: Article)
-    }
 
     private val binding get() = _binding!!
     override fun onCreateView(
@@ -45,8 +42,10 @@ class MisFavoritosFragment : Fragment() {
     override fun onAttach(context: android.content.Context) {
         super.onAttach(context)
 
-        if (context is OnShopClickListener) {
+        if (context is TabLayoutFragment.OnShopClickListener) {
             listener = context
+        } else {
+            throw RuntimeException(context.toString() + " must implement OnShopClickListener")
         }
     }
 
@@ -56,7 +55,6 @@ class MisFavoritosFragment : Fragment() {
         val userProvider = activity as UserProvider
         user = userProvider.getUser()
         viewModel.user = user
-
 
         subscribeUi(articuloAdapter)
     }
@@ -69,8 +67,8 @@ class MisFavoritosFragment : Fragment() {
         articuloAdapter = ArticuloAdapter(
             shops = favShops,
             onClick = {
-                Toast.makeText(context, "click on: "+it.title, Toast.LENGTH_SHORT).show()
-                //listener.onShopClick(it)
+                //Toast.makeText(context, "click on: "+it.title, Toast.LENGTH_SHORT).show()
+                listener.onShopClickProductosPerfil(it)
             },
             onLongClick = {
                 setNoFavorite(it)

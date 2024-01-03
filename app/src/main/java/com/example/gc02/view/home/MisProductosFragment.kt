@@ -2,21 +2,14 @@ package com.example.gc02.view.home
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.activity.viewModels
-import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.gc02.api.getNetworkService
-import com.example.gc02.data.Repository
-import com.example.gc02.database.BaseDatos
 import com.example.gc02.databinding.FragmentMisProductosBinding
 import com.example.gc02.model.Article
 import com.example.gc02.model.User
@@ -27,15 +20,12 @@ import kotlinx.coroutines.launch
 class MisProductosFragment : Fragment() {
     private var shops : List<Article> = emptyList()
     private lateinit var articuloAdapter: ArticuloAdapter
-    private lateinit var listener: MisFavoritosFragment.OnShopClickListener
+    private lateinit var listener: TabLayoutFragment.OnShopClickListener
 
     private lateinit var user: User
     private val viewModel:  MisProductosViewModel by viewModels { MisProductosViewModel.Factory }
 
     private var _binding: FragmentMisProductosBinding? = null
-    interface OnShopClickListener {
-        fun onShopClick(article: Article)
-    }
 
     private val binding get() = _binding!!
     override fun onCreateView(
@@ -50,12 +40,16 @@ class MisProductosFragment : Fragment() {
     }
     override fun onAttach(context: android.content.Context) {
         super.onAttach(context)
-        if (context is MisFavoritosFragment.OnShopClickListener) {
+
+        if (context is TabLayoutFragment.OnShopClickListener) {
             listener = context
+        } else {
+            throw RuntimeException(context.toString() + " must implement OnShopClickListener")
         }
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         setUpRecyclerView()
         val userProvider = activity as UserProvider
         user = userProvider.getUser()
@@ -72,8 +66,8 @@ class MisProductosFragment : Fragment() {
         articuloAdapter = ArticuloAdapter(
             shops = shops,
             onClick = {
-                Toast.makeText(context, "click on: "+it.title, Toast.LENGTH_SHORT).show()
-                //listener.onShopClick(it)
+                //Toast.makeText(context, "click on: "+it.title, Toast.LENGTH_SHORT).show()
+                listener.onShopClickProductosPerfil(it)
             },
             onLongClick = {
                 Toast.makeText(context, "long click on: "+it.title, Toast.LENGTH_SHORT).show()
