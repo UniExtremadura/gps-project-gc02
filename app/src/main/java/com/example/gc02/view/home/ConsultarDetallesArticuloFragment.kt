@@ -66,7 +66,9 @@ class ConsultarDetallesArticuloFragment : Fragment() {
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         setUpRecyclerViewComentario()
+
         val shop = args.shop
 
         viewModel.shop = shop
@@ -85,13 +87,13 @@ class ConsultarDetallesArticuloFragment : Fragment() {
         }
 
         subscribeUi()
-        subscribeUiComment(comentarioAdapter)
+        subscribeUiComment()
         setUpListeners()
 
 
     }
 
-    private fun subscribeUiComment( comentarioAdapter: ComentarioAdapter){
+    private fun subscribeUiComment( ){
         viewModel.comentarios.observe(viewLifecycleOwner){ comentarios->
             comentarioAdapter.updateData(comentarios)
         }
@@ -103,23 +105,14 @@ class ConsultarDetallesArticuloFragment : Fragment() {
         }
     }
     private fun enviarComentario(nameUser: String) {
-        // Agregar lógica para enviar un nuevo comentario
         val nuevoComentario = binding.editTextComentario.text.toString()
     Log.d("Comentario","Agregar comentario a articulo : ${args.shop.articleId}")
-        // Agregar lógica para almacenar el comentario en la base de datos
+
         lifecycleScope.launch {
-            val comment = Comentario(
-                null,
-                nameUser,
-                nuevoComentario,
-                args.shop.articleId,
-                args.shop.userId
-            )
-            val id = repository.insertComment(comment)
+            viewModel.enviarComentario(nameUser,nuevoComentario)
+            // Limpiar el EditText después de enviar el comentario
+            binding.editTextComentario.text.clear()
         }
-        // Después de enviar el comentario, actualizar la lista de comentarios llamando a cargarComentarios()
-        // Limpiar el EditText después de enviar el comentario
-        binding.editTextComentario.text.clear()
     }
 
     private fun setUpRecyclerViewComentario() {
@@ -141,7 +134,7 @@ class ConsultarDetallesArticuloFragment : Fragment() {
     private fun deleteComment(comment: Comentario){
         lifecycleScope.launch {
             repository.deleteComment(comment)
-            setUpRecyclerViewComentario()
+            viewModel.getComments()
         }
     }
     private fun showBinding(shop: Article) {

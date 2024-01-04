@@ -39,11 +39,15 @@ class ConsultarDetallesArticuloViewModel (
         getShop()
     }
 
-    private val comentario = MutableLiveData<List<Comentario>>()
-    val comentarios = repository.commentsArticle
+    private val _comentario = MutableLiveData<List<Comentario>>()
+    val comentarios: LiveData<List<Comentario>>
+        get() = _comentario
     private val _spinner = MutableLiveData<Boolean>()
     val spinner: LiveData<Boolean>
         get() = _spinner
+    init{
+        _spinner.value = false
+    }
     private fun getShop() {
         if (shop!=null)
             viewModelScope.launch{
@@ -61,9 +65,41 @@ class ConsultarDetallesArticuloViewModel (
 
     fun getComments(){
         viewModelScope.launch {
-            comentario.value = repository.getAllByArticleComment(shop!!.articleId!!,shop!!.userId!!)
+            try{
+                _spinner.value = true
+                _comentario.value = repository.getAllByArticleComment(
+                    shop?.articleId ?:0,
+                    shop?.userId ?:0
+                )
+            } catch (e: Exception){
+                _toast.value = "Error al obtener comentarios"
+            } finally {
+                _spinner.value = false
+            }
         }
     }
+
+    fun enviarComentario(nameUser: String, nuevoComentario: String) {
+        viewModelScope.launch {
+            try {
+                val comment = Comentario(
+                    null,
+                    nameUser,
+                    nuevoComentario,
+                    shop?.articleId ?: 0,
+                    shop?.userId ?: 0
+                )
+                val id = repository.insertComment(comment)
+
+                // Después de enviar el comentario con éxito, actualiza la lista de comentarios
+                getComments()
+
+            } catch (e: Exception) {
+                _toast.value = "Error al enviar el comentario"
+            }
+        }
+    }
+
     fun setFavorite(shop: Article){
         viewModelScope.launch {
             shop.isFavorite = true
