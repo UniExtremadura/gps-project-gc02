@@ -47,7 +47,7 @@ class AnadirArticuloALaVentaActivity : AppCompatActivity() {
         binding = ActivityAnadirArticuloVentaBinding.inflate(layoutInflater)
         setContentView(binding.root)
         db = BaseDatos.getInstance(applicationContext)!!
-        repository = Repository.getInstance(db.userDao(), db.articleDao(), getNetworkService())
+        repository = Repository.getInstance(db,getNetworkService())
 
         setUpListeners()
     }

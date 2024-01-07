@@ -1,63 +1,86 @@
 package com.example.gc02.view
 
-
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContentProviderCompat.requireContext
+import androidx.lifecycle.lifecycleScope
+import com.example.gc02.api.getNetworkService
+import com.example.gc02.data.Repository
+import com.example.gc02.database.BaseDatos
 import com.example.gc02.databinding.ActivityBorrarPerfilBinding
 import com.example.gc02.model.User
-import androidx.fragment.app.Fragment
-import com.example.gc02.databinding.FragmentSettingBinding
-import com.example.gc02.view.BorrarPerfilActivity
-import com.example.gc02.view.LoginActivity
-import com.example.gc02.view.ModifyProfileActivity
 import com.example.gc02.view.home.HomeActivity
+import com.example.gc02.view.home.UserProvider
+import kotlinx.coroutines.launch
 
 class BorrarPerfilActivity : AppCompatActivity(){
-    private lateinit var binding: BorrarPerfilActivity
+    private lateinit var binding: ActivityBorrarPerfilBinding
+    private lateinit var repository: Repository
+    private lateinit var db: BaseDatos
+    private lateinit var user : User
+    companion object {
+        const val USUARIO = "NEW_USUARIO"
+        const val EMAIL = "NEW_EMAIL"
+        const val PASSWORD = "NEW_PASSWORD"
+        const val REPASSWORD = "NEW_REPASSWORD"
 
-    /*override fun onCreate(savedInstanceState: Bundle?){
+        fun start(
+            context: Context,
+            responseLauncher: ActivityResultLauncher<Intent>
+        ) {
+            val intent = Intent(context, BorrarPerfilActivity::class.java)
+            responseLauncher.launch(intent)
+        }
+    }
+    override fun onCreate(savedInstanceState: Bundle?){
         super.onCreate(savedInstanceState)
 
         binding= ActivityBorrarPerfilBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        db = BaseDatos.getInstance(applicationContext)!!
+        repository = Repository.getInstance(db, getNetworkService())
+        user = (intent.getSerializableExtra("user") as User)
 
-        setUpUI()
         setUpListeners()
     }
-    private fun setUpUI() {
-        //get attributes from xml using binding
-    }
+
     private fun setUpListeners() {
 
         with(binding) {
 
             borrarPerfilButton.setOnClickListener {
-
+                lifecycleScope.launch {
+                if(user != null){
+                    repository.deleteUser(user)
+                    Log.d("Borrado","Borrado correctamente")
+                } else Log.d("Borrar Perfil", "No se ha podido borrar, user null")
                 navigateToLoginActivity()
                 Toast.makeText(
                     applicationContext,
                     "Article deleted",
                     Toast.LENGTH_SHORT
                 ).show()
+                }
             }
 
-            cancelarBorradoArticulobutton.setOnClickListener {
+            cancelarBorradoPerfilbutton.setOnClickListener {
                 navigateToJoin()
             }
         }
     }
     private fun navigateToLoginActivity() {
-
+        val intent = Intent(this, LoginActivity::class.java)
+        startActivity(intent)
     }
 
 
 
     private fun navigateToJoin() {
         HomeActivity.start(this, user)
-    }*/
+    }
 }

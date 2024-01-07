@@ -1,10 +1,12 @@
 package com.example.gc02.view.home
 
 import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.CreationExtras
 import com.example.gc02.RetroReuseApplication
@@ -12,8 +14,10 @@ import com.example.gc02.api.APIError
 import com.example.gc02.data.Repository
 import com.example.gc02.data.toShop
 import com.example.gc02.model.Article
+import com.example.gc02.model.Comentario
 import com.example.gc02.model.User
 import com.example.gc02.model.UserwithShops
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
 class ConsultarDetallesArticuloViewModel (
@@ -35,6 +39,15 @@ class ConsultarDetallesArticuloViewModel (
         getShop()
     }
 
+    private val _comentario = MutableLiveData<List<Comentario>>()
+    val comentarios: LiveData<List<Comentario>>
+        get() = _comentario
+    private val _spinner = MutableLiveData<Boolean>()
+    val spinner: LiveData<Boolean>
+        get() = _spinner
+    init{
+        _spinner.value = false
+    }
     private fun getShop() {
         if (shop!=null)
             viewModelScope.launch{
@@ -48,6 +61,43 @@ class ConsultarDetallesArticuloViewModel (
                     _toast.value = error.message
                 }
             }
+    }
+
+    fun getComments(){
+        viewModelScope.launch {
+            try{
+                _spinner.value = true
+                _comentario.value = repository.getAllByArticleComment(
+                    shop?.articleId ?:0,
+                    shop?.userId ?:0
+                )
+            } catch (e: Exception){
+                _toast.value = "Error al obtener comentarios"
+            } finally {
+                _spinner.value = false
+            }
+        }
+    }
+
+    fun enviarComentario(nameUser: String, nuevoComentario: String) {
+        viewModelScope.launch {
+            try {
+                val comment = Comentario(
+                    null,
+                    nameUser,
+                    nuevoComentario,
+                    shop?.articleId ?: 0,
+                    shop?.userId ?: 0
+                )
+                val id = repository.insertComment(comment)
+
+                // Después de enviar el comentario con éxito, actualiza la lista de comentarios
+                getComments()
+
+            } catch (e: Exception) {
+                _toast.value = "Error al enviar el comentario"
+            }
+        }
     }
 
     fun setFavorite(shop: Article){

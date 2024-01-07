@@ -30,7 +30,9 @@
             android:name=".view.ValoracionActivity"
             android:exported="false"/>
         <activity
-            android:name=".view.ModifyProfileActivity"
+            android:name=".view.BorrarPerfilActivity"
+            android:exported="false"/>
+        <activity android:name=".view.BorrarArticuloActivity"
             android:exported="false"/>
         <activity
             android:name=".view.LoginActivity"

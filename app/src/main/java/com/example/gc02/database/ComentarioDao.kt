@@ -1,5 +1,6 @@
 package com.example.gc02.database
 
+import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
@@ -15,6 +16,9 @@ interface ComentarioDao {
     suspend fun obtenerComentarios():List<Comentario>
     @Query("SELECT * FROM Comentario WHERE articleId = :articleId AND userId = :userId")
     suspend fun obtenerComentariosByArticleAndUser(articleId: Long, userId: Long):List<Comentario>
+
+    @Query("SELECT * FROM Comentario WHERE articleId = :articleId AND userId = :userId")
+    fun getCommentByArticleAndUser(articleId: Long, userId: Long):LiveData<List<Comentario>>
 
     @Query("SELECT * FROM Comentario")
     fun obtenerComentariosPrueba():List<Comentario>

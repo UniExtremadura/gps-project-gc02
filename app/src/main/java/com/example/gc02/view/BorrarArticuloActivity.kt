@@ -4,12 +4,17 @@ package com.example.gc02.view
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import android.widget.Toast
+import com.example.gc02.data.Repository
+import com.example.gc02.database.BaseDatos
 
 import com.example.gc02.databinding.ActivityBorrarArticuloBinding
+import com.example.gc02.model.User
 
 class BorrarArticuloActivity : AppCompatActivity() {
     private lateinit var binding: ActivityBorrarArticuloBinding
-
+    private lateinit var repository: Repository
+    private lateinit var db: BaseDatos
+    private lateinit var user : User
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

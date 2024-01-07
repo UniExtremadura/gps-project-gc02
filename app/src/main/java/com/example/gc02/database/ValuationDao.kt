@@ -1,5 +1,6 @@
 package com.example.gc02.database
 
+import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
@@ -24,6 +25,11 @@ interface ValuationDao {
     @Transaction
     @Query("SELECT * FROM Valuation WHERE userId=:userId")
     suspend fun getAllByUser(userId: Long?): List<Valuation>
+
+    @Transaction
+    @Query("SELECT * FROM Valuation WHERE userId=:userId")
+    fun getValuationsByUser(userId: Long): LiveData<List<Valuation>>
+
 
     @Delete
     suspend fun delete(valuation: Valuation)

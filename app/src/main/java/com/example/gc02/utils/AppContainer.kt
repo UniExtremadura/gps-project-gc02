@@ -9,6 +9,6 @@ class AppContainer(context: Context?) {
 
     private val networkService = getNetworkService()
     private val db = BaseDatos.getInstance(context!!)
-    val repository = Repository(db!!.userDao(),db.articleDao(),getNetworkService())
+    val repository = Repository(db!!,getNetworkService())
 
 }

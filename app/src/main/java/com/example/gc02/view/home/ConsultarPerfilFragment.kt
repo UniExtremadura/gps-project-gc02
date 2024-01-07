@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.gc02.database.BaseDatos
@@ -13,6 +14,7 @@ import com.example.gc02.databinding.FragmentConsultarPerfilBinding
 import com.example.gc02.model.Comentario
 import com.example.gc02.model.User
 import com.example.gc02.model.Valuation
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 /**
  * A simple [Fragment] subclass.
@@ -25,6 +27,7 @@ class ConsultarPerfilFragment : Fragment() {
 
     private var _valoracion: List<Valuation> = emptyList()
     private lateinit var listener: OnPerfilClickListener
+    private val viewModel: ValoracionViewModel by viewModels { ValoracionViewModel.Factory }
 
     interface OnPerfilClickListener {
         fun onPerfilClick(user:User)
@@ -44,10 +47,6 @@ class ConsultarPerfilFragment : Fragment() {
     ): View? {
         _binding = FragmentConsultarPerfilBinding.inflate(inflater, container, false)
 
-        setUpRecyclerViewValoracion()
-        // Configurar la carga de información del perfil (puedes obtener esta información desde tu base de datos u otro origen)
-        cargarInformacionDePerfil()
-
         return binding.root
     }
 
@@ -59,8 +58,11 @@ class ConsultarPerfilFragment : Fragment() {
         }
     }
 
-
-
+    private fun subscribeUi(adapter: ValoracionAdapter) {
+        viewModel.valuations.observe(viewLifecycleOwner) {  valuations ->
+            adapter.updateData(valuations)
+        }
+    }
 
     private fun setUpRecyclerViewValoracion() {
         valoracionAdapter = ValoracionAdapter(
@@ -70,18 +72,23 @@ class ConsultarPerfilFragment : Fragment() {
             layoutValoracion.layoutManager = LinearLayoutManager(context)
             layoutValoracion.adapter = valoracionAdapter
         }
-        lifecycleScope.launch {
-            val valoracionDB = db.valuationDao().getAllByUser(userInfo?.userId)
-            valoracionAdapter.updateData(valoracionDB)
-        }
-        Toast.makeText(
-            context,
-            "Valoraciones mostradas",
-            Toast.LENGTH_SHORT
-        ).show()
         android.util.Log.d("ValoracionFragment", "setUpRecyclerView")
     }
 
+    private fun dataLoad(valoraciones:List<Valuation>) {
+        lifecycleScope.launch {
+            binding.spinner.visibility = View.VISIBLE
+            //val valoracionDB = db.valuationDao().getAllByUser(userInfo?.userId)
+            valoracionAdapter.updateData(valoraciones)
+            binding.spinner.visibility = View.GONE
+
+            Toast.makeText(
+                context,
+                "Valoraciones mostradas",
+                Toast.LENGTH_SHORT
+            ).show()
+        }
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         db = BaseDatos.getInstance(requireContext())!!
@@ -97,7 +104,24 @@ class ConsultarPerfilFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setUpRecyclerViewValoracion()
+        // Configurar la carga de información del perfil (puedes obtener esta información desde tu base de datos u otro origen)
+        cargarInformacionDePerfil()
+        val userProvider = activity as UserProvider
+        val user = userProvider.getUser()
+        viewModel.user = user
+        // show the spinner when [spinner] is true
+        viewModel.spinner.observe(viewLifecycleOwner) { show ->
+            binding.spinner.visibility = if (show) View.VISIBLE else View.GONE
+        }
 
+        // Show a Toast whenever the [toast] is updated a non-null value
+        viewModel.toast.observe(viewLifecycleOwner) { text ->
+            text?.let { Toast.makeText(context, text, Toast.LENGTH_SHORT).show()
+                viewModel.onToastShown()
+            }
+        }
+        subscribeUi(valoracionAdapter)
     }
 
     override fun onDestroyView() {
