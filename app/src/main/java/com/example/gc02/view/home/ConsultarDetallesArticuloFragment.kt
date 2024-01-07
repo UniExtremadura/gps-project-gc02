@@ -8,14 +8,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.gc02.R
-import com.example.gc02.api.APIError
 import com.example.gc02.api.getNetworkService
 import com.example.gc02.data.Repository
 import com.example.gc02.database.BaseDatos
@@ -23,7 +21,6 @@ import com.example.gc02.databinding.FragmentConsultarArticuloBinding
 import com.example.gc02.model.Article
 import com.example.gc02.model.Comentario
 import com.example.gc02.model.User
-import com.example.gc02.model.Valuation
 import com.example.gc02.view.RealizarCompraActivity
 import kotlinx.coroutines.launch
 class ConsultarDetallesArticuloFragment : Fragment() {

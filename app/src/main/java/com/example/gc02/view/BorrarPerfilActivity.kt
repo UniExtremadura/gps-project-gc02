@@ -7,7 +7,6 @@ import android.util.Log
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.lifecycle.lifecycleScope
 import com.example.gc02.api.getNetworkService
 import com.example.gc02.data.Repository
@@ -15,7 +14,6 @@ import com.example.gc02.database.BaseDatos
 import com.example.gc02.databinding.ActivityBorrarPerfilBinding
 import com.example.gc02.model.User
 import com.example.gc02.view.home.HomeActivity
-import com.example.gc02.view.home.UserProvider
 import kotlinx.coroutines.launch
 
 class BorrarPerfilActivity : AppCompatActivity(){

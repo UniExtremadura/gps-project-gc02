@@ -7,7 +7,6 @@ import com.example.gc02.api.ShopApi
 import com.example.gc02.api.APIError
 import com.example.gc02.data.api.Shop
 import com.example.gc02.database.UserDao
-import com.example.gc02.database.ArticleDao
 import com.example.gc02.database.BaseDatos
 import com.example.gc02.database.ValuationDao
 import com.example.gc02.model.Article
@@ -89,6 +88,12 @@ class Repository(
         return shop
     }
 
+    suspend fun insert(user:User): Long {
+        return userDao.insert(user)
+    }
+    suspend fun  updateUser(user: User): Unit{
+        return userDao.update(user)
+    }
     suspend fun deleteUser(user: User){
         return userDao.delete(user)
     }

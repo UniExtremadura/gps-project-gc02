@@ -11,12 +11,9 @@ import com.example.gc02.api.getNetworkService
 import com.example.gc02.data.Repository
 import com.example.gc02.database.BaseDatos
 import androidx.lifecycle.lifecycleScope
-import com.example.gc02.view.home.UserProvider
-import com.example.gc02.database.UserDao
 import com.example.gc02.databinding.ActivityModifyProfileBinding
 import com.example.gc02.model.User
 import com.example.gc02.utils.CredentialCheck
-import com.example.gc02.view.home.MisProductosFragment
 import com.example.gc02.view.home.SettingFragment
 import kotlinx.coroutines.launch
 
@@ -44,7 +41,7 @@ class ModifyProfileActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityModifyProfileBinding.inflate(layoutInflater)
         db = BaseDatos.getInstance(applicationContext)!!
-        repository = Repository.getInstance(db.userDao(), db.articleDao(), getNetworkService())
+        repository = Repository.getInstance(db, getNetworkService())
 
         usuario = intent.getSerializableExtra("user") as User
         setContentView(binding.root)
