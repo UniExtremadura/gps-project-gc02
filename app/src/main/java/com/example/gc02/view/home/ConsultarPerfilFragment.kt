@@ -20,18 +20,10 @@ import kotlinx.coroutines.launch
  * create an instance of this fragment.
  */
 class ConsultarPerfilFragment : Fragment() {
-    private val TAG = "ComentarioFragment"
     private lateinit var db: BaseDatos
 
     private var _valoracion: List<Valuation> = emptyList()
-    private lateinit var listener: OnPerfilClickListener
     private val viewModel: ValoracionViewModel by viewModels { ValoracionViewModel.Factory }
-
-    interface OnPerfilClickListener {
-        fun onPerfilClick(user:User)
-    }
-    private var param1: String? = null
-    private var param2: String? = null
 
     private var _binding: FragmentConsultarPerfilBinding? = null
 
@@ -76,7 +68,7 @@ class ConsultarPerfilFragment : Fragment() {
     private fun dataLoad(valoraciones:List<Valuation>) {
         lifecycleScope.launch {
             binding.spinner.visibility = View.VISIBLE
-            //val valoracionDB = db.valuationDao().getAllByUser(userInfo?.userId)
+
             valoracionAdapter.updateData(valoraciones)
             binding.spinner.visibility = View.GONE
 
@@ -127,14 +119,7 @@ class ConsultarPerfilFragment : Fragment() {
         _binding = null // avoid memory leaks
     }
     companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment ConsultarPerfilFragment.
-         */
+
         private const val USER_INFO = "USER_INFO"
         @JvmStatic
         fun newInstance(userInfo:User):ConsultarPerfilFragment{

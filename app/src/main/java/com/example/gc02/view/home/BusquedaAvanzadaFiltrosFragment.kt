@@ -45,15 +45,4 @@ class BusquedaAvanzadaFiltrosFragment : Fragment(R.layout.fragment_busqueda_avan
         }
         return binding.root
     }
-
-
-    /**
-    private fun notifyInvalidBusqueda(msg: String) {
-        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
-    }
-
-    private fun notifyValidBusqueda(msg: String) {
-        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
-    }
-    */
 }

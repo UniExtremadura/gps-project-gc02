@@ -3,8 +3,6 @@ package com.example.gc02.api
 import com.example.gc02.data.api.Categories
 import com.example.gc02.data.api.Shop
 import com.example.gc02.data.api.ShopDetails
-import com.example.gc02.model.Article
-import com.example.gc02.utils.SkipNetworkInterceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Call
@@ -12,7 +10,6 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.Body
-import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.PUT
 import retrofit2.http.Path
@@ -20,7 +17,6 @@ import retrofit2.http.Query
 
 private val service: ShopApi by lazy {
     val okHttpClient = OkHttpClient.Builder()
-    //    .addInterceptor(SkipNetworkInterceptor())
         .addInterceptor(HttpLoggingInterceptor())
         .build()
 
@@ -49,8 +45,6 @@ interface ShopApi {
         @Query("q") id: Long?
     ): ShopDetails
 
-   // @DELETE("products/{productId}")
-   // fun deleteProduct(@Path("productId") productId: Long?): Call<Void>
 
     @PUT("products/{productId}")
     fun updateProduct(@Path("productId") productId: Long?, @Body shop: Shop): Call<Void>

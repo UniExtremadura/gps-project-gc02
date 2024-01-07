@@ -21,12 +21,8 @@ import kotlinx.coroutines.launch
 
 
 
-private const val TAG = "ConsultarArticuloFragment"
-/**
- * A simple [Fragment] subclass.
- * Use the [ConsultarArticuloFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
+
+
 class ConsultarArticuloFragment : Fragment() {
 
     private var _binding: FragmentListaArticulosBinding? = null
@@ -61,7 +57,7 @@ class ConsultarArticuloFragment : Fragment() {
         if (context is OnShopClickListener) {
             listener = context
         } else {
-            throw RuntimeException(context.toString() + " must implement OnShopClickListener")
+            throw RuntimeException("$context must implement OnShopClickListener")
         }
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -86,7 +82,7 @@ class ConsultarArticuloFragment : Fragment() {
     }
 
     private fun subscribeUi(adapter: ArticuloAdapter) {
-        if (!args.precio.equals("") && !args.nombre.equals("")) {
+        if (args.precio != "" && args.nombre != "") {
             viewModel.shops.observe(viewLifecycleOwner) { shops ->
                 adapter.updateData(shops.filter {
                     it.title.contains(
@@ -96,7 +92,7 @@ class ConsultarArticuloFragment : Fragment() {
                 })
             }
         } else {
-            if (!args.nombre.equals("")) {
+            if (args.nombre != "") {
                 viewModel.shops.observe(viewLifecycleOwner) { shops ->
                     adapter.updateData(shops.filter {
                         it.title.contains(
@@ -106,7 +102,7 @@ class ConsultarArticuloFragment : Fragment() {
                     })
                 }
             } else {
-                if (!args.precio.equals("")) {
+                if (args.precio != "") {
                     viewModel.shops.observe(viewLifecycleOwner) { shops ->
                         adapter.updateData(shops.filter {
                             it.price <= args.precio.toDouble()

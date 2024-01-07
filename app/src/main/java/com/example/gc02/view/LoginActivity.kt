@@ -66,7 +66,6 @@ class LoginActivity : AppCompatActivity() {
             lifecycleScope.launch{
                 val user = repository.findByNameUser(binding.username.text.toString())
                 if (user != null) {
-                    // db.userDao().insert(User(-1, etUsername.text.toString(), etPassword.text.toString()))
                     val check = CredentialCheck.passwordOk(binding.password.text.toString(), user.password)
                     if (check.fail) notifyInvalidCredentials(check.msg)
                     else navigateToHomeActivity(user!!, check.msg)
@@ -90,7 +89,6 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun navigateToHomeActivity(user: User, msg: String) {
-        // Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
         HomeActivity.start(this, user)
     }
 

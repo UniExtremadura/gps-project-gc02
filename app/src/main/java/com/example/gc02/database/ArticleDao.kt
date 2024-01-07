@@ -9,8 +9,6 @@ import androidx.room.Query
 import androidx.room.Transaction
 import androidx.room.Update
 import com.example.gc02.model.Article
-import com.example.gc02.model.Comentario
-import com.example.gc02.model.User
 import com.example.gc02.model.UserShopCrossRef
 import com.example.gc02.model.UserwithShops
 

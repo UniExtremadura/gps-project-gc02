@@ -76,7 +76,6 @@ class HomeActivity : AppCompatActivity(), ConsultarArticuloFragment.OnShopClickL
         navController.addOnDestinationChangedListener { _, destination, _ ->
             if (destination.id == R.id.consultarDetallesArticuloFragment)
              {
-                //   binding.toolbar.visibility = View.GONE
                 binding.bottomNavigation.visibility = View.GONE
             } else {
                 binding.bottomNavigation.visibility = View.VISIBLE

@@ -12,9 +12,7 @@ import androidx.lifecycle.lifecycleScope
 import com.example.gc02.api.getNetworkService
 import com.example.gc02.data.Repository
 import com.example.gc02.database.BaseDatos
-
 import com.example.gc02.databinding.ActivityBorrarArticuloBinding
-import com.example.gc02.databinding.ActivityBorrarPerfilBinding
 import com.example.gc02.databinding.ActivityModificarArticuloBinding
 import com.example.gc02.model.Article
 import com.example.gc02.model.User

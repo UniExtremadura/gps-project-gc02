@@ -66,7 +66,6 @@ class MisProductosFragment : Fragment() {
         articuloAdapter = ArticuloAdapter(
             shops = shops,
             onClick = {
-                //Toast.makeText(context, "click on: "+it.title, Toast.LENGTH_SHORT).show()
                 listener.onShopClickProductosPerfil(it)
             },
             onLongClick = {
@@ -104,11 +103,6 @@ class MisProductosFragment : Fragment() {
     }
 
     companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         * @return A new instance of fragment ShowDetailFragment.
-         */
         @JvmStatic
         fun newInstance(): MisProductosFragment {
             return MisProductosFragment()

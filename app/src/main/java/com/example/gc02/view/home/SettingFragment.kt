@@ -13,11 +13,7 @@ import com.example.gc02.view.BorrarPerfilActivity
 import com.example.gc02.view.LoginActivity
 import com.example.gc02.view.ModifyProfileActivity
 
-/**
- * A simple [Fragment] subclass.
- * Use the [SettingFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
+
 class SettingFragment : Fragment() {
     private lateinit var user : User
     private lateinit var binding: FragmentSettingBinding
