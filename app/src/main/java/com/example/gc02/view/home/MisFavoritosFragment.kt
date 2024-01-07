@@ -1,23 +1,16 @@
 package com.example.gc02.view.home
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.gc02.api.getNetworkService
-import com.example.gc02.data.Repository
-import com.example.gc02.database.BaseDatos
 import com.example.gc02.databinding.FragmentMisFavoritosBinding
 import com.example.gc02.model.Article
 import com.example.gc02.model.User
-import kotlinx.coroutines.launch
 
 
 class MisFavoritosFragment : Fragment() {

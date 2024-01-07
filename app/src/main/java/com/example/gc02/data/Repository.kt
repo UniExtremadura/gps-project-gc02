@@ -89,6 +89,10 @@ class Repository(
         return shop
     }
 
+    suspend fun deleteUser(user: User){
+        return userDao.delete(user)
+    }
+
     suspend fun getUserWithShopsFavorites(userId: Long): UserwithShops {
         return articleDao.getUserWithShops(userId)
     }

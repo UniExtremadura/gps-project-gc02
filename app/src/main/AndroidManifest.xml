@@ -30,6 +30,9 @@
             android:name=".view.ValoracionActivity"
             android:exported="false"/>
         <activity
+            android:name=".view.BorrarPerfilActivity"
+            android:exported="false"/>
+        <activity
             android:name=".view.LoginActivity"
             android:exported="true"
             android:label="@string/app_name"
