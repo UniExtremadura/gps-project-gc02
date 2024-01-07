@@ -7,9 +7,9 @@ import java.io.Serializable
 @Entity
 data class Article(
     @PrimaryKey(autoGenerate = true) var articleId: Long?,
-    val title: String = "",
-    val description: String = "",
-    val price: Double = 0.0,
+    var title: String = "",
+    var description: String = "",
+    var price: Double = 0.0,
     val category: String? = "",
     val image: String? = "",
     @ColumnInfo(name = "is_favorite") var isFavorite: Boolean,

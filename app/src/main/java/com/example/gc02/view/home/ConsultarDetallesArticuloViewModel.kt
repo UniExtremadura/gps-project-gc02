@@ -117,7 +117,6 @@ class ConsultarDetallesArticuloViewModel (
         _toast.value = null
     }
 
-
     companion object {
 
         val Factory: ViewModelProvider.Factory = object : ViewModelProvider.Factory {

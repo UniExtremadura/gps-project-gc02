@@ -38,7 +38,7 @@ class TabLayoutFragment : Fragment(){
                 tab.text = when (position) {
                     0 -> "Productos"
                     1 -> "Favoritos"
-                    2 -> "Comentarios"
+                    2 -> "Valoraciones"
                     else -> null
                 }
             }.attach()

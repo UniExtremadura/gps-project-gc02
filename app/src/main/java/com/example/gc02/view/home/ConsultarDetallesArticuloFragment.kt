@@ -21,6 +21,10 @@ import com.example.gc02.databinding.FragmentConsultarArticuloBinding
 import com.example.gc02.model.Article
 import com.example.gc02.model.Comentario
 import com.example.gc02.model.User
+import com.example.gc02.view.BorrarArticuloActivity
+import com.example.gc02.view.BorrarPerfilActivity
+import com.example.gc02.view.ModificarArticuloActivity
+import com.example.gc02.view.ModifyProfileActivity
 import com.example.gc02.view.RealizarCompraActivity
 import kotlinx.coroutines.launch
 class ConsultarDetallesArticuloFragment : Fragment() {
@@ -72,9 +76,21 @@ class ConsultarDetallesArticuloFragment : Fragment() {
         viewModel.getComments()
         viewModel.user = userInfo
         // show the spinner when [spinner] is true
+        viewModel.shopDetail.observe(viewLifecycleOwner){ shop ->
+            shop?.let { showBinding(shop)}
+            if(viewModel.shop!!.userId != viewModel.user?.userId){
+                binding.btBorrar.visibility = View.GONE
+                binding.btModificar.visibility = View.GONE
+            } else{
+                binding.btBorrar.visibility = View.VISIBLE
+                binding.btModificar.visibility = View.VISIBLE
+            }
+
+        }
         viewModel.spinner.observe(viewLifecycleOwner) { show ->
             binding.spinner.visibility = if (show) View.VISIBLE else View.GONE
         }
+
         // Show a Toast whenever the [toast] is updated a non-null value
         viewModel.toast.observe(viewLifecycleOwner) { text ->
             text?.let {
@@ -85,6 +101,7 @@ class ConsultarDetallesArticuloFragment : Fragment() {
 
         subscribeUi()
         subscribeUiComment()
+
         setUpListeners()
 
 
@@ -182,6 +199,18 @@ class ConsultarDetallesArticuloFragment : Fragment() {
                 if (userInfo != null) {
                     enviarComentario(userInfo!!.name)
                 }
+            }
+            btModificar.setOnClickListener{
+                val intent = Intent(requireContext(), ModificarArticuloActivity::class.java)
+                intent.putExtra("articulo",viewModel.shop)
+                startActivity(intent)
+                requireActivity().finish()
+            }
+            btBorrar.setOnClickListener {
+                val intent = Intent(requireContext(), BorrarArticuloActivity::class.java)
+                intent.putExtra("articulo",viewModel.shop)
+                startActivity(intent)
+                requireActivity().finish()
             }
         }
     }

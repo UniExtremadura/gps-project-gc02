@@ -87,7 +87,9 @@ class Repository(
         }
         return shop
     }
-
+    suspend fun findByNameUser(name:String): User{
+        return userDao.findByName(name)
+    }
     suspend fun insert(user:User): Long {
         return userDao.insert(user)
     }
@@ -119,7 +121,9 @@ class Repository(
     suspend fun insert(article: Article): Long {
         return articleDao.insert(article)
     }
-
+    suspend fun deleteArticulo(article: Article){
+        return articleDao.delete(article)
+    }
     suspend fun findById(id: Int): Article {
         return articleDao.findById(id)
     }

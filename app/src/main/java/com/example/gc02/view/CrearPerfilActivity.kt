@@ -8,6 +8,8 @@ import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
+import com.example.gc02.api.getNetworkService
+import com.example.gc02.data.Repository
 import com.example.gc02.database.BaseDatos
 
 import com.example.gc02.databinding.ActivityCrearPerfilBinding
@@ -19,6 +21,7 @@ class CrearPerfilActivity : AppCompatActivity(){
 
     private lateinit var db: BaseDatos
     private lateinit var binding: ActivityCrearPerfilBinding
+    private lateinit var repository: Repository
 
     companion object {
         const val USUARIO = "NEW_USUARIO"
@@ -40,6 +43,7 @@ class CrearPerfilActivity : AppCompatActivity(){
         setContentView(binding.root)
 
         db = BaseDatos.getInstance(applicationContext)!!
+        repository= Repository.getInstance(db, getNetworkService())
         setUpListeners()
     }
 
@@ -68,7 +72,7 @@ class CrearPerfilActivity : AppCompatActivity(){
                         etEmail.text.toString(),
                         etPassword.text.toString()
                     )
-                    val id =  db?.userDao()?.insert(user)
+                    val id =  repository.insert(user)
 
                     navigateBackWithResult(
                         User(

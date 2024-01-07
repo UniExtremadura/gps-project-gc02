@@ -5,6 +5,8 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
+import com.example.gc02.api.getNetworkService
+import com.example.gc02.data.Repository
 import com.example.gc02.database.BaseDatos
 import com.example.gc02.databinding.ActivityLoginBinding
 import com.example.gc02.model.User
@@ -17,7 +19,7 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
 
     private lateinit var db: BaseDatos
-
+    private lateinit var repository: Repository
     private val responseLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == RESULT_OK) {
@@ -46,6 +48,7 @@ class LoginActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         db = BaseDatos.getInstance(applicationContext)!!
+        repository = Repository.getInstance(db, getNetworkService())
         //views initialization and listeners
         setUpUI()
         setUpListeners()
@@ -61,7 +64,7 @@ class LoginActivity : AppCompatActivity() {
         val check = CredentialCheck.login(binding.username.text.toString(), binding.password.text.toString())
         if (!check.fail){
             lifecycleScope.launch{
-                val user = db?.userDao()?.findByName(binding.username.text.toString()) //?: User(-1, etUsername.text.toString(), etPassword.text.toString())
+                val user = repository.findByNameUser(binding.username.text.toString())
                 if (user != null) {
                     // db.userDao().insert(User(-1, etUsername.text.toString(), etPassword.text.toString()))
                     val check = CredentialCheck.passwordOk(binding.password.text.toString(), user.password)
