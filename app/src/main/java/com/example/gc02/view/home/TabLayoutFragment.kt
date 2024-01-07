@@ -4,17 +4,18 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil.setContentView
 import androidx.fragment.app.Fragment
-import com.example.gc02.databinding.ActivityHomeBinding
-import com.example.gc02.databinding.FragmentListaArticulosBinding
 import com.example.gc02.databinding.FragmentTabsLayoutBinding
-import com.example.gc02.model.User
+import com.example.gc02.model.Article
 import com.google.android.material.tabs.TabLayoutMediator
 
 class TabLayoutFragment : Fragment(){
 
     private lateinit var binding: FragmentTabsLayoutBinding
+
+    interface OnShopClickListener{
+        fun onShopClickProductosPerfil(shop: Article)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

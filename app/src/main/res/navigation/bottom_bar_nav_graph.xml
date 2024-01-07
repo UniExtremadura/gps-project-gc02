@@ -73,7 +73,13 @@
     <fragment
         android:id="@+id/page_perfil"
         android:name="com.example.gc02.view.home.TabLayoutFragment"
-        android:label="Perfil" />
+        android:label="Perfil" >
+
+        <action
+            android:id="@+id/action_productos_Peril_to_consultarDetallesArticuloFragment"
+            app:destination="@id/consultarDetallesArticuloFragment" />
+    </fragment>
+
     <fragment
         android:id="@+id/consultarDetallesArticuloFragment"
         android:name="com.example.gc02.view.home.ConsultarDetallesArticuloFragment"
