@@ -69,13 +69,6 @@ class ArticleCheck private constructor() {
             else checks[0]
         }
 
-        fun confirmar(){
-            /*Toast.makeText(
-                ArticleCheck,
-                "Articulo modificado",
-                Toast.LENGTH_SHORT
-            ).show()*/
-        }
     }
 
     enum class ArticleError {

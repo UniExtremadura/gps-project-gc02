@@ -41,10 +41,6 @@ class BorrarArticuloActivity : AppCompatActivity() {
     }
 
     companion object {
-        const val TITLE = "NEW_TITLE"
-        const val DESC = "NEW_DESC"
-        const val PRICE = "NEW_PRICE"
-
         fun start(
             context: Context,
             responseLauncher: ActivityResultLauncher<Intent>

@@ -11,10 +11,8 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.gc02.database.BaseDatos
 import com.example.gc02.databinding.FragmentConsultarPerfilBinding
-import com.example.gc02.model.Comentario
 import com.example.gc02.model.User
 import com.example.gc02.model.Valuation
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 /**
  * A simple [Fragment] subclass.

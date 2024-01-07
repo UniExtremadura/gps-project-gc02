@@ -3,11 +3,9 @@ package com.example.gc02.view.home
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.navigation.fragment.NavHostFragment
@@ -17,7 +15,6 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.gc02.R
-import com.example.gc02.data.api.Shop
 import com.example.gc02.databinding.ActivityHomeBinding
 import com.example.gc02.model.Article
 import com.example.gc02.model.User

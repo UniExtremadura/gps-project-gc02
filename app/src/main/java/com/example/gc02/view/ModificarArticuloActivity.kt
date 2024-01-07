@@ -14,7 +14,6 @@ import com.example.gc02.databinding.ActivityModificarArticuloBinding
 import com.example.gc02.model.Article
 import com.example.gc02.utils.ArticleCheck
 import com.example.gc02.view.home.ConsultarDetallesArticuloFragment
-import com.example.gc02.view.home.SettingFragment
 import kotlinx.coroutines.launch
 
 class ModificarArticuloActivity : AppCompatActivity() {

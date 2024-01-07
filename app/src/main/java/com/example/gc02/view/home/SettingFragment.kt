@@ -39,11 +39,7 @@ class SettingFragment : Fragment() {
         binding.btnLogout.setOnClickListener {
             val intent = Intent(requireContext(), LoginActivity::class.java)
             startActivity(intent)
-            /* Toast.makeText(
-                 this@SettingFragment,
-                 "Sesion cerrada",
-                 Toast.LENGTH_SHORT
-             ).show()*/
+
             // Cierra la actividad actual del fragmento si es necesario
             requireActivity().finish()
         }

@@ -5,17 +5,11 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.EditText
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.navigation.Navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.example.gc02.R
-import com.example.gc02.data.dummyArticulos
 import com.example.gc02.databinding.FragmentBusquedaAvanzadaFiltrosBinding
-import com.example.gc02.databinding.FragmentListaArticulosBinding
-import com.example.gc02.model.Article
 
 class BusquedaAvanzadaFiltrosFragment : Fragment(R.layout.fragment_busqueda_avanzada_filtros) {
 

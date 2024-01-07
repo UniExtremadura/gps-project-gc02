@@ -22,10 +22,6 @@ class BorrarPerfilActivity : AppCompatActivity(){
     private lateinit var db: BaseDatos
     private lateinit var user : User
     companion object {
-        const val USUARIO = "NEW_USUARIO"
-        const val EMAIL = "NEW_EMAIL"
-        const val PASSWORD = "NEW_PASSWORD"
-        const val REPASSWORD = "NEW_REPASSWORD"
 
         fun start(
             context: Context,
@@ -60,7 +56,7 @@ class BorrarPerfilActivity : AppCompatActivity(){
                 navigateToLoginActivity()
                 Toast.makeText(
                     applicationContext,
-                    "Article deleted",
+                    "Perfil deleted",
                     Toast.LENGTH_SHORT
                 ).show()
                 }

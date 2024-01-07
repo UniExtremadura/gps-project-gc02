@@ -26,7 +26,6 @@ class ModifyProfileActivity : AppCompatActivity() {
         const val USUARIO = "NEW_USUARIO"
         const val EMAIL = "NEW_EMAIL"
         const val PASSWORD = "NEW_PASSWORD"
-        const val REPASSWORD = "NEW_REPASSWORD"
 
         fun start(
             context: Context,

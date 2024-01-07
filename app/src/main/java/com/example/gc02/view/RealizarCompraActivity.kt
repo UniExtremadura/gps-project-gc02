@@ -2,18 +2,13 @@ package com.example.gc02.view
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.navArgs
-import androidx.navigation.navArgs
 
 import com.example.gc02.database.BaseDatos
 import com.example.gc02.databinding.ActivityRealizarCompraBinding
 import com.example.gc02.model.Article
-import com.example.gc02.view.home.ConsultarDetallesArticuloFragmentArgs
 import kotlinx.coroutines.launch
 
 

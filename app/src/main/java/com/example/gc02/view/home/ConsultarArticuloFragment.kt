@@ -11,22 +11,15 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.gc02.RetroReuseApplication
 import com.example.gc02.api.APIError
 import com.example.gc02.api.getNetworkService
-import com.example.gc02.data.Repository
 import com.example.gc02.data.api.Shop
-import com.example.gc02.data.dummyArticulos
-import com.example.gc02.data.toShop
-import com.example.gc02.database.BaseDatos
 import com.example.gc02.databinding.FragmentListaArticulosBinding
 import com.example.gc02.model.Article
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 
 private const val TAG = "ConsultarArticuloFragment"
 /**

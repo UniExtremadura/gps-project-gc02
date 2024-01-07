@@ -11,7 +11,6 @@ class CredentialCheck {
 
     companion object {
 
-        private val TAG = CredentialCheck::class.java.canonicalName
         private val MINCHARS = 4
 
         private val checks = arrayOf(
@@ -68,13 +67,7 @@ class CredentialCheck {
             else if (password.isBlank() || password.length < MINCHARS) checks[2]
             else checks[0]
         }
-        fun join_confirmacion(){
-            /*Toast.makeText(
-                this@CredentialCheck,
-                "Iniciar sesion Correcto",
-                Toast.LENGTH_SHORT
-            ).show()*/
-        }
+
         enum class CredentialError {
             PasswordError, UsernameError, Success
         }

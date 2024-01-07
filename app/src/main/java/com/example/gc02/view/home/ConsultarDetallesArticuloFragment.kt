@@ -22,9 +22,7 @@ import com.example.gc02.model.Article
 import com.example.gc02.model.Comentario
 import com.example.gc02.model.User
 import com.example.gc02.view.BorrarArticuloActivity
-import com.example.gc02.view.BorrarPerfilActivity
 import com.example.gc02.view.ModificarArticuloActivity
-import com.example.gc02.view.ModifyProfileActivity
 import com.example.gc02.view.RealizarCompraActivity
 import kotlinx.coroutines.launch
 class ConsultarDetallesArticuloFragment : Fragment() {

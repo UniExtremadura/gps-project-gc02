@@ -1,23 +1,17 @@
 package com.example.gc02.view.home
 
-import android.util.Log
-import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.CreationExtras
 import com.example.gc02.RetroReuseApplication
 import com.example.gc02.api.APIError
 import com.example.gc02.data.Repository
-import com.example.gc02.data.toShop
 import com.example.gc02.model.Article
 import com.example.gc02.model.Comentario
 import com.example.gc02.model.User
-import com.example.gc02.model.UserwithShops
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
 class ConsultarDetallesArticuloViewModel (
