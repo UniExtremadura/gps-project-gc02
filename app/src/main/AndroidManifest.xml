@@ -32,6 +32,8 @@
         <activity
             android:name=".view.BorrarPerfilActivity"
             android:exported="false"/>
+        <activity android:name=".view.BorrarArticuloActivity"
+            android:exported="false"/>
         <activity
             android:name=".view.LoginActivity"
             android:exported="true"

@@ -109,8 +109,8 @@
             app:layout_constraintTop_toBottomOf="@+id/shImage"
             app:layout_constraintVertical_bias="0.47" />
 
-
         <!-- Agregar Comentario -->
+
         <ProgressBar
             android:id="@+id/spinner"
             android:layout_width="50dp"
@@ -125,13 +125,13 @@
             android:id="@+id/layoutComentarios"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="64dp"
             android:orientation="vertical"
             android:padding="16dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btComprar">
+            app:layout_constraintTop_toBottomOf="@+id/btModificar">
 
         </androidx.recyclerview.widget.RecyclerView>
 
@@ -139,23 +139,27 @@
             android:id="@+id/layoutAgregarComentario"
             android:layout_width="408dp"
             android:layout_height="174dp"
-            android:layout_marginTop="36dp"
+            android:layout_marginTop="24dp"
             android:orientation="vertical"
             android:padding="16dp"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/layoutComentarios">
 
             <!-- EditText para el Comentario -->
+
+            <!-- Botón para Enviar Comentario -->
             <EditText
                 android:id="@+id/editTextComentario"
                 android:layout_width="match_parent"
                 android:layout_height="75dp"
+                android:layout_marginStart="4dp"
+                android:layout_marginTop="4dp"
                 android:hint="Añadir comentario"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <!-- Botón para Enviar Comentario -->
             <Button
                 android:id="@+id/btEnviarComentario"
                 android:layout_width="wrap_content"
@@ -168,6 +172,31 @@
                 app:layout_constraintTop_toBottomOf="@+id/editTextComentario" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <Button
+            android:id="@+id/btModificar"
+            android:layout_width="114dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="68dp"
+            android:text="Modificar Articulo"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.573"
+            app:layout_constraintStart_toEndOf="@+id/btBorrar"
+            app:layout_constraintTop_toBottomOf="@+id/btComprar" />
+
+        <Button
+            android:id="@+id/btBorrar"
+            android:layout_width="114dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="64dp"
+            android:text="Borrar Articulo"
+            app:layout_constraintBottom_toTopOf="@+id/layoutComentarios"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.151"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btComprar"
+            app:layout_constraintVertical_bias="0.058" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
