@@ -7,15 +7,24 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.appcompat.app.AppCompatActivity
+import com.example.gc02.api.getNetworkService
+import com.example.gc02.data.Repository
+import com.example.gc02.database.BaseDatos
+import androidx.lifecycle.lifecycleScope
+import com.example.gc02.view.home.UserProvider
+import com.example.gc02.database.UserDao
 import com.example.gc02.databinding.ActivityModifyProfileBinding
 import com.example.gc02.model.User
 import com.example.gc02.utils.CredentialCheck
+import com.example.gc02.view.home.MisProductosFragment
+import com.example.gc02.view.home.SettingFragment
+import kotlinx.coroutines.launch
 
 class ModifyProfileActivity : AppCompatActivity() {
-
+    private lateinit var db: BaseDatos
     private lateinit var binding: ActivityModifyProfileBinding
-
-
+    private lateinit var repository: Repository
+    private lateinit var usuario: User
     companion object {
         const val USUARIO = "NEW_USUARIO"
         const val EMAIL = "NEW_EMAIL"
@@ -34,12 +43,20 @@ class ModifyProfileActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityModifyProfileBinding.inflate(layoutInflater)
+        db = BaseDatos.getInstance(applicationContext)!!
+        repository = Repository.getInstance(db.userDao(), db.articleDao(), getNetworkService())
+
+        usuario = intent.getSerializableExtra("user") as User
         setContentView(binding.root)
         setUpListeners()
     }
 
     private fun setUpListeners() {
         with(binding) {
+            etUsername.setText(usuario.name)
+            etEmail.setText(usuario.email)
+            etPassword.setText(usuario.password)
+
             btModificarPerfil.setOnClickListener {
                 val check = CredentialCheck.join_Modificar(
                     etUsername.text.toString(),
@@ -48,29 +65,29 @@ class ModifyProfileActivity : AppCompatActivity() {
                 )
                 if (check.fail) notifyInvalidCredentials(check.msg)
                 else
-                    navigateBackWithResult(
-                        User(null,
-                            etUsername.text.toString(),
-                            etEmail.text.toString(),
-                            etPassword.text.toString()
+                    lifecycleScope.launch {
+                        usuario.name = etUsername.text.toString()
+                        usuario.email = etEmail.text.toString()
+                        usuario.password = etPassword.text.toString()
+                        repository.updateUser(usuario)
+                        navigateBackWithResult(
+                            usuario
                         )
-                    )
+                    }
+
             }
         }
     }
 
     private fun navigateBackWithResult(user: User) {
-        Toast.makeText(
-            this,
-            "User modified",
-            Toast.LENGTH_SHORT
-        ).show()
         val intent = Intent().apply {
             putExtra(USUARIO, user.name)
             putExtra(EMAIL, user.email)
             putExtra(PASSWORD, user.password)
         }
         setResult(RESULT_OK, intent)
+        val intentModifyProfileActivity= Intent(this, SettingFragment::class.java)
+        startActivity(intentModifyProfileActivity)
         finish()
     }
 

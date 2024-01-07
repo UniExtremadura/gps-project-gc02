@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.gc02.databinding.FragmentSettingBinding
+import com.example.gc02.model.User
 import com.example.gc02.view.BorrarPerfilActivity
 import com.example.gc02.view.LoginActivity
 import com.example.gc02.view.ModifyProfileActivity
@@ -20,13 +21,15 @@ import com.example.gc02.view.ModifyProfileActivity
 class SettingFragment : Fragment() {
 
     private lateinit var binding: FragmentSettingBinding
-
+    private lateinit var user:User
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment using View Binding
         binding = FragmentSettingBinding.inflate(inflater, container, false)
+        val userP = activity as UserProvider
+        user = userP.getUser()
         return binding.root
     }
 
@@ -46,6 +49,7 @@ class SettingFragment : Fragment() {
         }
         binding.btnModificarPerfil.setOnClickListener{
             val intent = Intent(requireContext(),ModifyProfileActivity::class.java)
+            intent.putExtra("user",user)
             startActivity(intent)
             requireActivity().finish()
         }

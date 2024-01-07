@@ -74,7 +74,12 @@ class Repository(
         }
         return shop
     }
-
+    suspend fun insert(user:User): Long {
+        return userDao.insert(user)
+    }
+    suspend fun  updateUser(user: User): Unit{
+        return userDao.update(user)
+    }
     suspend fun getUserWithShopsFavorites(userId: Long): UserwithShops {
         return articleDao.getUserWithShops(userId)
     }
@@ -96,7 +101,6 @@ class Repository(
     suspend fun insert(article: Article): Long {
         return articleDao.insert(article)
     }
-
     suspend fun findById(id: Int): Article {
         return articleDao.findById(id)
     }
