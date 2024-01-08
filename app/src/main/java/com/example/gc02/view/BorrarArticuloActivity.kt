@@ -17,6 +17,7 @@ import com.example.gc02.databinding.ActivityModificarArticuloBinding
 import com.example.gc02.model.Article
 import com.example.gc02.model.User
 import com.example.gc02.view.home.HomeActivity
+import com.example.gc02.view.home.UserProvider
 import kotlinx.coroutines.launch
 
 class BorrarArticuloActivity : AppCompatActivity() {
@@ -28,12 +29,12 @@ class BorrarArticuloActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?){
         super.onCreate(savedInstanceState)
-
         binding= ActivityBorrarArticuloBinding.inflate(layoutInflater)
         setContentView(binding.root)
         db = BaseDatos.getInstance(applicationContext)!!
         repository = Repository.getInstance(db, getNetworkService())
         articulo = (intent.getSerializableExtra("articulo") as Article)
+        user = intent.getSerializableExtra("USER_INFO") as User
 
         setUpListeners()
     }
@@ -75,6 +76,7 @@ class BorrarArticuloActivity : AppCompatActivity() {
 
     private fun navigateToHomeActivity() {
         val intent = Intent(this, HomeActivity::class.java)
+        intent.putExtra("USER_INFO",user)
         startActivity(intent)
     }
 
