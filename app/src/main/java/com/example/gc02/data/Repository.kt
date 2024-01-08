@@ -124,6 +124,9 @@ class Repository(
     suspend fun deleteArticulo(article: Article){
         return articleDao.delete(article)
     }
+    suspend fun updateArticulo(article: Article){
+        return articleDao.updateProduct(article)
+    }
     suspend fun findById(id: Int): Article {
         return articleDao.findById(id)
     }

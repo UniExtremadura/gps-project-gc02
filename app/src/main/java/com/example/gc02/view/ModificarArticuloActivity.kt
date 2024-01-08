@@ -12,8 +12,10 @@ import com.example.gc02.data.Repository
 import com.example.gc02.database.BaseDatos
 import com.example.gc02.databinding.ActivityModificarArticuloBinding
 import com.example.gc02.model.Article
+import com.example.gc02.model.User
 import com.example.gc02.utils.ArticleCheck
 import com.example.gc02.view.home.ConsultarDetallesArticuloFragment
+import com.example.gc02.view.home.HomeActivity
 import kotlinx.coroutines.launch
 
 class ModificarArticuloActivity : AppCompatActivity() {
@@ -21,6 +23,7 @@ class ModificarArticuloActivity : AppCompatActivity() {
     private lateinit var binding: ActivityModificarArticuloBinding
     private lateinit var articulo: Article
     private lateinit var repository: Repository
+    private lateinit var user: User
 
     companion object {
         const val TITLE = "NEW_TITLE"
@@ -41,6 +44,7 @@ class ModificarArticuloActivity : AppCompatActivity() {
         db = BaseDatos.getInstance(applicationContext)!!
         repository = Repository.getInstance(db, getNetworkService())
         articulo = intent.getSerializableExtra("articulo") as Article
+        user = intent.getSerializableExtra("USER_INFO") as User
         setContentView(binding.root)
         setUpListeners()
     }
@@ -59,28 +63,20 @@ class ModificarArticuloActivity : AppCompatActivity() {
                 if (check.fail) notifyInvalidArticle(check.msg)
                 else
                     lifecycleScope.launch {
-                        articulo.title = tituloProducto.toString()
-                        articulo.description = descripcionProducto.toString()
-                        val precioString = precioArticulo.text.toString()
-                        articulo.price = precioString.toDoubleOrNull() ?: 0.0
-                        navigateBackWithResult(
-                            articulo
-                        )
+                        articulo.title = tituloProducto.text.toString()
+                        articulo.description = descripcionProducto.text.toString()
+                        articulo.price = precioArticulo.text.toString().toDouble()
+                        repository.updateArticulo(articulo)
                     }
-
+                navigateBackWithResult(articulo)
             }
         }
     }
 
     private fun navigateBackWithResult(article: Article) {
-        val intent = Intent().apply {
-            putExtra(TITLE, article.title)
-            putExtra(DESC, article.description)
-            putExtra(PRICE, article.price)
-        }
-        setResult(RESULT_OK, intent)
-        val intentModificarArticuloActivity= Intent(this, ConsultarDetallesArticuloFragment::class.java)
-        startActivity(intentModificarArticuloActivity)
+        val intentHomeActivity= Intent(this, HomeActivity::class.java)
+        intentHomeActivity.putExtra("USER_INFO", user)
+        startActivity(intentHomeActivity)
         finish()
     }
     private fun notifyInvalidArticle(msg: String) {
