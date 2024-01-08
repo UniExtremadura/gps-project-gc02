@@ -79,9 +79,11 @@ class ConsultarDetallesArticuloFragment : Fragment() {
             if(viewModel.shop!!.userId != viewModel.user?.userId){
                 binding.btBorrar.visibility = View.GONE
                 binding.btModificar.visibility = View.GONE
+                binding.btComprar.visibility = View.VISIBLE
             } else{
                 binding.btBorrar.visibility = View.VISIBLE
                 binding.btModificar.visibility = View.VISIBLE
+                binding.btComprar.visibility = View.GONE
             }
 
         }

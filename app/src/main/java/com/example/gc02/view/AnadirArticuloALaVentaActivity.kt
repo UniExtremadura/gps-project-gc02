@@ -109,8 +109,7 @@ class AnadirArticuloALaVentaActivity : AppCompatActivity() {
         }
         setResult(RESULT_OK, intent)
 
-        val intentListaMisArticulos = Intent(this, MisProductosFragment::class.java)
-        startActivity(intentListaMisArticulos)
+
 
         finish()
     }
