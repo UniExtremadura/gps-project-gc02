@@ -62,7 +62,7 @@ class ModificarArticuloActivity : AppCompatActivity() {
                         articulo.title = tituloProducto.toString()
                         articulo.description = descripcionProducto.toString()
                         val precioString = precioArticulo.text.toString()
-                        articulo.price = precioString.toDoubleOrNull() ?: 0.0
+                        articulo.price = precioString.toDouble()
                         navigateBackWithResult(
                             articulo
                         )

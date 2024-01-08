@@ -201,12 +201,14 @@ class ConsultarDetallesArticuloFragment : Fragment() {
             btModificar.setOnClickListener{
                 val intent = Intent(requireContext(), ModificarArticuloActivity::class.java)
                 intent.putExtra("articulo",viewModel.shop)
+                intent.putExtra("USER_INFO",userInfo)
                 startActivity(intent)
                 requireActivity().finish()
             }
             btBorrar.setOnClickListener {
                 val intent = Intent(requireContext(), BorrarArticuloActivity::class.java)
                 intent.putExtra("articulo",viewModel.shop)
+                intent.putExtra("USER_INFO",userInfo)
                 startActivity(intent)
                 requireActivity().finish()
             }
