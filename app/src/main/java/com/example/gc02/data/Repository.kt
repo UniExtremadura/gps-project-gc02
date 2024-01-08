@@ -93,6 +93,11 @@ class Repository(
     suspend fun insert(user:User): Long {
         return userDao.insert(user)
     }
+
+    suspend fun deleteArticles(id: Long) {
+        return articleDao.deleteArticleByUserId(id)
+    }
+
     suspend fun  updateUser(user: User): Unit{
         return userDao.update(user)
     }

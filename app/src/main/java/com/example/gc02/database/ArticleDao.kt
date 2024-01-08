@@ -33,6 +33,9 @@ interface ArticleDao {
     @Delete
     suspend fun delete(article: Article)
 
+    @Query("Delete FROM Article WHERE userId = :id")
+    suspend fun deleteArticleByUserId(id: Long)
+
     @Delete
     fun delete1(article: Article)
 

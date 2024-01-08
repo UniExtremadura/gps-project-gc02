@@ -50,6 +50,7 @@ class BorrarPerfilActivity : AppCompatActivity(){
             borrarPerfilButton.setOnClickListener {
                 lifecycleScope.launch {
                 if(user != null){
+                    repository.deleteArticles(user!!.userId!!)
                     repository.deleteUser(user)
                     Log.d("Borrado","Borrado correctamente")
                 } else Log.d("Borrar Perfil", "No se ha podido borrar, user null")
@@ -67,6 +68,8 @@ class BorrarPerfilActivity : AppCompatActivity(){
             }
         }
     }
+
+
     private fun navigateToLoginActivity() {
         val intent = Intent(this, LoginActivity::class.java)
         startActivity(intent)
