@@ -14,6 +14,7 @@ import androidx.lifecycle.lifecycleScope
 import com.example.gc02.databinding.ActivityModifyProfileBinding
 import com.example.gc02.model.User
 import com.example.gc02.utils.CredentialCheck
+import com.example.gc02.view.home.HomeActivity
 import com.example.gc02.view.home.SettingFragment
 import kotlinx.coroutines.launch
 
@@ -82,8 +83,9 @@ class ModifyProfileActivity : AppCompatActivity() {
             putExtra(PASSWORD, user.password)
         }
         setResult(RESULT_OK, intent)
-        val intentModifyProfileActivity= Intent(this, SettingFragment::class.java)
-        startActivity(intentModifyProfileActivity)
+        val intentHomeActivity= Intent(this, HomeActivity::class.java)
+        intentHomeActivity.putExtra("USER_INFO", usuario)
+        startActivity(intentHomeActivity)
         finish()
     }
 
