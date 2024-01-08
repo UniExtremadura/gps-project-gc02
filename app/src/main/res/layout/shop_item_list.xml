@@ -46,12 +46,12 @@
             <TextView
                 android:id="@+id/shDescription"
                 android:layout_width="327dp"
-                android:layout_height="27dp"
-                android:layout_marginTop="8dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="12dp"
                 android:text="description"
                 android:textSize="12sp"
-                app:layout_constraintStart_toStartOf="@+id/shCategory"
-                app:layout_constraintTop_toBottomOf="@+id/shCategory" />
+                app:layout_constraintStart_toStartOf="@+id/shPrice"
+                app:layout_constraintTop_toBottomOf="@+id/shPrice" />
 
             <TextView
                 android:id="@+id/shPrice"
@@ -62,16 +62,6 @@
                 android:textSize="20sp"
                 app:layout_constraintStart_toStartOf="@+id/shTitle"
                 app:layout_constraintTop_toBottomOf="@+id/shTitle" />
-
-            <TextView
-                android:id="@+id/shCategory"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="6dp"
-                android:text="category"
-                android:textSize="15sp"
-                app:layout_constraintStart_toStartOf="@+id/shPrice"
-                app:layout_constraintTop_toBottomOf="@+id/shPrice" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>

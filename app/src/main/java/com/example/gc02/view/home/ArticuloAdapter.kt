@@ -27,8 +27,6 @@ class ArticuloAdapter(
                 shTitle.text = shop.title
                 shDescription.text =  shop.description
                 shPrice.text = "${shop.price} $"
-                shCategory.text = shop.category
-
                 context?.let {
                     Glide.with(context)
                         .load(shop.image)

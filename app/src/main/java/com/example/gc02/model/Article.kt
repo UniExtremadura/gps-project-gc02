@@ -10,7 +10,6 @@ data class Article(
     var title: String = "",
     var description: String = "",
     var price: Double = 0.0,
-    val category: String? = "",
     val image: String? = "",
     @ColumnInfo(name = "is_favorite") var isFavorite: Boolean,
     val userId: Long? = null

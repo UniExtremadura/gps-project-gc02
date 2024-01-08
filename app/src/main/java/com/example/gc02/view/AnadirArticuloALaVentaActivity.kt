@@ -75,7 +75,6 @@ class AnadirArticuloALaVentaActivity : AppCompatActivity() {
                         descripcionProducto.text.toString(),
                         precioArticulo.text.toString().toDouble(),
                         null,
-                        null,
                         false,
                         (intent.getSerializableExtra("user") as User).userId
 
@@ -90,7 +89,6 @@ class AnadirArticuloALaVentaActivity : AppCompatActivity() {
                             tituloProducto.text.toString(),
                             descripcionProducto.text.toString(),
                             precioArticulo.text.toString().toDouble(),
-                            null,
                             null,
                             false
                         )
